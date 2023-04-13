@@ -298,6 +298,16 @@ ul li{
 .pr-5{
   padding-right: 20px;
 }
+
+
+
+.image-w{
+  height: 100px;
+} 
+.image-h{
+  width: 100px;
+}
+
  /* 
   */
 

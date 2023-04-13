@@ -1,11 +1,47 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
+import api from "../components/urlApi";
 
 const TrangChu = () => {
+  const [data, setData] = useState([]);
+  console.log(data);
+
+  useEffect(() => {
+    axios.get(api.sach).then((res) => {
+      setData(res.data.data);
+    });
+  }, []);
+  const rederSanPham = () => {
+    return data.map((item, index) => {
+      return (
+        <div className="col-3" key={index}>
+          <Link
+            to={"/san_pham_chi_tiet/" + item.idSach}
+            className="product-card position-relative"
+          >
+            <div className="product-image">
+              <img
+                src={api.img + item.hinhAnh}
+                className="img-fluid"
+                alt="product image"
+              />
+            </div>
+            <div className="product-details">
+              <h6 className="brand">{item.ten}</h6>
+              <h5 className="product-title">Kids headphones</h5>
+              <p>At vero eos et</p>
+              <p className="price">$100.00</p>
+            </div>
+          </Link>
+        </div>
+      );
+    });
+  };
+
   return (
-    <div className='rimary'>
-      <div className='container-xxl py-2'>
+    <div className="rimary">
+      <div className="container-xxl py-2">
         <div className="row">
           <div className="col-6">
             <div className="main-banner position-relative ">
@@ -50,240 +86,11 @@ const TrangChu = () => {
           </div>
         </div>
       </div>
-      <div className='container-xxl'>
-        <div className='row'>
-          <div className='col-3'>
-            <div>
-              <Link to='/san_pham_chi_tiet' className="product-card position-relative">
-                <div className="product-image">
-                  <img src='https://cdn0.fahasa.com/media/catalog/product/i/m/image_195509_1_36793.jpg' className="img-fluid" alt="product image" />
-                </div>
-                <div className="product-details">
-                  <h6 className="brand">Sách Giáo Khóa</h6>
-                  <h5 className="product-title">
-                    Kids headphones
-                  </h5>
-                  <p>
-                    At vero eos et 
-                  </p>
-                  <p className="price">$100.00</p>
-                </div>
-              </Link>
-            </div>
-          </div>
-          <div className='col-3'>
-            <div>
-              <Link to='/san_pham_chi_tiet' className="product-card position-relative">
-                <div className="product-image">
-                  <img src='https://cdn0.fahasa.com/media/catalog/product/i/m/image_195509_1_36793.jpg' className="img-fluid" alt="product image" />
-                </div>
-                <div className="product-details">
-                  <h6 className="brand">Sách Giáo Khóa</h6>
-                  <h5 className="product-title">
-                    Kids headphones
-                  </h5>
-                  <p>
-                    At vero eos et 
-                  </p>
-                  <p className="price">$100.00</p>
-                </div>
-              </Link>
-            </div>
-          </div>
-          <div className='col-3'>
-            <div>
-              <Link to='/san_pham_chi_tiet' className="product-card position-relative">
-                <div className="product-image">
-                  <img src='https://cdn0.fahasa.com/media/catalog/product/i/m/image_195509_1_36793.jpg' className="img-fluid" alt="product image" />
-                </div>
-                <div className="product-details">
-                  <h6 className="brand">Sách Giáo Khóa</h6>
-                  <h5 className="product-title">
-                    Kids headphones
-                  </h5>
-                  <p>
-                    At vero eos et 
-                  </p>
-                  <p className="price">$100.00</p>
-                </div>
-              </Link>
-            </div>
-          </div>
-          <div className='col-3'>
-            <div>
-              <Link to='/san_pham_chi_tiet' className="product-card position-relative">
-                <div className="product-image">
-                  <img src='https://cdn0.fahasa.com/media/catalog/product/i/m/image_195509_1_36793.jpg' className="img-fluid" alt="product image" />
-                </div>
-                <div className="product-details">
-                  <h6 className="brand">Sách Giáo Khóa</h6>
-                  <h5 className="product-title">
-                    Kids headphones
-                  </h5>
-                  <p>
-                    At vero eos et 
-                  </p>
-                  <p className="price">$100.00</p>
-                </div>
-              </Link>
-            </div>
-          </div>
-          <div className='col-3'>
-            <div>
-              <Link to='/san_pham_chi_tiet' className="product-card position-relative">
-                <div className="product-image">
-                  <img src='https://cdn0.fahasa.com/media/catalog/product/i/m/image_195509_1_36793.jpg' className="img-fluid" alt="product image" />
-                </div>
-                <div className="product-details">
-                  <h6 className="brand">Sách Giáo Khóa</h6>
-                  <h5 className="product-title">
-                    Kids headphones
-                  </h5>
-                  <p>
-                    At vero eos et 
-                  </p>
-                  <p className="price">$100.00</p>
-                </div>
-              </Link>
-            </div>
-          </div>
-          <div className='col-3'>
-            <div>
-              <Link to='/san_pham_chi_tiet' className="product-card position-relative">
-                <div className="product-image">
-                  <img src='https://cdn0.fahasa.com/media/catalog/product/i/m/image_195509_1_36793.jpg' className="img-fluid" alt="product image" />
-                </div>
-                <div className="product-details">
-                  <h6 className="brand">Sách Giáo Khóa</h6>
-                  <h5 className="product-title">
-                    Kids headphones
-                  </h5>
-                  <p>
-                    At vero eos et 
-                  </p>
-                  <p className="price">$100.00</p>
-                </div>
-              </Link>
-            </div>
-          </div>
-          <div className='col-3'>
-            <div>
-              <Link to='/san_pham_chi_tiet' className="product-card position-relative">
-                <div className="product-image">
-                  <img src='https://cdn0.fahasa.com/media/catalog/product/i/m/image_195509_1_36793.jpg' className="img-fluid" alt="product image" />
-                </div>
-                <div className="product-details">
-                  <h6 className="brand">Sách Giáo Khóa</h6>
-                  <h5 className="product-title">
-                    Kids headphones
-                  </h5>
-                  <p>
-                    At vero eos et 
-                  </p>
-                  <p className="price">$100.00</p>
-                </div>
-              </Link>
-            </div>
-          </div>
-          <div className='col-3'>
-            <div>
-              <Link to='/san_pham_chi_tiet' className="product-card position-relative">
-                <div className="product-image">
-                  <img src='https://cdn0.fahasa.com/media/catalog/product/i/m/image_195509_1_36793.jpg' className="img-fluid" alt="product image" />
-                </div>
-                <div className="product-details">
-                  <h6 className="brand">Sách Giáo Khóa</h6>
-                  <h5 className="product-title">
-                    Kids headphones
-                  </h5>
-                  <p>
-                    At vero eos et 
-                  </p>
-                  <p className="price">$100.00</p>
-                </div>
-              </Link>
-            </div>
-          </div>
-          <div className='col-3'>
-            <div>
-              <Link to='/san_pham_chi_tiet' className="product-card position-relative">
-                <div className="product-image">
-                  <img src='https://cdn0.fahasa.com/media/catalog/product/i/m/image_195509_1_36793.jpg' className="img-fluid" alt="product image" />
-                </div>
-                <div className="product-details">
-                  <h6 className="brand">Sách Giáo Khóa</h6>
-                  <h5 className="product-title">
-                    Kids headphones
-                  </h5>
-                  <p>
-                    At vero eos et 
-                  </p>
-                  <p className="price">$100.00</p>
-                </div>
-              </Link>
-            </div>
-          </div>
-          <div className='col-3'>
-            <div>
-              <Link to='/san_pham_chi_tiet' className="product-card position-relative">
-                <div className="product-image">
-                  <img src='https://cdn0.fahasa.com/media/catalog/product/i/m/image_195509_1_36793.jpg' className="img-fluid" alt="product image" />
-                </div>
-                <div className="product-details">
-                  <h6 className="brand">Sách Giáo Khóa</h6>
-                  <h5 className="product-title">
-                    Kids headphones
-                  </h5>
-                  <p>
-                    At vero eos et 
-                  </p>
-                  <p className="price">$100.00</p>
-                </div>
-              </Link>
-            </div>
-          </div>
-          <div className='col-3'>
-            <div>
-              <Link to='/san_pham_chi_tiet' className="product-card position-relative">
-                <div className="product-image">
-                  <img src='https://cdn0.fahasa.com/media/catalog/product/i/m/image_195509_1_36793.jpg' className="img-fluid" alt="product image" />
-                </div>
-                <div className="product-details">
-                  <h6 className="brand">Sách Giáo Khóa</h6>
-                  <h5 className="product-title">
-                    Kids headphones
-                  </h5>
-                  <p>
-                    At vero eos et 
-                  </p>
-                  <p className="price">$100.00</p>
-                </div>
-              </Link>
-            </div>
-          </div>
-          <div className='col-3'>
-            <div>
-              <Link to='/san_pham_chi_tiet' className="product-card position-relative">
-                <div className="product-image">
-                  <img src='https://cdn0.fahasa.com/media/catalog/product/i/m/image_195509_1_36793.jpg' className="img-fluid" alt="product image" />
-                </div>
-                <div className="product-details">
-                  <h6 className="brand">Sách Giáo Khóa</h6>
-                  <h5 className="product-title">
-                    Kids headphones
-                  </h5>
-                  <p>
-                    At vero eos et 
-                  </p>
-                  <p className="price">$100.00</p>
-                </div>
-              </Link>
-            </div>
-          </div>
-        </div>
+      <div className="container-xxl">
+        <div className="row">{rederSanPham()}</div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default TrangChu
+export default TrangChu;

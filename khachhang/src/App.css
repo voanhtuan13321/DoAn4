@@ -282,9 +282,21 @@ footer .input-group-text {
   overflow: hidden;
   width: 100%;
 }
+
+
+
+
+
+/* ////////////////////////////////////////// */
 .product-card .product-image {
-  height: 240px;
+  max-height: 200px;
 }
+
+
+
+
+
+/* /////////////////////////////////////////// */
 /* .product-card .product-image img {
   object-fit: contain;
 } */

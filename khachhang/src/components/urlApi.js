@@ -4,9 +4,10 @@ const api = {
   getDanhMuc: `http://${ip}:8080/api/danh-muc`,
   getDanhMucId: `http://${ip}:8080/api/danh-muc/`,
 
+  checkLogin: `http://${ip}:8080/api/khach-hang/check-logging`,
+
   login: `http://${ip}:8080/api/quan-ly/logging`,
   checkTaiKhoan: `http://${ip}:8080/api/quan-ly/check-tai-khoan`,
-  sendMail: `http://${ip}:8080/api/quan-ly/email/1`,
 
   suKien: `http://${ip}:8080/api/thong-tin-su-kien`,
   suKienId: `http://${ip}:8080/api/thong-tin-su-kien/`,
@@ -20,9 +21,10 @@ const api = {
   sach: `http://${ip}:8080/api/sach`,
   sachId: `http://${ip}:8080/api/sach/`,
 
-  lichSuMua: `http://${ip}:8080/api/lichd-sud-mua`,
-
   gioHang: `http://${ip}:8080/api/gio-hang`,
+  gioHangId: `http://${ip}:8080/api/gio-hang/`,
+
+  lichSuMuaHang: `http://${ip}:8080/api/lich_su_mua/`,
 
   img: "data:image/jpeg;base64,",
 };
