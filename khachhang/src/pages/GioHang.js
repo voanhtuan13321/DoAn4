@@ -1,22 +1,298 @@
-import React, { useStat, useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import api from "../components/urlApi";
+import { AiFillDelete } from "react-icons/ai";
+
 const GioHang = () => {
   let idKhachHang = JSON.parse(localStorage.getItem("idKhachHang"));
+  const [data, setData] = useState([]);
+  const [getNameImage, setNameImage] = useState([]);
+  const [a, setA] = useState("");
+  const [arrayGioHang, setAyGioHang] = useState([]);
+  const [loaiThanhToan, setLoaiThanhToan] = useState("Thanh toán online");
+  let navigator = useNavigate();
+
+  console.log(getNameImage);
+
   useEffect(() => {
     axios
-      .get(api.gioHang + idKhachHang)
+      .get(api.gioHang + "/" + idKhachHang)
       .then((res) => {
-        console.log(res);
-        // setData(res.data.data);
+        setData(res.data.data);
       })
       .catch((error) => {
         console.log(error);
       });
+  }, [a]);
+
+  // thanh toan
+  const subThanhToan = (arr) => {
+    // lap va cap nhat trang thai gio hang
+    if (arr) {
+      let selectValue = document.getElementById("luaChon").value;
+      let data = {
+        trangThai: "",
+      };
+      if (selectValue == 1) {
+        data.trangThai = "online";
+      } else {
+        alert("Đặt hàng thành công");
+        data.trangThai = "truc tiep";
+      }
+      const promises = [];
+      arr.forEach((element) => {
+        const promise1 = axios.put(
+          api.gioHang + "/cap-nhat-trang-thai/" + element.id,
+          data
+        );
+        promises.push(promise1);
+      });
+      Promise.all(promises).then(() => {
+        localStorage.removeItem("gioHang");
+        // navigator("/gio_hang");
+
+        window.location.href = "http://localhost:3000/gio_hang";
+      });
+    }
+  };
+
+  // check thanh toan thanh cong hay that bai
+  useEffect(() => {
+    const url = new URL(window.location);
+    const param1 = url.searchParams.get("vnp_ResponseCode");
+    let arr = JSON.parse(localStorage.getItem("gioHang"));
+
+    if (param1 != null) {
+      if (param1 == 0) {
+        alert("Thanh toán thành công");
+
+        subThanhToan(arr);
+      } else {
+        alert("Thanh toán không thành công");
+      }
+    }
   }, []);
 
-  const xoaGioHang = () => {};
+  const deleteCart = (id) => {
+    console.log(id);
+    axios
+      .delete(api.gioHang + "/" + id)
+      .then((res) => {
+        console.log(res);
+        setA(!a);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const themSoLuongSanPham = (item) => {
+    let idKhachHang = item["khachHang"].idKhachHang;
+    let idSach = item["sach"].idSach;
+
+    const data = {
+      id: item.id,
+      idKhachHang,
+      idSach,
+    };
+    axios
+      .post(api.gioHang, data)
+      .then((res) => {
+        setA(!a);
+        console.log(res.data.data);
+      })
+      .catch();
+  };
+
+  const giamSoLuongSanPham = (item) => {
+    let idKhachHang = item["khachHang"].idKhachHang;
+    let idSach = item["sach"].idSach;
+    const data = {
+      id: item.id,
+      idKhachHang,
+      idSach,
+    };
+    axios
+      .put(api.gioHang, data)
+      .then((res) => {
+        setA(!a);
+        console.log(res);
+      })
+      .catch();
+  };
+
+  function checKed(e) {
+    let name = e.target.value;
+    let check = e.target.checked;
+    // console.log(check);
+    if (check) {
+      setNameImage((state) => [...state, name]);
+    } else {
+      let c = getNameImage.filter((item, i) => {
+        return item != name;
+      });
+      setNameImage(c);
+    }
+  }
+
+  const sum = (data) => {
+    return data.reduce((accumulator, currentValue) => {
+      const id = currentValue.id;
+      if (getNameImage.includes(id + "")) {
+        return accumulator + currentValue.sach.giaSach * currentValue.soLuong;
+      } else {
+        return accumulator + 0;
+      }
+    }, 0);
+  };
+
+  const total = sum(data);
+  // console.log(total);
+
+  // const tongTien = () => {
+  //   axios.get(api.gioHangTongTien, getNameImage).then((res) => {
+  //     console.log(res);
+  //     setA(!a);
+  //   });
+  // };
+  console.log(data);
+
+  const renderGioHang = () => {
+    return data.map((item, index) => {
+      return (
+        <div
+          key={index}
+          // className="cart-data py-3 mb-2 d-flex justify-content-between align-items-center"
+
+          className={
+            item.trangThai === "online" || item.trangThai === "truc tiep"
+              ? "cart-data py-3 mb-2 d-flex justify-content-between align-items-center anButtun"
+              : "cart-data py-3 mb-2 d-flex justify-content-between align-items-center"
+          }
+        >
+          <div className="cart-col-1 gap-15 d-flex align-items-center">
+            <input
+              value={item.id}
+              onChange={checKed}
+              name="chon"
+              className="form-check-input"
+              type="checkbox"
+            />
+            <div className="w-25">
+              <img className="img-fluid" src={api.img + item["sach"].hinhAnh} />
+            </div>
+            <div>
+              {item.trangThai === "online" || item.trangThai === "truc tiep"
+                ? "Chờ phê duyêt"
+                : ""}
+            </div>
+          </div>
+          <div className="cart-col-2">
+            <h5 className="price">{item["sach"].ten}</h5>
+          </div>
+          <div className="cart-col-2">
+            <h5 className="price">{item["sach"].giaSach}</h5>
+          </div>
+          <div className="cart-col-3 d-flex align-items-center gap-15">
+            <div
+              className={
+                item.trangThai === "thanh_toan" ? "d-flex anButtun" : "d-flex"
+              }
+            >
+              <button
+                onClick={() => {
+                  themSoLuongSanPham(item);
+                }}
+                className="btn anButtun"
+              >
+                +
+              </button>
+              <input
+                type="number"
+                name=""
+                className="text-center"
+                value={item.soLuong}
+                min={1}
+                max={10}
+              />
+              <button
+                onClick={() => {
+                  giamSoLuongSanPham(item);
+                }}
+                className="btn"
+              >
+                -
+              </button>
+            </div>
+            <div>{/* <AiFillDelete className="text-danger " /> */}</div>
+          </div>
+          <div className="cart-col-4">
+            <h5 className="price">
+              {Number(item["sach"].giaSach) * Number(item.soLuong)}$
+            </h5>
+          </div>
+          <button
+            className="btn btn-danger"
+            onClick={() => deleteCart(item.id)}
+          >
+            <AiFillDelete />
+          </button>
+        </div>
+      );
+    });
+  };
+
+  const thanhToan = () => {
+    // tinh thanh tien cac san pham da chon
+    let khachHang = JSON.parse(localStorage.getItem("ten"));
+    getNameImage.map((element) => {
+      axios.get(api.gioHang + "/find-by/" + element).then((res) => {
+        let arr = JSON.parse(localStorage.getItem("gioHang"));
+        if (arr == null) {
+          arr = [];
+        }
+        const check = !isTonTai(arr, res.data.data.id);
+        console.log(check);
+        if (check) {
+          arr.push(res.data.data);
+        }
+        localStorage.setItem("gioHang", JSON.stringify(arr));
+      });
+    });
+
+    function isTonTai(arr, id) {
+      for (const a of arr) {
+        if (a.id == id) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    // check lua chon phuong thuc thanh toan
+    let selectValue = document.getElementById("luaChon").value;
+    if (selectValue == 1) {
+      // thanh toan online
+      let datThanhToan = {
+        amount: sum(data),
+        vnp_OrderInfo: `${khachHang} mua hàng`,
+        vnp_ResponseCode: "0",
+        vnp_ReturnUrl: "http://localhost:3000/gio_hang",
+      };
+      axios
+        .post(api.thanhToan, datThanhToan)
+        .then((res) => (window.location = res.data.data));
+      alert(sum(data));
+    } else {
+      // thanh toan truc tiep
+      let arr = JSON.parse(localStorage.getItem("gioHang"));
+      if (arr == null) {
+        arr = [];
+      }
+      subThanhToan(arr);
+    }
+  };
 
   return (
     <div className="container-xxl">
@@ -32,88 +308,8 @@ const GioHang = () => {
             <h4 className="cart-col-3">Số lượng</h4>
             <h4 className="cart-col-4">Tổng tiền</h4>
           </div>
-          <div className="cart-data py-3 mb-2 d-flex justify-content-between align-items-center">
-            <div className="cart-col-1 gap-15 d-flex align-items-center">
-              <input className="form-check-input" type="checkbox" />
-              <div className="w-25">
-                <img
-                  src="https://cdn0.fahasa.com/media/catalog/product/i/m/image_195509_1_36793.jpg"
-                  className="img-fluid"
-                  alt="product image"
-                />
-              </div>
-              <div className="w-75">
-                <p>GDffdhg</p>
-                <p>Size: hgf</p>
-                <p>Color: gfd</p>
-              </div>
-            </div>
-            <div className="cart-col-2">
-              <h5 className="price">Sách giáo khoa</h5>
-            </div>
-            <div className="cart-col-2">
-              <h5 className="price">$ 100</h5>
-            </div>
-            <div className="cart-col-3 d-flex align-items-center gap-15">
-              <div className="d-flex">
-                {/* <button className='btn'>+</button> */}
-                <input
-                  type="number"
-                  name=""
-                  className="text-center"
-                  defaultValue={1}
-                  min={1}
-                  max={10}
-                />
-                {/* <button className='btn'>-</button> */}
-              </div>
-              <div>{/* <AiFillDelete className="text-danger " /> */}</div>
-            </div>
-            <div className="cart-col-4">
-              <h5 className="price">$ 100</h5>
-            </div>
-          </div>
-          <div className="cart-data py-3 mb-2 d-flex justify-content-between align-items-center">
-            <div className="cart-col-1 gap-15 d-flex align-items-center">
-              <input className="form-check-input" type="checkbox" />
-              <div className="w-25">
-                <img
-                  src="https://cdn0.fahasa.com/media/catalog/product/i/m/image_195509_1_36793.jpg"
-                  className="img-fluid"
-                  alt="product image"
-                />
-              </div>
-              <div className="w-75">
-                <p>GDffdhg</p>
-                <p>Size: hgf</p>
-                <p>Color: gfd</p>
-              </div>
-            </div>
-            <div className="cart-col-2">
-              <h5 className="price">Sách giáo khoa</h5>
-            </div>
-            <div className="cart-col-2">
-              <h5 className="price">$ 100</h5>
-            </div>
-            <div className="cart-col-3 d-flex align-items-center gap-15">
-              <div className="d-flex">
-                {/* <button className='btn'>+</button> */}
-                <input
-                  type="number"
-                  name=""
-                  className="text-center"
-                  defaultValue={1}
-                  min={1}
-                  max={10}
-                />
-                {/* <button className='btn'>-</button> */}
-              </div>
-              <div>{/* <AiFillDelete className="text-danger " /> */}</div>
-            </div>
-            <div className="cart-col-4">
-              <h5 className="price">$ 100</h5>
-            </div>
-          </div>
+          {renderGioHang()}
+          {/* {ra()} */}
         </div>
         <div className="col-12 py-2 mt-4">
           <div className="d-flex justify-content-between align-items-baseline">
@@ -124,11 +320,17 @@ const GioHang = () => {
               Lịch sử mua hàng
             </Link>
             <div className="d-flex flex-column align-items-end">
-              <h4>SubTotal: $ 1000</h4>
-              <p>Taxes and shipping calculated at checkout</p>
-              <Link to="/checkout" className="button">
-                Checkout
-              </Link>
+              <h4>Tổng tiền: $ {total}</h4>
+              <p></p>
+              <div className="d-flex">
+                <select id="luaChon" className="rounded">
+                  <option value="1">Thanh toán Online</option>
+                  <option value="2">Thanh toán trực tiếp</option>
+                </select>
+                <button onClick={() => thanhToan()} className="btn button">
+                  Thanh toán
+                </button>
+              </div>
             </div>
           </div>
         </div>

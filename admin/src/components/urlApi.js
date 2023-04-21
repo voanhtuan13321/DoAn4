@@ -1,4 +1,4 @@
-const ip = "192.168.1.49";
+const ip = "192.168.1.32";
 
 const api = {
   getDanhMuc: `http://${ip}:8080/api/danh-muc`,
@@ -20,9 +20,15 @@ const api = {
   sach: `http://${ip}:8080/api/sach`,
   sachId: `http://${ip}:8080/api/sach/`,
 
-  lichSuMua: `http://${ip}:8080/api/lichd-sud-mua`,
+  lichSuMua: `http://${ip}:8080/api/lich-su-mua`,
 
   gioHang: `http://${ip}:8080/api/gio-hang`,
+
+  binhLuan: `http://${ip}:8080/api/danh-gia-san-pham`,
+
+  thongKeTheoThang: `http://${ip}:8080/api/lich-su-mua/thong-ke/`,
+
+  // binhLuanTheoSanPham: `http://${ip}:8080/api/danh-gia-san-pham`,
 
   img: "data:image/jpeg;base64,",
 };

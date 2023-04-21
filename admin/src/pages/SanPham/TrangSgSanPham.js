@@ -1,8 +1,24 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import api from "../../components/urlApi";
-
+import { useNavigate } from "react-router-dom";
+import ReactPaginate from "react-paginate";
+import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 const TrangSgSanPham = () => {
+  let navigation = useNavigate();
+
+  const ITEMS_PER_PAGE = 10; //Số lượng sản phẩm hiển thị
+  const [pageCount, setPageCount] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
+
+  // Kiểm tra đăng nhập
+  let admin = JSON.parse(localStorage.getItem("admin"));
+  if (!admin) {
+    alert("Bạn phải đăng nhập");
+    navigation("/");
+  }
+
+  // tạo để nhận các giá trị
   const [sanPham, setSapPham] = useState({
     ten: "",
     tacGia: "",
@@ -10,43 +26,41 @@ const TrangSgSanPham = () => {
     giaSach: "",
     moTa: "",
     ngayXuatBan: "",
-    soLuong: "",
-    khuyenMai: "",
+    soLuong: parseInt(""),
   });
 
   const [a, setA] = useState(true);
-
-  // useEffect(() => {
-  //   axios
-  //     .get(api.sach)
-  //     .then((res) => {
-  //       console.log(res);
-  //       console.log(res.data.data);
-  //     })
-  //     .catch((errors) => console.log(errors));
-  // }, []);
-
-  console.log(sanPham);
   const [danhMuc, setDanhMuc] = useState([]);
   const [file, setFile] = useState("");
   const [avatar, setAvatar] = useState("");
   const [valuedanhMuc, setValueDanhMuc] = useState("");
   const [data, setData] = useState([]);
+  let [errTen, setErrTen] = useState("");
+  let [errTacGia, setErrTacGia] = useState("");
+  let [errNhaXuatBan, setErrNhaXuatBan] = useState("");
+  let [errGiaSach, setErrGiaSach] = useState("");
+  let [errMoTa, setErrMoTa] = useState("");
+  let [errNgayXuatBan, setErrNgayXuatBan] = useState("");
+  let [errSoLuong, setErrSoLuong] = useState("");
 
+  // Gọi api lấy tất cả các sách đả được thêm
   useEffect(() => {
     axios
       .get(api.sach)
       .then((res) => {
         setData(res.data.data);
+        setPageCount(Math.ceil(res.data.data.length / ITEMS_PER_PAGE));
       })
       .catch((errors) => console.log(errors));
   }, [a]);
 
+  // khi chọn danh mực nào thì lấy danh mục đó để gởi lên
   const handleDanhMuc = (e) => {
     let value = e.target.value;
     setValueDanhMuc(value);
   };
 
+  // Gọi api danh mục
   useEffect(() => {
     axios
       .get(api.getDanhMuc)
@@ -57,6 +71,7 @@ const TrangSgSanPham = () => {
       .catch((errors) => console.log(errors));
   }, []);
 
+  // mỗi lần nhập thông tin trong ô input thì lấy key và value lưu vào object
   const handleInput = (e) => {
     let nameKey = e.target.name;
     let nameValue = e.target.value;
@@ -73,6 +88,7 @@ const TrangSgSanPham = () => {
     reader.readAsDataURL(files[0]);
   };
 
+  // trả về danh mục để lựa chọn
   const rederDanhMuc = () => {
     return danhMuc.map((item, index) => {
       return (
@@ -83,11 +99,14 @@ const TrangSgSanPham = () => {
     });
   };
 
+  // xóa sản phẩm theo id
   function deleteId(e) {
     let getId = e.target.value;
+    console.log(getId);
     axios
       .delete(api.sachId + getId)
       .then((res) => {
+        console.log(res.data);
         setA(!a);
       })
       .catch((error) => {
@@ -95,22 +114,30 @@ const TrangSgSanPham = () => {
       });
   }
 
+  // Lấy phần tủ sách đả được chọn sửa bỏ vào local
   function checkId(item) {
     localStorage.setItem("sach", JSON.stringify(item));
     navigation("/admin/sua_san_pham");
   }
 
+  const handlePageClick = ({ selected }) => {
+    setCurrentPage(selected);
+  };
+
+  const offset = currentPage * ITEMS_PER_PAGE;
+  const currentData = data.slice(offset, offset + ITEMS_PER_PAGE);
+
   const rederSanPham = () => {
-    return data.map((item, index) => {
+    return currentData.map((item, index) => {
       return (
-        <tr>
-          <th scope="col">#</th>
+        <tr key={index}>
+          <th scope="col">{index}</th>
           <th scope="col">{item.ten}</th>
           <th scope="col">{item.tacGia}</th>
           <th scope="col">{item.ngayXuatBan}</th>
           <th scope="col">{item.giaSach}</th>
           <th scope="col">{item.soLuong}</th>
-          <th scope="col">{item.khuyenMai}</th>
+
           <th scope="col">
             <img
               className="img-thumbnail image-w image-h"
@@ -118,8 +145,17 @@ const TrangSgSanPham = () => {
             />
           </th>
           <th scope="col">
-            <button onClick={() => checkId(item)}>Sửa</button>
-            <button value={item.idDanhMuc} onClick={deleteId}>
+            <button
+              className="btn btn-warning mr3"
+              onClick={() => checkId(item)}
+            >
+              Sửa
+            </button>
+            <button
+              className="btn btn-danger"
+              value={item.idSach}
+              onClick={deleteId}
+            >
               Xóa
             </button>
           </th>
@@ -130,36 +166,102 @@ const TrangSgSanPham = () => {
 
   const handlerSubmit = (e) => {
     e.preventDefault();
+    console.log(typeof sanPham.soLuong);
 
-    const data = {
-      ten: sanPham.ten,
-      tacGia: sanPham.tacGia,
-      nhaXuatBan: sanPham.nhaXuatBan,
-      giaSach: parseInt(sanPham.giaSach),
-      moTa: sanPham.moTa,
-      ngayXuatBan: sanPham.ngayXuatBan,
-      soLuong: parseInt(sanPham.soLuong),
-      khuyenMai: parseInt(sanPham.khuyenMai),
-      hinhAnh: avatar.replace("data:image/jpeg;base64,", ""),
-      idDanhMuc: parseInt(valuedanhMuc),
-    };
+    let check = 1;
+    if (sanPham.ten == "") {
+      check = 2;
+      setErrTen("Vui lòng nhập vào tên");
+    } else {
+      check = 1;
+      setErrTen("");
+    }
+    if (sanPham.tacGia == "") {
+      check = 2;
+      setErrTacGia("Vui lòng nhập vào tác giả");
+    } else {
+      check = 1;
+      setErrTacGia("");
+    }
+    if (sanPham.nhaXuatBan == "") {
+      check = 2;
+      setErrNhaXuatBan("Vui lòng nhập vào nhà xuất bản");
+    } else {
+      check = 1;
+      setErrNhaXuatBan("");
+    }
+    if (sanPham.giaSach == "") {
+      check = 2;
+      setErrGiaSach("Vui lòng nhập vào giá sách");
+    } else {
+      check = 1;
+      setErrGiaSach("");
+    }
+    if (sanPham.moTa == "") {
+      check = 2;
+      setErrMoTa("Vui lòng nhập vào mô tả");
+    } else {
+      check = 1;
+      setErrMoTa("");
+    }
+    if (sanPham.ngayXuatBan == "") {
+      check = 2;
+      setErrNgayXuatBan("Vui lòng nhập vào ngày xuất bản");
+    } else {
+      check = 1;
+      setErrNgayXuatBan("");
+    }
+    if (sanPham.soLuong == "") {
+      check = 2;
+      setErrSoLuong("Vui lòng nhập vào số lượng");
+    } else {
+      check = 1;
+      setErrSoLuong("");
+    }
+    // if (sanPham.soLuong == "") {
+    //   check = 2;
+    //   setErrSoLuong("Vui lòng nhập vào tên");
+    // } else {
+    //   check = 1;
+    //   setErrSoLuong("");
+    // }
 
-    console.log(data);
-    axios
-      .post(api.sach, data)
-      .then((res) => {
-        console.log(res);
-        setA(!a);
-      })
-      .catch((errors) => console.log(errors));
+    if (check == 1) {
+      let admin = JSON.parse(localStorage.getItem("admin"));
+      if (admin) {
+        const data = {
+          ten: sanPham.ten,
+          tacGia: sanPham.tacGia,
+          nhaXuatBan: sanPham.nhaXuatBan,
+          giaSach: parseInt(sanPham.giaSach),
+          moTa: sanPham.moTa,
+          ngayXuatBan: sanPham.ngayXuatBan,
+          soLuong: parseInt(sanPham.soLuong),
+          hinhAnh: avatar.replace("data:image/jpeg;base64,", ""),
+          idDanhMuc: parseInt(valuedanhMuc),
+        };
+
+        axios
+          .post(api.sach, data)
+          .then((res) => {
+            alert("Thêm thành công");
+            setA(!a);
+            navigation("/admin/trang_san_pham");
+          })
+          .catch((errors) => console.log(errors));
+      } else {
+        alert("Bạn chưa đăng nhập");
+        navigation("/");
+      }
+    }
   };
 
   return (
     <div>
       <div className="">
-        <div className="d-flex justify-content-center">
+        <div className="d-flex justify-content-center py-4">
           <form className="" onSubmit={handlerSubmit}>
-            <h3>
+            <h3 className="text-center">
               <b>Thêm sản phẩm</b>
             </h3>
             <div className="d-flex ">
@@ -174,6 +276,7 @@ const TrangSgSanPham = () => {
                     onChange={handleInput}
                   />
                 </div>
+                <span className="error">{errTen}</span>
                 <div className="input_container">
                   <label className="input_label" htmlFor="password_field">
                     Tác giả
@@ -185,6 +288,7 @@ const TrangSgSanPham = () => {
                     className="input_field"
                     onChange={handleInput}
                   />
+                  <span className="error">{errTacGia}</span>
                 </div>
                 <div className="input_container">
                   <label className="input_label">Nhà xuất bản</label>
@@ -195,26 +299,29 @@ const TrangSgSanPham = () => {
                     className="input_field"
                     onChange={handleInput}
                   />
+                  <span className="error">{errNhaXuatBan}</span>
                 </div>
                 <div className="input_container">
                   <label className="input_label">Giá sách</label>
                   <input
                     placeholder="Giá sách"
                     name="giaSach"
-                    type="text"
+                    type="number"
                     className="input_field"
                     onChange={handleInput}
                   />
+                  <span className="error">{errGiaSach}</span>
                 </div>
                 <div className="input_container">
                   <label className="input_label">Mô tả</label>
-                  <input
+                  <textarea
                     placeholder="Mô tả"
                     name="moTa"
                     type="text"
                     className="input_field"
                     onChange={handleInput}
                   />
+                  <span className="error">{errMoTa}</span>
                 </div>
               </div>
               <div className="p-3">
@@ -227,6 +334,7 @@ const TrangSgSanPham = () => {
                     className="input_field"
                     onChange={handleInput}
                   />
+                  <span className="error">{errNgayXuatBan}</span>
                 </div>
                 <div className="input_container">
                   <label className="input_label" htmlFor="password_field">
@@ -235,22 +343,11 @@ const TrangSgSanPham = () => {
                   <input
                     placeholder="Số lượng"
                     name="soLuong"
-                    type="text"
+                    type="number"
                     className="input_field"
                     onChange={handleInput}
                   />
-                </div>
-                <div className="input_container">
-                  <label className="input_label" htmlFor="password_field">
-                    Khuyến mãi
-                  </label>
-                  <input
-                    placeholder="Khuyến mãi"
-                    name="khuyenMai"
-                    type="text"
-                    className="input_field"
-                    onChange={handleInput}
-                  />
+                  <span className="error">{errSoLuong}</span>
                 </div>
                 <div className="input_container">
                   <label className="input_label" htmlFor="password_field">
@@ -288,12 +385,24 @@ const TrangSgSanPham = () => {
                 <th scope="col">Nhà xuất bản</th>
                 <th scope="col">Giá sách</th>
                 <th scope="col">Số lượng</th>
-                <th scope="col">Khuyến mãi</th>
                 <th scope="col">Ảnh</th>
                 <th scope="col"></th>
               </tr>
             </thead>
             <tbody>{rederSanPham()}</tbody>
+            <tfoot>
+              <ReactPaginate
+                previousLabel={<AiFillCaretLeft />}
+                nextLabel={<AiFillCaretRight />}
+                breakLabel={"..."}
+                pageCount={pageCount}
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={3}
+                onPageChange={handlePageClick}
+                containerClassName={"pagination"}
+                activeClassName={"active"}
+              />
+            </tfoot>
           </table>
         </div>
       </div>

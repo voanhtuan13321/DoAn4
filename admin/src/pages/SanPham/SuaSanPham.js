@@ -2,20 +2,24 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import api from "../../components/urlApi";
 
+import { useNavigate } from "react-router-dom";
+
 const SuaSanPham = () => {
   const sach = JSON.parse(localStorage.getItem("sach"));
+  let navigator = useNavigate();
 
   const [input, setInput] = useState({
+    idSach: sach.idSach,
     ten: sach.ten,
     tacGia: sach.tacGia,
-    nhaXuatBan: sach.ngayXuatBan,
+    nhaXuatBan: sach.nhaXuatBan,
     giaSach: sach.giaSach,
     moTa: sach.moTa,
-    ngayXuatBan: sach.nhaXuatBan,
+    ngayXuatBan: sach.ngayXuatBan,
     soLuong: sach.soLuong,
     khuyenMai: sach.khuyenMai,
     hinhAnh: sach.hinhAnh,
-    idDanhMuc: sach.idDanhMuc,
+    idDanhMuc: sach.danhMuc.idDanhMuc,
   });
 
   const [danhMuc, setDanhMuc] = useState([]);
@@ -69,6 +73,7 @@ const SuaSanPham = () => {
     e.preventDefault();
 
     const data = {
+      idSach: input.idSach,
       ten: input.ten,
       tacGia: input.tacGia,
       nhaXuatBan: input.nhaXuatBan,
@@ -76,17 +81,18 @@ const SuaSanPham = () => {
       moTa: input.moTa,
       ngayXuatBan: input.ngayXuatBan,
       soLuong: parseInt(input.soLuong),
-      khuyenMai: parseInt(input.khuyenMai),
       hinhAnh: avatar.replace("data:image/jpeg;base64,", ""),
-      idDanhMuc: parseInt(valuedanhMuc),
+      idDanhMuc: input.idDanhMuc,
     };
 
-    console.log(data);
+    console.log(typeof data.hinhAnh);
+
     axios
       .post(api.sach, data)
       .then((res) => {
         console.log(res);
-        // setA(!a)
+        alert("Cập nhật thành công");
+        navigator("/admin/trang_san_pham");
       })
       .catch((errors) => console.log(errors));
   };
@@ -97,7 +103,7 @@ const SuaSanPham = () => {
         <div className="d-flex justify-content-center">
           <form className="" onSubmit={handlerSubmit}>
             <h3>
-              <b>Thêm sản phẩm</b>
+              <b>Cập nhật sản phẩm</b>
             </h3>
             <div className="d-flex ">
               <div className="p-3">
@@ -168,7 +174,7 @@ const SuaSanPham = () => {
                     type="date"
                     className="input_field"
                     onChange={handleInput}
-                    value={input.ngayXuatBan}
+                    value={new Date(input.ngayXuatBan)}
                   />
                 </div>
                 <div className="input_container">
@@ -184,7 +190,7 @@ const SuaSanPham = () => {
                     value={input.soLuong}
                   />
                 </div>
-                <div className="input_container">
+                {/* <div className="input_container">
                   <label className="input_label" htmlFor="password_field">
                     Khuyến mãi
                   </label>
@@ -196,7 +202,7 @@ const SuaSanPham = () => {
                     onChange={handleInput}
                     value={input.khuyenMai}
                   />
-                </div>
+                </div> */}
                 <div className="input_container">
                   <label className="input_label" htmlFor="password_field">
                     Hình ảnh
@@ -211,19 +217,19 @@ const SuaSanPham = () => {
                 </div>
                 <div className="input_container pt-5">
                   <select onChange={handleDanhMuc} value={input.idDanhMuc}>
-                    <option>Chọn danh mục</option>
+                    {/* <option>Chọn danh mục</option> */}
                     {rederDanhMuc()}
                   </select>
                 </div>
               </div>
             </div>
             <button title="Sign In" type="submit" className="sign-in_btn">
-              <span>Thêm</span>
+              <span>Cập nhật</span>
             </button>
           </form>
         </div>
 
-        <div className="py-5">
+        {/* <div className="py-5">
           <table class="table">
             <thead>
               <tr>
@@ -240,7 +246,7 @@ const SuaSanPham = () => {
             </thead>
             <tbody></tbody>
           </table>
-        </div>
+        </div> */}
       </div>
     </div>
   );

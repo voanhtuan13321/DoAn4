@@ -2,58 +2,48 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import api from "../../components/urlApi";
 import { useNavigate } from "react-router-dom";
-
 import { Button, Form, Input } from "antd";
 
 const TrangDanhMuc = () => {
   let navigation = useNavigate();
 
-  // const [input,setInput] = useState({
-  //   ten:'',
-  //   moTa:''
-  // })
+  // const [input, setInput] = useState({
+  //   ten: "",
+  //   moTa: "",
+  // });
   const [danhMuc, setDanhMuc] = useState([]);
   const [a, setA] = useState(true);
 
   // const handleInput = (e) => {
   //   let nameKey = e.target.name;
   //   let nameValue = e.target.value;
-  //   setInput(state => ({...state,[nameKey]:nameValue}))
-  // }
+  //   setInput((state) => ({ ...state, [nameKey]: nameValue }));
+  // };
 
   // const handlerSubmit = (e) => {
   //   e.preventDefault();
-
   //   const data = {
-  //     ten:input.ten,
-  //     moTa:input.moTa
-  //   }
-  //   axios.post(api.getDanhMuc,data)
-  //   .then(res => {
-  //     console.log(res);
-  //     setA(!a)
-  //   })
-  //   .catch(errors => console.log(errors))
-  // }
+  //     ten: input.ten,
+  //     moTa: input.moTa,
+  //   };
+  //   axios
+  //     .post(api.getDanhMuc, data)
+  //     .then((res) => {
+  //       console.log(res);
+  //       setA(!a);
+  //     })
+  //     .catch((errors) => console.log(errors));
+  // };
 
   useEffect(() => {
     axios
       .get(api.getDanhMuc)
       .then((res) => {
+        console.log(res);
         setDanhMuc(res.data.data);
       })
       .catch((errors) => console.log(errors));
   }, [a]);
-
-  const onFinish = (values) => {
-    axios
-      .post(api.getDanhMuc, values)
-      .then((res) => {
-        console.log(res);
-        setA(!a);
-      })
-      .catch((errors) => console.log(errors));
-  };
 
   function deleteId(e) {
     let getId = e.target.value;
@@ -80,14 +70,30 @@ const TrangDanhMuc = () => {
           <td>{item.ten}</td>
           <td>{item.moTa}</td>
           <td>
-            <button onClick={() => checkId(item)}>Sửa</button>
-            <button value={item.idDanhMuc} onClick={deleteId}>
+            <button className="btn btn-danger" onClick={() => checkId(item)}>
+              Sửa
+            </button>
+            <button
+              className="btn btn-warning"
+              value={item.idDanhMuc}
+              onClick={deleteId}
+            >
               Xóa
             </button>
           </td>
         </tr>
       );
     });
+  };
+
+  const onFinish = (values) => {
+    axios
+      .post(api.getDanhMuc, values)
+      .then((res) => {
+        console.log(res);
+        setA(!a);
+      })
+      .catch((errors) => console.log(errors));
   };
 
   return (
@@ -102,7 +108,7 @@ const TrangDanhMuc = () => {
               onChange={handleInput}
               placeholder="Nhập tên"
             />
-            <span></span>
+            <p>{error}</p>
           </div>
           <div className="input-container pb-3">
             <input
@@ -140,8 +146,8 @@ const TrangDanhMuc = () => {
           autoComplete="off"
         >
           <Form.Item
-            label="Ten danh mục"
-            name="tieuDe"
+            label="Nhập vào tên danh mục"
+            name="ten"
             rules={[
               {
                 required: true,
@@ -153,12 +159,12 @@ const TrangDanhMuc = () => {
           </Form.Item>
 
           <Form.Item
-            label="Nội dung"
-            name="noiDung"
+            label="Nhập vào mô tả danh mục"
+            name="moTa"
             rules={[
               {
                 required: true,
-                message: "Nhập vào nội dung danh mục",
+                message: "Nhập vào mô tả danh mục",
               },
             ]}
           >

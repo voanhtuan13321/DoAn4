@@ -1,174 +1,77 @@
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
-import api from '../../components/urlApi'
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import api from "../../components/urlApi";
+import { useNavigate, Link } from "react-router-dom";
 
 const TrangKhachHang = () => {
-  const [input,setInput] = useState({
-    ten:'',
-    email:'',
-    soDienThoai:'',
-    diaChi:'',
-    taiKhoan:'',
-    matKhau:''
-  })
-  const [khachHang,setKhachHang] = useState([]);
-  const [a,setA] = useState(true)
-
-
-  const handleInput = (e) => {
-    let nameKey = e.target.name;
-    let nameValue = e.target.value;
-    setInput(state => ({...state,[nameKey]:nameValue}))
+  let navigation = useNavigate();
+  let admin = JSON.parse(localStorage.getItem("admin"));
+  if (!admin) {
+    alert("Bạn phải đăng nhập");
+    navigation("/");
   }
 
-  const handlerSubmit = (e) => {
-    e.preventDefault();
-   
-    const data = {
-      ten:input.ten,
-      email:input.email,
-      soDienThoai:input.soDienThoai,
-      diaChi:input.diaChi,
-      taiKhoan:input.taiKhoan,
-      matKhau:input.matKhau
-    }
-    axios.post(api.khachHang,data)
-    .then(res => {
-      console.log(res);
-      setA(!a)
-    })
-    .catch(errors => console.log(errors))
-  }
+  const [khachHang, setKhachHang] = useState([]);
+  const [a, setA] = useState(true);
 
-  useEffect(()=>{
-    axios.get(api.khachHang)
-    .then(res=>{   
-      setKhachHang(res.data.data)
+  // Gọi các khách hàng ra
+  useEffect(() => {
+    axios
+      .get(api.khachHang)
+      .then((res) => {
+        setKhachHang(res.data.data);
       })
-    .catch(errors=>console.log(errors));
-  },[a]);
+      .catch((errors) => console.log(errors));
+  }, [a]);
 
-  function checkId(e){
-    let getId=e.target.value;
-    axios.delete(api.khachHangId + getId)
-    .then(res=>{
-      setA(!a)
-    })
-    .catch((error)=>{
-      console.log(error);
-    })
+  // Khi click vào nút này sẻ lấy đc id của khách hàng đó vào xóa theo id của khách hàng
+  function checkId(e) {
+    let getLocalStolore = JSON.parse(localStorage.getItem("admin"));
+    if (getLocalStolore) {
+      let getId = e.target.value;
+      axios
+        .delete(api.khachHangId + getId)
+        .then((res) => {
+          setA(!a);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      alert("Bạn chưa đăng nhập");
+      navigation("/");
+    }
   }
 
-    const renderKhachHang = () => {
-      return khachHang.map((item,index)=>{
-        return(
-          <tr key={index}>
-            <th scope="row">{index}</th>
-            <td>{item.ten}</td>
-            <td>{item.email}</td>
-            <td>{item.soDienThoai}</td>
-            <td>{item.diaChi}</td>
-            <td>{item.taiKhoan}</td>
-            <td>{item.matKhau}</td>
-            <td>
-              <button value={item.idDanhMuc}  onClick={checkId}>Xóa</button>
-            </td>
-          </tr>
-        ) 
-      })
-    }
+  // lấy ra từng thông tin của khách hàng
+  const renderKhachHang = () => {
+    return khachHang.map((item, index) => {
+      return (
+        <tr key={index}>
+          <th scope="row">{index}</th>
+          <td>{item.ten}</td>
+          <td>{item.email}</td>
+          <td>{item.soDienThoai}</td>
+          <td>{item.diaChi}</td>
+          <td>{item.taiKhoan}</td>
+          <td>{item.matKhau}</td>
+          <td>
+            <button
+              className="btn btn-warning"
+              value={item.idKhachHang}
+              onClick={checkId}
+            >
+              Xóa
+            </button>
+          </td>
+        </tr>
+      );
+    });
+  };
   return (
     <div>
-      <div className=''>
-        <div className='d-flex justify-content-center'>
-              <form className="" onSubmit={handlerSubmit}>
-                <h3><b>Thêm mới khách hàng</b></h3>
-                  <div className='p-3'>
-                    <div className="input_container">
-                      <label className="input_label">
-                        Tên
-                      </label>
-                      <input
-                        placeholder="Tên"
-                        name="ten"
-                        type="text"
-                        className="input_field"
-                        onChange={handleInput}
-                      />
-                    </div>
-                    <div className="input_container">
-                      <label className="input_label" htmlFor="password_field">
-                        Email
-                      </label>
-                      <input
-                        placeholder="Email"
-                        name="email"
-                        type="text"
-                        className="input_field"
-                        onChange={handleInput}
-                      />
-                    </div>
-                    <div className="input_container">
-                      <label className="input_label">
-                        Số điện thoại
-                      </label>
-                      <input
-                        placeholder="Số điện thoại"
-                        name="soDienThoai"
-                        type="text"
-                        className="input_field"
-                        onChange={handleInput}
-                      />
-                    </div>
-                    <div className="input_container">
-                      <label className="input_label">
-                        Địa chỉ
-                      </label>
-                      <input
-                        placeholder="Địa chỉ"
-                        name="diaChi"
-                        type="text"
-                        className="input_field"
-                        onChange={handleInput}
-                      />
-                    </div>
-                    <div className="input_container">
-                      <label className="input_label" htmlFor="password_field">
-                        Tài khoản
-                      </label>
-                      <input
-                        placeholder="Tài khoản"
-                        name="taiKhoan"
-                        type="text"
-                        className="input_field"
-                        onChange={handleInput}
-                      />
-                    </div>
-
-                    <div className="input_container">
-                      <label className="input_label">
-                      Mật khẩu
-                      </label>
-                      <input
-                        placeholder="Nhà xuất bản"
-                        name="nhaXuatBan"
-                        type="text"
-                        className="input_field"
-                        onChange={handleInput}
-                      />
-                    </div>
-
-                  </div>
-                <button title="Sign In" type="submit" className="sign-in_btn">
-                  <span>Thêm</span>
-                </button>
-              </form>
-
-        </div>
-
-
-
-        <div className='py-5'>
+      <div className="">
+        <div className="py-5">
           <table class="table">
             <thead>
               <tr>
@@ -182,14 +85,12 @@ const TrangKhachHang = () => {
                 <th scope="col"></th>
               </tr>
             </thead>
-            <tbody>
-              {renderKhachHang()}
-            </tbody>
+            <tbody>{renderKhachHang()}</tbody>
           </table>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default TrangKhachHang
+export default TrangKhachHang;

@@ -8,13 +8,10 @@ import {
 } from "react-icons/ai";
 import { RiCouponLine } from "react-icons/ri";
 
-import { Link } from "react-router-dom";
 import { Outlet } from "react-router-dom";
-import { ImBlog } from "react-icons/im";
-import { IoIosNotifications } from "react-icons/io";
+
 import { FaClipboardList, FaBloggerB } from "react-icons/fa";
-import { SiBrandfolder } from "react-icons/si";
-import { BiCategoryAlt } from "react-icons/bi";
+
 import { Layout, Menu, theme } from "antd";
 import { useNavigate } from "react-router-dom";
 const { Header, Sider, Content } = Layout;
@@ -28,12 +25,7 @@ const MainLayout = () => {
   return (
     <Layout /* onContextMenu={(e) => e.preventDefault()} */>
       <Sider trigger={null} collapsible collapsed={collapsed}>
-        <div className="logo">
-          <h2 className="text-white fs-5 text-center py-3 mb-0">
-            <span className="sm-logo">DC</span>
-            <span className="lg-logo">Dev Corner</span>
-          </h2>
-        </div>
+        <div className="logo"></div>
         <Menu
           theme="dark"
           mode="inline"
@@ -46,9 +38,9 @@ const MainLayout = () => {
           }}
           items={[
             {
-              key: "/admin/thong_ke",
-              icon: <AiOutlineDashboard className="fs-4" />,
-              label: "Thống kê",
+              key: "/admin/don_hang",
+              icon: <FaClipboardList className="fs-4" />,
+              label: "Đơn đặt hàng",
             },
             {
               key: "/admin/trang_danh_muc",
@@ -67,7 +59,7 @@ const MainLayout = () => {
             },
             {
               key: "/admin/trang_cua_hang",
-              icon: <RiCouponLine className="fs-4" />,
+              icon: <FaClipboardList className="fs-4" />,
               label: "Cửa hàng",
             },
             {
@@ -75,16 +67,23 @@ const MainLayout = () => {
               icon: <FaClipboardList className="fs-4" />,
               label: "Sản phẩm",
             },
+
             {
-              key: "/admin/don_hang",
+              key: "/admin/binh_luan",
               icon: <FaClipboardList className="fs-4" />,
-              label: "Đơn đặt hàng",
+              label: "Bình luận",
+            },
+            {
+              key: "/admin/thong_ke",
+              icon: <AiOutlineDashboard className="fs-4" />,
+              label: "Thống kê",
             },
           ]}
         />
+        {/* <button>Đăng xuất</button> */}
       </Sider>
       <Layout className="site-layout">
-        <Header
+        {/* <Header
           className="d-flex justify-content-between ps-1 pe-5"
           style={{
             padding: 0,
@@ -98,7 +97,7 @@ const MainLayout = () => {
               onClick: () => setCollapsed(!collapsed),
             }
           )}
-        </Header>
+        </Header> */}
         <Content
           style={{
             margin: "24px 16px",

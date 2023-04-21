@@ -7,6 +7,11 @@ import { Button, Form, Input } from "antd";
 
 const TrangSuKien = () => {
   let navigation = useNavigate();
+  let admin = JSON.parse(localStorage.getItem("admin"));
+  if (!admin) {
+    alert("Bạn phải đăng nhập");
+    navigation("/");
+  }
   const [suKien, setSuKien] = useState([]);
   const [a, setA] = useState(true);
 
@@ -20,44 +25,20 @@ const TrangSuKien = () => {
   }, [a]);
 
   const onFinish = (values) => {
-    axios
-      .post(api.suKien, values)
-      .then((res) => {
-        console.log(res);
-        setA(!a);
-      })
-      .catch((errors) => console.log(errors));
+    let getLocalStolore = JSON.parse(localStorage.getItem("admin"));
+    if (getLocalStolore) {
+      axios
+        .post(api.suKien, values)
+        .then((res) => {
+          console.log(res);
+          setA(!a);
+        })
+        .catch((errors) => console.log(errors));
+    } else {
+      alert("Bạn chưa đăng nhập");
+      navigation("/");
+    }
   };
-  // const onFinishFailed = (errorInfo) => {
-  //   console.log("Failed:", errorInfo);
-  // };
-
-  // const [input, setInput] = useState({
-  //   tieuDe: "",
-  //   noiDung: "",
-  // });
-
-  // const handleInput = (e) => {
-  //   let nameKey = e.target.name;
-  //   let nameValue = e.target.value;
-  //   setInput((state) => ({ ...state, [nameKey]: nameValue }));
-  // };
-
-  // const handlerSubmit = (e) => {
-  //   e.preventDefault();
-
-  //   const data = {
-  //     tieuDe: input.tieuDe,
-  //     noiDung: input.noiDung,
-  //   };
-  //   axios
-  //     .post(api.suKien, data)
-  //     .then((res) => {
-  //       console.log(res);
-  //       setA(!a);
-  //     })
-  //     .catch((errors) => console.log(errors));
-  // };
 
   function deleteId(e) {
     let getId = e.target.value;
@@ -84,8 +65,14 @@ const TrangSuKien = () => {
           <td>{item.tieuDe}</td>
           <td>{item.noiDung}</td>
           <td>
-            <button onClick={() => checkId(item)}>Sửa</button>
-            <button value={item.id} onClick={deleteId}>
+            <button className="btn btn-danger" onClick={() => checkId(item)}>
+              Sửa
+            </button>
+            <button
+              className="btn btn-warning"
+              value={item.id}
+              onClick={deleteId}
+            >
               Xóa
             </button>
           </td>
@@ -208,7 +195,29 @@ const TrangSuKien = () => {
                 <th scope="col"></th>
               </tr>
             </thead>
-            <tbody>{renderSuKien()}</tbody>
+            <tbody>
+              {renderSuKien()}
+              <tr>
+                <th scope="row">1</th>
+                <td>Sản phẩm</td>
+                <td>Giảm giá</td>
+                <td>
+                  <button
+                    className="btn btn-danger mr3"
+                    // onClick={() => checkId(item)}
+                  >
+                    Sửa
+                  </button>
+                  <button
+                    className="btn btn-warning"
+                    // value={item.id}
+                    // onClick={deleteId}
+                  >
+                    Xóa
+                  </button>
+                </td>
+              </tr>
+            </tbody>
           </table>
         </div>
       </div>

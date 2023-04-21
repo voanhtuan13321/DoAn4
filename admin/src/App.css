@@ -7,6 +7,27 @@ ul li{
   
 }
 
+.error{
+  font-size: 13px;
+  color: red;
+}
+
+.next{
+  padding: 5px 10px 5px 10px;
+  background-color: #ccc;
+  color: #fff;
+  border-radius: 5px;
+}
+.previous{
+  padding: 5px 10px 5px 10px;
+  background-color: #ccc;
+  color: #fff;
+  border-radius: 5px;
+  margin-right: 5px;
+}
+
+.mr3{margin-right: 4px;}
+
 .form-label{
   width: 22% !important;
   text-align: left;
@@ -54,6 +75,8 @@ ul li{
 
 
 /* CSS form đang kí */
+.bsd{
+  box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;}
 
 .form {
   background-color: #fff;

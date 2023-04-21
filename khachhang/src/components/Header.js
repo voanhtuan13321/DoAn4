@@ -1,55 +1,147 @@
-import React from "react";
-import { NavLink, Link } from "react-router-dom";
-import { BsSearch ,BsFillCartCheckFill} from "react-icons/bs";
-import {BiLogIn} from "react-icons/bi";
-const Header = () => {
-    return (
+import React, { useEffect, useState } from "react";
+import { BsSearch, BsFillCartCheckFill } from "react-icons/bs";
+import { useNavigate, NavLink, Link } from "react-router-dom";
+import api from "../components/urlApi";
+import axios from "axios";
+const Header = (props) => {
+  let navigator = useNavigate();
+  const [timKiemSach, setTimKiem] = useState("");
+  const [danhMuc, setDanhMuc] = useState([]);
+  useEffect(() => {
+    axios
+      .get(api.getDanhMuc)
+      .then((res) => {
+        setDanhMuc(res.data.data);
+      })
+      .catch((errors) => console.log(errors));
+  }, []);
+
+  const tenKhachHang = () => {
+    let getLocalStolore = JSON.parse(localStorage.getItem("khachHang"));
+    if (getLocalStolore) {
+      return getLocalStolore.ten;
+    } else {
+      return "Đăng nhập";
+    }
+  };
+
+  const handleSearch = (event) => {
+    setTimKiem(event.target.value);
+  };
+
+  const rederDanhMuc = () => {
+    return danhMuc.map((item, index) => {
+      return (
+        <li key={index}>
+          <Link
+            className="dropdown-item text-white"
+            to={"/san_theo_danh_muc/" + item.idDanhMuc}
+          >
+            {item.ten}
+          </Link>
+        </li>
+      );
+    });
+  };
+
+  let idKhachHang = JSON.parse(localStorage.getItem("khachHang"));
+  console.log(idKhachHang);
+  let tong = JSON.parse(localStorage.getItem("tong"));
+
+  // useEffect(() => {
+  //   axios
+  //     .get(api.gioHangCount + idKhachHang)
+  //     .then((res) => {
+  //       console.log(res.data.data);
+  //       setCount(res.data.data);
+  //       localStorage.setItem("tong", JSON.stringify(res.data.data));
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }, []);
+
+  const dangXuat = () => {
+    localStorage.removeItem("dataKhachHang");
+    localStorage.removeItem("ten");
+    localStorage.removeItem("khachHang");
+    navigator("dang_nhap");
+  };
+  function renderTaiKhoan() {
+    let getLocalStolore = localStorage.getItem("khachHang");
+    if (getLocalStolore) {
+      return (
         <>
-          {/* <header className="header-top-strip py-3">
-            <div className="container-xxl">
-              <div className="row">
-                <div className="col-6">
-                  <p className="text-white mb-0">
-                    Free Shipping Over $100 & Free Returns
-                  </p>
-                </div>
-                <div className="col-6">
-                  <p className="text-end text-white mb-0">
-                    Hotline:
-                    <a className="text-white" href="tel:+91 8264954234">
-                      +91 8264954234
-                    </a>
-                  </p>
-                </div>
+          <li>
+            <Link to="/cap_nhat_tai_khoan" className="dropdown-item">
+              Taì khoản
+            </Link>
+          </li>
+          <li>
+            <button onClick={() => dangXuat()} className="dropdown-item">
+              Đăng xuất
+            </button>
+          </li>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <li>
+            <Link to="/dang_ki" className="dropdown-item">
+              Đăng kí
+            </Link>
+          </li>
+          <li>
+            <Link to="/dang_nhap" className="dropdown-item" href="#">
+              Đăng nhập
+            </Link>
+          </li>
+        </>
+      );
+    }
+  }
+
+  const timKiem = () => {
+    axios.get(api.timKiem, { params: { search: timKiemSach } }).then((res) => {
+      localStorage.setItem("timKiem", JSON.stringify(res.data.data));
+      window.location.href = "http://localhost:3000/tim_kiem";
+    });
+  };
+
+  return (
+    <>
+      <header className="header-upper py-3">
+        <div className="container-xxl">
+          <div className="row align-items-center">
+            <div className="col-2">
+              <h2>
+                <Link to="/" className="text-white">
+                  Dev
+                </Link>
+              </h2>
+            </div>
+            <div className="col-5">
+              <div className="input-group">
+                <input
+                  type="text"
+                  className="form-control py-2"
+                  placeholder="Tìm kiếm..."
+                  onChange={handleSearch}
+                  aria-label="Search Product Here..."
+                  aria-describedby="basic-addon2"
+                />
+                <span className="input-group-text p-3" id="basic-addon2">
+                  <button onClick={() => timKiem()}>
+                    <BsSearch className="fs-6" />
+                  </button>
+                </span>
               </div>
             </div>
-          </header> */}
-          <header className="header-upper py-3">
-            <div className="container-xxl">
-              <div className="row align-items-center">
-                <div className="col-2">
-                  <h2>
-                    <Link className="text-white">Dev Corner</Link>
-                  </h2>
-                </div>
-                <div className="col-5">
-                  <div className="input-group">
-                    <input
-                      type="text"
-                      className="form-control py-2"
-                      placeholder="Search Product Here..."
-                      aria-label="Search Product Here..."
-                      aria-describedby="basic-addon2"
-                    />
-                    <span className="input-group-text p-3" id="basic-addon2">
-                      <BsSearch className="fs-6" />
-                    </span>
-                  </div>
-                </div>
-                <div className="col-5 text-start">
-                  <div className="header-upper-links d-flex align-items-center justify-content-between">
-                    <div>
-                      <Link
+            <div className="col-5 text-start d-flex justify-content-end">
+              <div className="header-upper-links d-flex align-items-center justify-content-between">
+                <div>
+                  {/* <Link
                         to="/dang_nhap"
                         className="d-flex align-items-center gap-10 text-white"
                       >
@@ -57,42 +149,91 @@ const Header = () => {
                         <p className="mb-0">
                           Đăng nhập
                         </p>
-                      </Link>
+                      </Link> */}
+                  <div className="dropdown">
+                    <button
+                      className="btn btn-secondary dropdown-toggle"
+                      type="button"
+                      id="dropdownMenuButton1"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      {tenKhachHang()}
+                    </button>
+                    <ul
+                      className="dropdown-menu"
+                      aria-labelledby="dropdownMenuButton1"
+                    >
+                      {/* <li>
+                        <Link to="/dang_ki" className="dropdown-item">
+                          Đăng kí
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/dang_nhap"
+                          className="dropdown-item"
+                          href="#"
+                        >
+                          Đăng nhập
+                        </Link>
+                      </li> */}
+                      {renderTaiKhoan()}
+                    </ul>
+                  </div>
+                </div>
+                <div className="mx-3">
+                  <Link
+                    to="/gio_hang"
+                    className="d-flex align-items-center gap-10 text-white"
+                  >
+                    <BsFillCartCheckFill />
+                    <div className="d-flex flex-column gap-10">
+                      <span className="badge bg-white text-dark">{tong}</span>
                     </div>
-                    <div>
-                      <Link to="/gio_hang" className="d-flex align-items-center gap-10 text-white">
-                        <BsFillCartCheckFill/>
-                        <div className="d-flex flex-column gap-10">
-                          <span className="badge bg-white text-dark">0</span>
-                          <p className="mb-0">$ 500</p>
-                        </div>
-                      </Link>
-                    </div>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+      <header className="header-bottom py-3">
+        <div className="container-xxl">
+          <div className="row">
+            <div className="col-12">
+              <div className="menu-bottom d-flex align-items-center gap-30">
+                <div className="dropdown">
+                  <button
+                    className="btn btn-secondary dropdown-toggle bg-transparent border-0 gap-15 d-flex align-items-center"
+                    type="button"
+                    id="dropdownMenuButton1"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    <img alt="" />
+                    <span className="me-5 d-inline-block">Danh mục</span>
+                  </button>
+                  <ul
+                    className="dropdown-menu"
+                    aria-labelledby="dropdownMenuButton1"
+                  >
+                    {rederDanhMuc()}
+                  </ul>
+                </div>
+                <div className="menu-links">
+                  <div className="d-flex align-items-center gap-15">
+                    <NavLink to="/">Trang chủ</NavLink>
+                    <NavLink to="/su_kien">Thông tin sự kiện</NavLink>
                   </div>
                 </div>
               </div>
             </div>
-          </header>
-          <header className="header-bottom py-3">
-            <div className="container-xxl">
-              <div className="row">
-                <div className="col-12">
-                  <div className="menu-bottom d-flex justify-content-center align-items-center gap-30">
-                    <div className="menu-links">
-                      <div className="d-flex align-items-center gap-15">
-                        <NavLink to="/">Trang chủ</NavLink>
-                        <NavLink to="/su_kien">Thông tin sự kiện</NavLink>
-                        <NavLink to="/blogs">Blogs</NavLink>
-                        <NavLink to="/contact">Contact</NavLink>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </header>
-        </>
-      );
-}
+          </div>
+        </div>
+      </header>
+    </>
+  );
+};
 
-export default Header
+export default Header;

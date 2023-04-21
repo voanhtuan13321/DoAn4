@@ -1,80 +1,85 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import api from "../../components/urlApi";
-import { useNavigate } from "react-router-dom";
 
-const TrangCuaHang = () => {
-  let navigation = useNavigate();
-  const [cuaHang, setCuaHang] = useState([]);
+const SuaThongTinCuaHang = () => {
+  const item = JSON.parse(localStorage.getItem("cuahang"));
+
+  const [input, setInput] = useState({
+    id: item.id,
+    tenCuaHang: item.tenCuaHang,
+    moTa: item.moTa,
+    soDienThoai: item.soDienThoai,
+    diaChi: item.diaChi,
+    website: item.website,
+    email: item.email,
+  });
+
+  console.log(input.id);
   const [a, setA] = useState(false);
 
-  useEffect(() => {
-    axios
-      .get(api.cuaHang)
-      .then((res) => {
-        setCuaHang(res.data.data);
-      })
-      .catch((errors) => console.log(errors));
-  }, [a]);
-
-  function checkId(item) {
-    localStorage.setItem("cuahang", JSON.stringify(item));
-    navigation("/admin/trang_sua_cua_hang");
-  }
-
-  const renderCuaHang = () => {
-    return cuaHang.map((item, index) => {
-      return (
-        <tr key={index}>
-          {/* {console.log(item)} */}
-          <th scope="row">{index}</th>
-          <td>{item.tenCuaHang}</td>
-          <td>{item.moTa}</td>
-          <td>{item.soDienThoai}</td>
-          <td>{item.diaChi}</td>
-          <td>{item.website}</td>
-          <td>{item.email}</td>
-          <td>
-            <button className="btn btn-warning" onClick={() => checkId(item)}>
-              Sửa
-            </button>
-          </td>
-        </tr>
-      );
-    });
+  const handleInput = (e) => {
+    let nameKey = e.target.name;
+    let nameValue = e.target.value;
+    setInput((state) => ({ ...state, [nameKey]: nameValue }));
   };
 
+  const handlerSubmit = (e) => {
+    e.preventDefault();
+
+    const data = {
+      id: input.id,
+      tenCuaHang: input.tenCuaHang,
+      moTa: item.moTa,
+      soDienThoai: input.soDienThoai,
+      diaChi: input.diaChi,
+      website: input.website,
+      email: input.email,
+    };
+
+    axios
+      .post(api.cuaHang, data)
+      .then((res) => {
+        console.log(res);
+        setA(!a);
+      })
+      .catch((errors) => console.log(errors));
+  };
   return (
-    <>
-      {/* <div className="d-flex align-items-center justify-content-center">
+    <div className="text-center">
+      <h3>Cập nhật danh mục</h3>
+      <div className="d-flex align-items-center justify-content-center">
         <form onSubmit={handlerSubmit} className="width-500">
-          <p className="form-title py-4">Thêm thông tin của hàng</p>
+          <p className="form-title py-4">Cập nhật thông tin của hàng</p>
           <div className="d-flex">
             <div className="pr-5">
               <div className="input-container">
-                <label className="input_label">Nhà xuất bản</label>
+                <label className="input_label">Tên cửa hàng</label>
                 <input
                   type="text"
                   name="tenCuaHang"
                   onChange={handleInput}
+                  value={input.tenCuaHang}
                   placeholder="Nhập tên cửa hàng"
                 />
                 <span></span>
               </div>
               <div className="input-container">
-                <label className="input_label">Nhà xuất bản</label>
+                <label className="input_label">NHập mô tả</label>
                 <input
                   type="text"
                   name="moTa"
+                  value={input.moTa}
                   onChange={handleInput}
                   placeholder="Nhập mô tả"
                 />
               </div>
-              <label className="input_label">Nhà xuất bản</label>
+              <label className="input_label">Nhập số điện thoại</label>
               <div className="input-container">
                 <input
                   type="text"
                   name="soDienThoai"
+                  value={input.soDienThoai}
                   onChange={handleInput}
                   placeholder="Nhập số điện thoại"
                 />
@@ -82,28 +87,31 @@ const TrangCuaHang = () => {
             </div>
             <div>
               <div className="input-container">
-                <label className="input_label">Nhà xuất bản</label>
+                <label className="input_label">Nhập địa chỉ</label>
                 <input
                   type="text"
                   name="diaChi"
+                  value={input.diaChi}
                   onChange={handleInput}
                   placeholder="Nhập số điạ chỉ"
                 />
               </div>
               <div className="input-container">
-                <label className="input_label">Nhà xuất bản</label>
+                <label className="input_label">NHập website</label>
                 <input
                   type="text"
                   name="website"
+                  value={input.website}
                   onChange={handleInput}
                   placeholder="Website"
                 />
               </div>
               <div className="input-container pb-3">
-                <label className="input_label">Nhà xuất bản</label>
+                <label className="input_label">Nhập email cửa hàng</label>
                 <input
                   type="text"
                   name="email"
+                  value={input.email}
                   onChange={handleInput}
                   placeholder="Email"
                 />
@@ -118,26 +126,9 @@ const TrangCuaHang = () => {
             Thêm
           </button>
         </form>
-      </div> */}
-
-      <div className="py-5">
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Tên cửa hàng</th>
-              <th scope="col">Mô tả</th>
-              <th scope="col">Số điện thoại</th>
-              <th scope="col">Dia chỉ</th>
-              <th scope="col">Website</th>
-              <th scope="col">Email</th>
-            </tr>
-          </thead>
-          <tbody>{renderCuaHang()}</tbody>
-        </table>
       </div>
-    </>
+    </div>
   );
 };
 
-export default TrangCuaHang;
+export default SuaThongTinCuaHang;
