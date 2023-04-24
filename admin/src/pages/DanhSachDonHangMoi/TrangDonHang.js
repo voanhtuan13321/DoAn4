@@ -63,6 +63,11 @@ const TrangDonHang = () => {
             <th scope="col">{item["khachHang"].soDienThoai}</th>
             <th scope="col">{item["sach"].ten}</th>
             <th scope="col">{item.soLuong}</th>
+            <th scope="col">
+              {item.trangThai == "online"
+                ? "Đả thanh toán"
+                : item["sach"].giaSach * item.soLuong + " VNĐ"}
+            </th>
             <th scope="col">{item.trangThai}</th>
             <th scope="col">
               <button onClick={() => checkId(item)} className="btn btn-success">
@@ -85,12 +90,6 @@ const TrangDonHang = () => {
             <th scope="col">{item["khachHang"].soDienThoai}</th>
             <th scope="col">{item["sach"].ten}</th>
             <th scope="col">{item.soLuong}</th>
-
-            {/* <th scope="col">
-              <button onClick={() => checkId(item)} className="btn btn-success">
-                Xác nhận
-              </button>
-            </th> */}
           </tr>
         );
       });
@@ -107,6 +106,7 @@ const TrangDonHang = () => {
               <th scope="col">Số điện thoại</th>
               <th scope="col">Tên sách</th>
               <th scope="col">Số lượng</th>
+              <th scope="col">Giá tiền</th>
               <th scope="col">Thanh toán</th>
               <th scope="col"></th>
             </tr>

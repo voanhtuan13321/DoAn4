@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import api from "../../components/urlApi";
-
+import { useNavigate } from "react-router-dom";
 const SuaThongTinCuaHang = () => {
+  let navigation = useNavigate();
   const item = JSON.parse(localStorage.getItem("cuahang"));
 
   const [input, setInput] = useState({
@@ -41,13 +42,13 @@ const SuaThongTinCuaHang = () => {
       .post(api.cuaHang, data)
       .then((res) => {
         console.log(res);
+        navigation("/admin/trang_cua_hang");
         setA(!a);
       })
       .catch((errors) => console.log(errors));
   };
   return (
     <div className="text-center">
-      <h3>Cập nhật danh mục</h3>
       <div className="d-flex align-items-center justify-content-center">
         <form onSubmit={handlerSubmit} className="width-500">
           <p className="form-title py-4">Cập nhật thông tin của hàng</p>
@@ -123,7 +124,7 @@ const SuaThongTinCuaHang = () => {
             type="submit"
             className="rounded-pill btn bg-secondary btn-width"
           >
-            Thêm
+            Cập nhật
           </button>
         </form>
       </div>

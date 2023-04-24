@@ -5,6 +5,14 @@ import { useNavigate } from "react-router-dom";
 
 const TrangCuaHang = () => {
   let navigation = useNavigate();
+
+  // Kiểm tra đăng nhập hay chưa
+  let dangNhap = JSON.parse(localStorage.getItem("dangNhapAdmin"));
+  if (!dangNhap) {
+    alert("Vui lòng đăng nhập");
+    navigation("/");
+  }
+  //////////////////////////////////
   const [cuaHang, setCuaHang] = useState([]);
   const [a, setA] = useState(false);
 
@@ -110,7 +118,6 @@ const TrangCuaHang = () => {
               </div>
             </div>
           </div>
-
           <button
             type="submit"
             className="rounded-pill btn bg-secondary btn-width"

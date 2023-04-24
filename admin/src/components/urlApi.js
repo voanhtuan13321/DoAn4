@@ -1,4 +1,4 @@
-const ip = "192.168.1.32";
+const ip = "192.168.43.45";
 
 const api = {
   getDanhMuc: `http://${ip}:8080/api/danh-muc`,

@@ -1,9 +1,11 @@
-const ip = "192.168.1.32";
+const ip = "192.168.43.45";
 
 const api = {
   getDanhMuc: `http://${ip}:8080/api/danh-muc`,
   getDanhMucId: `http://${ip}:8080/api/danh-muc/`,
   getDanhMucIdDanhMuc: `http://${ip}:8080/api/sach/by-danh-muc/`,
+
+  getCuaHang: `http://${ip}:8080/api/thong-tin-cua-hang`,
 
   checkLogin: `http://${ip}:8080/api/khach-hang/check-logging`,
 

@@ -885,13 +885,37 @@ footer .input-group-text {
 z-index: 9999;
 }
 
+.colorbutton{
+  background-color: var(--color-febd69);
+}
 
+#luaChon{
+  margin-right: 20px;
+}
 
-/* img.heightImage{
-  width: 200px !important;
+.mh700{
+  min-height: 700px;
+}
+
+.mh400{
+  min-height: 240px;
+}
+
+.imageHeight{
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.ml5{
+  margin-right: 25px;
+}
+
+img.heightImage{
+  width: 300px !important;
   height: 200px !important;
   object-fit: cover;
-} */
+}
 
 .classdelete{
   margin-right: 3px;

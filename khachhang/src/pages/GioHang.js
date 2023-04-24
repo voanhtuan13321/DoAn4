@@ -88,21 +88,36 @@ const GioHang = () => {
   };
 
   const themSoLuongSanPham = (item) => {
-    let idKhachHang = item["khachHang"].idKhachHang;
-    let idSach = item["sach"].idSach;
+    // kiểm tra số lượng sách so với số lượng tăng
+    const [soLuong, setSoLuong] = useState("");
 
-    const data = {
-      id: item.id,
-      idKhachHang,
-      idSach,
-    };
     axios
-      .post(api.gioHang, data)
+      .get(api.sachId + item.idSach)
       .then((res) => {
-        setA(!a);
-        console.log(res.data.data);
+        setSach(res.data.data.soLuong);
       })
-      .catch();
+      .catch((error) => {
+        console.log(error);
+      });
+
+    if (item.soLuong > soLuong) {
+      alert("Hết sản phẩm");
+    } else {
+      let idKhachHang = item["khachHang"].idKhachHang;
+      let idSach = item["sach"].idSach;
+      const data = {
+        id: item.id,
+        idKhachHang,
+        idSach,
+      };
+      axios
+        .post(api.gioHang, data)
+        .then((res) => {
+          setA(!a);
+          console.log(res.data.data);
+        })
+        .catch();
+    }
   };
 
   const giamSoLuongSanPham = (item) => {
@@ -180,7 +195,10 @@ const GioHang = () => {
               type="checkbox"
             />
             <div className="w-25">
-              <img className="img-fluid" src={api.img + item["sach"].hinhAnh} />
+              <img
+                className="img-fluid imageHeight"
+                src={api.img + item["sach"].hinhAnh}
+              />
             </div>
             <div>
               {item.trangThai === "online" || item.trangThai === "truc tiep"
@@ -192,7 +210,7 @@ const GioHang = () => {
             <h5 className="price">{item["sach"].ten}</h5>
           </div>
           <div className="cart-col-2">
-            <h5 className="price">{item["sach"].giaSach}</h5>
+            <h5 className="price">{item["sach"].giaSach} VNĐ</h5>
           </div>
           <div className="cart-col-3 d-flex align-items-center gap-15">
             <div
@@ -204,7 +222,7 @@ const GioHang = () => {
                 onClick={() => {
                   themSoLuongSanPham(item);
                 }}
-                className="btn anButtun"
+                className="btn"
               >
                 +
               </button>
@@ -295,7 +313,7 @@ const GioHang = () => {
   };
 
   return (
-    <div className="container-xxl">
+    <div className="container-xxl mh700">
       <div className="row">
         <div className="pt-5">
           <h3>Giỏ hàng</h3>
@@ -320,7 +338,7 @@ const GioHang = () => {
               Lịch sử mua hàng
             </Link>
             <div className="d-flex flex-column align-items-end">
-              <h4>Tổng tiền: $ {total}</h4>
+              <h4>Tổng tiền: {total} VND</h4>
               <p></p>
               <div className="d-flex">
                 <select id="luaChon" className="rounded">

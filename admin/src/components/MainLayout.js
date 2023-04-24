@@ -3,15 +3,17 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import {
   AiOutlineDashboard,
   AiOutlineShoppingCart,
-  AiOutlineUser,
-  AiOutlineBgColors,
+  AiOutlineLogout,
+  AiOutlineUserAdd,
+  AiFillAppstore,
+  AiOutlineComment,
 } from "react-icons/ai";
-import { RiCouponLine } from "react-icons/ri";
+import { BsBorderStyle } from "react-icons/bs";
 
 import { Outlet } from "react-router-dom";
 
-import { FaClipboardList, FaBloggerB } from "react-icons/fa";
-
+import { FaProductHunt } from "react-icons/fa";
+import { GoFileDirectory } from "react-icons/go";
 import { Layout, Menu, theme } from "antd";
 import { useNavigate } from "react-router-dom";
 const { Header, Sider, Content } = Layout;
@@ -22,6 +24,14 @@ const MainLayout = () => {
     token: { colorBgContainer },
   } = theme.useToken();
   const navigate = useNavigate();
+
+  // Kiểm tra đăng nhập hay chưa
+  let dangNhap = JSON.parse(localStorage.getItem("dangNhapAdmin"));
+  if (!dangNhap) {
+    alert("Vui lòng đăng nhập");
+    navigate("/");
+  }
+  //////////////////////////////////
   return (
     <Layout /* onContextMenu={(e) => e.preventDefault()} */>
       <Sider trigger={null} collapsible collapsed={collapsed}>
@@ -39,12 +49,12 @@ const MainLayout = () => {
           items={[
             {
               key: "/admin/don_hang",
-              icon: <FaClipboardList className="fs-4" />,
+              icon: <BsBorderStyle className="fs-4" />,
               label: "Đơn đặt hàng",
             },
             {
               key: "/admin/trang_danh_muc",
-              icon: <AiOutlineUser className="fs-4" />,
+              icon: <GoFileDirectory className="fs-4" />,
               label: "Danh Mục",
             },
             {
@@ -54,23 +64,23 @@ const MainLayout = () => {
             },
             {
               key: "/admin/trang_khach_hang",
-              icon: <FaClipboardList className="fs-4" />,
+              icon: <AiOutlineUserAdd className="fs-4" />,
               label: "Khách hàng",
             },
             {
               key: "/admin/trang_cua_hang",
-              icon: <FaClipboardList className="fs-4" />,
+              icon: <AiFillAppstore className="fs-4" />,
               label: "Cửa hàng",
             },
             {
               key: "/admin/trang_san_pham",
-              icon: <FaClipboardList className="fs-4" />,
+              icon: <FaProductHunt className="fs-4" />,
               label: "Sản phẩm",
             },
 
             {
               key: "/admin/binh_luan",
-              icon: <FaClipboardList className="fs-4" />,
+              icon: <AiOutlineComment className="fs-4" />,
               label: "Bình luận",
             },
             {
@@ -78,13 +88,22 @@ const MainLayout = () => {
               icon: <AiOutlineDashboard className="fs-4" />,
               label: "Thống kê",
             },
+            {
+              key: "/admin/thong_ke",
+              icon: <AiOutlineDashboard className="fs-4" />,
+              label: "Thống kê",
+            },
+            {
+              key: "/",
+              icon: <AiOutlineLogout className="fs-4" />,
+              label: "Đăng xuất",
+            },
           ]}
         />
-        {/* <button>Đăng xuất</button> */}
       </Sider>
       <Layout className="site-layout">
-        {/* <Header
-          className="d-flex justify-content-between ps-1 pe-5"
+        <Header
+          className="d-flex justify-content-between ps-1 pe-2"
           style={{
             padding: 0,
             background: colorBgContainer,
@@ -97,7 +116,7 @@ const MainLayout = () => {
               onClick: () => setCollapsed(!collapsed),
             }
           )}
-        </Header> */}
+        </Header>
         <Content
           style={{
             margin: "24px 16px",

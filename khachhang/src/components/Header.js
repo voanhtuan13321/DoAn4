@@ -48,23 +48,11 @@ const Header = (props) => {
   console.log(idKhachHang);
   let tong = JSON.parse(localStorage.getItem("tong"));
 
-  // useEffect(() => {
-  //   axios
-  //     .get(api.gioHangCount + idKhachHang)
-  //     .then((res) => {
-  //       console.log(res.data.data);
-  //       setCount(res.data.data);
-  //       localStorage.setItem("tong", JSON.stringify(res.data.data));
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }, []);
-
   const dangXuat = () => {
     localStorage.removeItem("dataKhachHang");
     localStorage.removeItem("ten");
     localStorage.removeItem("khachHang");
+    localStorage.removeItem("idKhachHang");
     navigator("dang_nhap");
   };
   function renderTaiKhoan() {
@@ -117,7 +105,7 @@ const Header = (props) => {
             <div className="col-2">
               <h2>
                 <Link to="/" className="text-white">
-                  Dev
+                  QLBS
                 </Link>
               </h2>
             </div>
@@ -131,8 +119,8 @@ const Header = (props) => {
                   aria-label="Search Product Here..."
                   aria-describedby="basic-addon2"
                 />
-                <span className="input-group-text p-3" id="basic-addon2">
-                  <button onClick={() => timKiem()}>
+                <span className="input-group-text" id="basic-addon2">
+                  <button className="btn colorbutton" onClick={() => timKiem()}>
                     <BsSearch className="fs-6" />
                   </button>
                 </span>
@@ -225,6 +213,9 @@ const Header = (props) => {
                   <div className="d-flex align-items-center gap-15">
                     <NavLink to="/">Trang chủ</NavLink>
                     <NavLink to="/su_kien">Thông tin sự kiện</NavLink>
+                    <NavLink to="/thong_tin_cua_hang">
+                      Thông tin cửa hàng
+                    </NavLink>
                   </div>
                 </div>
               </div>

@@ -195,29 +195,7 @@ const TrangSuKien = () => {
                 <th scope="col"></th>
               </tr>
             </thead>
-            <tbody>
-              {renderSuKien()}
-              <tr>
-                <th scope="row">1</th>
-                <td>Sản phẩm</td>
-                <td>Giảm giá</td>
-                <td>
-                  <button
-                    className="btn btn-danger mr3"
-                    // onClick={() => checkId(item)}
-                  >
-                    Sửa
-                  </button>
-                  <button
-                    className="btn btn-warning"
-                    // value={item.id}
-                    // onClick={deleteId}
-                  >
-                    Xóa
-                  </button>
-                </td>
-              </tr>
-            </tbody>
+            <tbody>{renderSuKien()}</tbody>
           </table>
         </div>
       </div>

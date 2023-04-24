@@ -44,23 +44,29 @@ const SanPhamTheoDanhMuc = () => {
         // </div>
 
         <div className=" col-3 mb-3" key={index}>
-          <div className="card">
-            <img
-              src={api.img + item.hinhAnh}
-              className="card-img-top"
-              alt="..."
-            />
-            <div className="card-body">
-              <h5 className="card-title">{item.ten}</h5>
-              <p className="card-text ">Giá sách : {item.giaSach}</p>
+          <Link
+            to={"/san_pham/" + item.idSach}
+            className="border color  card "
+            title={item.ten}
+          >
+            <div className="card">
+              <img
+                src={api.img + item.hinhAnh}
+                className="card-img-top heightImage"
+                alt="..."
+              />
+              <div className="card-body">
+                <h5 className="card-title">{item.ten}</h5>
+                <p className="card-text ">Giá sách : {item.giaSach} VND</p>
+              </div>
             </div>
-          </div>
+          </Link>
         </div>
       );
     });
   };
   return (
-    <div className="container-xxl py-4">
+    <div className="container-xxl py-4 mh700">
       <div className="row">{sanPhamTheoDanhMuc()}</div>
     </div>
   );

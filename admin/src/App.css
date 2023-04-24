@@ -3,8 +3,18 @@
   list-style: none;
   text-decoration: none;
 }
-ul li{
-  
+.w300{
+  width: 18%;
+  background-color: #ccc;
+}
+
+.h100vh{
+  height: 100vh !important;
+}
+
+.w100{
+  margin-top: 20px;
+  width: 100%;
 }
 
 .error{

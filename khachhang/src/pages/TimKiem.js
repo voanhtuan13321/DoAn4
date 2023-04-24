@@ -4,9 +4,16 @@ import { Link } from "react-router-dom";
 
 const TimKiem = () => {
   let sach = JSON.parse(localStorage.getItem("timKiem"));
-  console.log(sach);
+  if (sach == "") {
+    return (
+      <div className="container-xxl py-5 mh400 text-center">
+        <h3>Không tìm thấy sản phẩm</h3>
+      </div>
+    );
+  }
+
   return (
-    <div className="container-xxl py-5">
+    <div className="container-xxl py-5 mh700">
       <div className="row">
         {sach.map((item, index) => (
           <div key={index} className="col-3 mb-3">
@@ -23,7 +30,7 @@ const TimKiem = () => {
                 />
                 <div className="card-body">
                   <h5 className="card-title">{item.ten}</h5>
-                  <p className="card-text ">Giá sách : {item.giaSach}</p>
+                  <p className="card-text ">Giá sách : {item.giaSach} VND</p>
                 </div>
               </div>
             </Link>

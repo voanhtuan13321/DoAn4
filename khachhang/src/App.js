@@ -12,6 +12,7 @@ import CapnhatThongTinKhachHang from "./pages/CapnhatThongTinKhachHang";
 import QuenMatKhau from "./pages/QuenMatKhau";
 import SanPhamChiTiet from "./pages/SanPhamChiTiet";
 import TimKiem from "./pages/TimKiem";
+import ThongTinCuaHang from "./pages/ThongTinCuaHang";
 function App() {
   return (
     <BrowserRouter>
@@ -29,6 +30,7 @@ function App() {
           <Route path="/dang_ki" element={<DangKi />} />
           <Route path="/gio_hang" element={<GioHang />} />
           <Route path="/tim_kiem" element={<TimKiem />} />
+          <Route path="/thong_tin_cua_hang" element={<ThongTinCuaHang />} />
           <Route path="/lich_su_mua_hang" element={<LichSuMuaHang />} />
           <Route
             path="/san_theo_danh_muc/:id"

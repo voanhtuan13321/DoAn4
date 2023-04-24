@@ -19,6 +19,7 @@ const SanPhamChiTiet = () => {
     axios
       .get(api.gioHang + "/" + idKhachHang)
       .then((res) => {
+        console.log(res.data.data);
         setData(res.data.data);
       })
       .catch((error) => {
@@ -30,6 +31,7 @@ const SanPhamChiTiet = () => {
     axios
       .get(api.sachId + params.id)
       .then((res) => {
+        console.log(res.data.data);
         setSanPham(res.data.data);
         console.log(res);
       })
@@ -175,7 +177,7 @@ const SanPhamChiTiet = () => {
   };
   return (
     <>
-      <div className="container-xxl py-4 ">
+      <div className="container-xxl py-4 mh700">
         <div className="row rounded border-light border-4 bg-light bg-gradient p-5">
           <div className="col-4 ">
             <img
@@ -197,7 +199,7 @@ const SanPhamChiTiet = () => {
                 </div>
                 <div className="d-flex justify-content-between py-2">
                   <span>
-                    Nhà xuất bản: <b>Kim đồng</b>
+                    Nhà xuất bản: <b>{sanPham.nhaXuatBan}</b>
                   </span>
                   <span>Ngày xuất bản: {sanPham.ngayXuatBan}</span>
                 </div>
@@ -215,8 +217,7 @@ const SanPhamChiTiet = () => {
               </div>
             </div>
             <p>{sanPham.moTa}</p>
-            <p>Thể loại : Ngôn tình</p>
-            <p>Ngày phát hành 20/22/2023</p>
+            <p>Ngày phát hành : {sanPham.ngayXuatBan}</p>
             <div>
               <button
                 onClick={() => themVaoGioHang(sanPham.idSach)}
@@ -230,20 +231,25 @@ const SanPhamChiTiet = () => {
             </div>
           </div>
         </div>
-
-        <div className="p-5">
-          <h3>Phần bình luận</h3>
-          <form action="#" onSubmit={handleSubmit}>
-            <p>
-              <textarea
-                className="comment p-3"
-                onChange={handleInput}
-                rows={7}
-                placeholder="Bình luận ...."
-              />
-            </p>
-            <button className="btn btn-primary">Bình luận</button>
-          </form>
+        <div className="row">
+          <div className="col-3"></div>
+          <div className="col-6">
+            <div className="p-5">
+              <h3>Phần bình luận</h3>
+              <form action="#" onSubmit={handleSubmit}>
+                <p>
+                  <textarea
+                    className="comment p-3"
+                    onChange={handleInput}
+                    rows={4}
+                    placeholder="Bình luận ...."
+                  />
+                </p>
+                <button className="btn btn-primary">Bình luận</button>
+              </form>
+            </div>
+          </div>
+          <div className="col-3"></div>
         </div>
 
         <div className="row rounded border-light border-4 bg-light bg-gradient p-3">

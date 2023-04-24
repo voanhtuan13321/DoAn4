@@ -31,21 +31,21 @@ const LichSuMuaHang = () => {
             <h5 className="price">{item["sach"].ten}</h5>
           </div>
           <div className="cart-col-2">
-            <h5 className="price"> {item["sach"].giaSach}$</h5>
+            <h5 className="price"> {item["sach"].giaSach} VNĐ</h5>
           </div>
           <div className="cart-col-3 d-flex align-items-center gap-15">
             <div>{item.soLuong}</div>
             <div>{/* <AiFillDelete className="text-danger " /> */}</div>
           </div>
           <div className="cart-col-4">
-            <h5 className="price">$ 100</h5>
+            <h5 className="price">{item["sach"].giaSach * item.soLuong} VNĐ</h5>
           </div>
         </div>
       );
     });
   };
   return (
-    <div className="container-xxl">
+    <div className="container-xxl mh700">
       <div className="row">
         <div className="pt-5">
           <h3>Lịch sử mua hàng</h3>

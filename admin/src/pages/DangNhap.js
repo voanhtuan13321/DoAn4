@@ -4,8 +4,11 @@ import api from "../components/urlApi";
 import { useNavigate } from "react-router-dom";
 
 const DangNhap = () => {
+  // Sóa localAdmin để đăng xuất
+  localStorage.removeItem("dangNhapAdmin");
+  ////////////////////////////
+
   const navigate = useNavigate();
-  // const [error, setError] = useState({});
 
   const [input, setInput] = useState({
     taiKhoan: "",
@@ -50,7 +53,8 @@ const DangNhap = () => {
         .post(api.login, data)
         .then((res) => {
           if (res.data.status === "ok") {
-            navigate("/admin/thong_ke");
+            localStorage.setItem("admin", JSON.stringify("dangNhapAdmin"));
+            navigate("/admin/don_hang");
           } else {
             check = 2;
             setErrmatKhau("Tài khoản hoặc mật khẩu không hợp lệ");

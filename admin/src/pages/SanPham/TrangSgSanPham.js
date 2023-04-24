@@ -312,7 +312,7 @@ const TrangSgSanPham = () => {
                   />
                   <span className="error">{errGiaSach}</span>
                 </div>
-                <div className="input_container">
+                {/* <div className="input_container">
                   <label className="input_label">Mô tả</label>
                   <textarea
                     placeholder="Mô tả"
@@ -322,7 +322,7 @@ const TrangSgSanPham = () => {
                     onChange={handleInput}
                   />
                   <span className="error">{errMoTa}</span>
-                </div>
+                </div> */}
               </div>
               <div className="p-3">
                 <div className="input_container">
@@ -368,6 +368,18 @@ const TrangSgSanPham = () => {
                   </select>
                 </div>
               </div>
+            </div>
+            <div className="input_container mb-5">
+              <label className="input_label">Mô tả</label>
+              <textarea
+                placeholder="Mô tả"
+                name="moTa"
+                type="text"
+                rows={5}
+                // className="input_field"
+                onChange={handleInput}
+              />
+              <span className="error">{errMoTa}</span>
             </div>
             <button title="Sign In" type="submit" className="sign-in_btn">
               <span>Thêm</span>

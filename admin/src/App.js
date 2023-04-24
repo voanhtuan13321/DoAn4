@@ -18,6 +18,7 @@ import DanhSachDonHangMoi from "../src/pages/DanhSachDonHangMoi/TrangDonHang";
 import SuaThongTinCuaHang from "../src/pages/CuaHang/SuaThongTinCuaHang";
 import TrangBinhLuan from "../src/pages/BinhLuan/TrangBinhLuan";
 import BinhLuanCuaSanPham from "../src/pages/BinhLuan/BinhLuanCuaSanPham";
+import Home from "./components/Home";
 
 function App() {
   return (

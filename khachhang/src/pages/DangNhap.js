@@ -129,7 +129,7 @@ const DangNhap = () => {
 
   return (
     <>
-      <div className="d-flex justify-content-center py-5">
+      <div className="d-flex justify-content-center py-5 mh700">
         <form className="bsd form p-5" onSubmit={handlerSubmit}>
           <p className="form-title">Đăng nhập</p>
           <label>Tài khoản</label>
