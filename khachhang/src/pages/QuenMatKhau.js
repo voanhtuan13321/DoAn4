@@ -56,8 +56,8 @@ const QuenMatKhau = () => {
         .then((res) => {
           console.log(res);
           if (res.data.status === "ok") {
+            alert("Đổi mật khẩu thành công");
             navigate("/dang_nhap");
-
             localStorage.setItem();
           } else {
             navigate("");
@@ -69,9 +69,9 @@ const QuenMatKhau = () => {
   };
 
   return (
-    <div className="d-flex justify-content-center py-5 mh700">
+    <div className="d-flex justify-content-center py-5">
       <form className="form p-5" onSubmit={handlerSubmit}>
-        <p className="form-title">Quên tài khoản</p>
+        <p className="form-title">Đổi mật khẩu</p>
 
         <label>Mật khẩu mới</label>
         <div className="input-container">

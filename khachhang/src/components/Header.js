@@ -91,10 +91,16 @@ const Header = (props) => {
   }
 
   const timKiem = () => {
-    axios.get(api.timKiem, { params: { search: timKiemSach } }).then((res) => {
-      localStorage.setItem("timKiem", JSON.stringify(res.data.data));
-      window.location.href = "http://localhost:3000/tim_kiem";
-    });
+    if (timKiemSach == "") {
+      alert("Bạn chưa nhập");
+    } else {
+      axios
+        .get(api.timKiem, { params: { search: timKiemSach } })
+        .then((res) => {
+          localStorage.setItem("timKiem", JSON.stringify(res.data.data));
+          window.location.href = `http://${api.ip}:3000/tim_kiem`;
+        });
+    }
   };
 
   return (

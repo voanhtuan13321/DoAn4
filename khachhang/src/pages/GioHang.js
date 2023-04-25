@@ -9,8 +9,7 @@ const GioHang = () => {
   const [data, setData] = useState([]);
   const [getNameImage, setNameImage] = useState([]);
   const [a, setA] = useState("");
-  const [arrayGioHang, setAyGioHang] = useState([]);
-  const [loaiThanhToan, setLoaiThanhToan] = useState("Thanh toán online");
+
   let navigator = useNavigate();
 
   console.log(getNameImage);
@@ -19,6 +18,7 @@ const GioHang = () => {
     axios
       .get(api.gioHang + "/" + idKhachHang)
       .then((res) => {
+        console.log(res.data.data);
         setData(res.data.data);
       })
       .catch((error) => {
@@ -52,7 +52,7 @@ const GioHang = () => {
         localStorage.removeItem("gioHang");
         // navigator("/gio_hang");
 
-        window.location.href = "http://localhost:3000/gio_hang";
+        window.location.href = `http://${api.ip}:3000/gio_hang`;
       });
     }
   };
@@ -89,35 +89,36 @@ const GioHang = () => {
 
   const themSoLuongSanPham = (item) => {
     // kiểm tra số lượng sách so với số lượng tăng
-    const [soLuong, setSoLuong] = useState("");
+    // const [soLuong, setSoLuong] = useState("");
 
+    // axios
+    //   .get(api.sachId + item.idSach)
+    //   .then((res) => {
+    //     console.log(res.data.data);
+    //     setSoLuong(res.data.data);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+
+    // if (item.soLuong > soLuong) {
+    //   alert("Hết sản phẩm");
+    // } else {
+    let idKhachHang = item["khachHang"].idKhachHang;
+    let idSach = item["sach"].idSach;
+    const data = {
+      id: item.id,
+      idKhachHang,
+      idSach,
+    };
     axios
-      .get(api.sachId + item.idSach)
+      .post(api.gioHang, data)
       .then((res) => {
-        setSach(res.data.data.soLuong);
+        setA(!a);
+        console.log(res.data.data);
       })
-      .catch((error) => {
-        console.log(error);
-      });
-
-    if (item.soLuong > soLuong) {
-      alert("Hết sản phẩm");
-    } else {
-      let idKhachHang = item["khachHang"].idKhachHang;
-      let idSach = item["sach"].idSach;
-      const data = {
-        id: item.id,
-        idKhachHang,
-        idSach,
-      };
-      axios
-        .post(api.gioHang, data)
-        .then((res) => {
-          setA(!a);
-          console.log(res.data.data);
-        })
-        .catch();
-    }
+      .catch();
+    // }
   };
 
   const giamSoLuongSanPham = (item) => {
@@ -163,15 +164,6 @@ const GioHang = () => {
   };
 
   const total = sum(data);
-  // console.log(total);
-
-  // const tongTien = () => {
-  //   axios.get(api.gioHangTongTien, getNameImage).then((res) => {
-  //     console.log(res);
-  //     setA(!a);
-  //   });
-  // };
-  console.log(data);
 
   const renderGioHang = () => {
     return data.map((item, index) => {
@@ -238,7 +230,7 @@ const GioHang = () => {
                 onClick={() => {
                   giamSoLuongSanPham(item);
                 }}
-                className="btn"
+                className={item.soLuong == 1 ? "btn d-none" : "btn"}
               >
                 -
               </button>
@@ -247,7 +239,7 @@ const GioHang = () => {
           </div>
           <div className="cart-col-4">
             <h5 className="price">
-              {Number(item["sach"].giaSach) * Number(item.soLuong)}$
+              {Number(item["sach"].giaSach) * Number(item.soLuong)} VND
             </h5>
           </div>
           <button
@@ -296,7 +288,7 @@ const GioHang = () => {
         amount: sum(data),
         vnp_OrderInfo: `${khachHang} mua hàng`,
         vnp_ResponseCode: "0",
-        vnp_ReturnUrl: "http://localhost:3000/gio_hang",
+        vnp_ReturnUrl: `http://${api.ip}:3000/gio_hang`,
       };
       axios
         .post(api.thanhToan, datThanhToan)

@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import api from "../components/urlApi";
 import { Link, useNavigate } from "react-router-dom";
-import { Button, Form, Input } from "antd";
-import QuenMatKhau from "./QuenMatKhau";
+// import { Button, Form, Input } from "antd";
+// import QuenMatKhau from "./QuenMatKhau";
 
 const DangNhap = () => {
   const navigate = useNavigate();
@@ -12,6 +12,7 @@ const DangNhap = () => {
     taiKhoan: "",
     matKhau: "",
   });
+  const [nhoDangNhap, setNhoDangNhap] = useState("");
   let [errTaiKhoan, setTaiKhoan] = useState("");
   let [errMatKhau, setMatKhau] = useState("");
 
@@ -20,6 +21,11 @@ const DangNhap = () => {
     let nameValue = e.target.value;
     setInput((state) => ({ ...state, [nameKey]: nameValue }));
   }
+
+  const ghiNhoDangNhap = () => {
+    setNhoDangNhap(input);
+    console.log(input);
+  };
 
   const handlerSubmit = (e) => {
     e.preventDefault();
@@ -45,26 +51,45 @@ const DangNhap = () => {
         taiKhoan: input.taiKhoan,
         matKhau: input.matKhau,
       };
+      console.log(data);
 
-      axios
-        .post(api.checkLogin, data)
-        .then((res) => {
-          console.log(res);
-          if (res.data.status === "ok") {
-            localStorage.setItem(
-              "idKhachHang",
-              JSON.stringify(res.data.data.idKhachHang)
-            );
-            localStorage.setItem("khachHang", JSON.stringify(res.data.data));
-            navigate("/");
-          } else {
-            // check = 2;
-            setMatKhau("Tài khoản hoặc mật khẩu không hợp lệ");
-            navigate("");
-          }
-          console.log(res);
-        })
-        .catch((errors) => console.log(errors));
+      // check xem tai khoan co ton tai chua
+      axios.post(api.checkTaiKhoan, data).then((res) => {
+        console.log(res);
+        if (res.data.status === "fail") {
+          setTaiKhoan("Tài khoản không hợp lệ");
+        } else {
+          // neu ton tai thi check dang nhap
+          //check logging
+          axios
+            .post(api.checkLogin, data)
+            .then((res) => {
+              console.log(res);
+              if (res.data.status === "ok") {
+                localStorage.setItem(
+                  "idKhachHang",
+                  JSON.stringify(res.data.data.idKhachHang)
+                );
+                localStorage.setItem(
+                  "khachHang",
+                  JSON.stringify(res.data.data)
+                );
+                navigate("/");
+              }
+              // else if{
+
+              // }
+              else {
+                // check = 2;
+                // setTaiKhoan("Tài khoản không hợp lệ");
+                setMatKhau("Mật không hợp lệ");
+                navigate("");
+              }
+              console.log(res);
+            })
+            .catch((errors) => console.log(errors));
+        }
+      });
     }
   };
 
@@ -99,7 +124,7 @@ const DangNhap = () => {
       .then((res) => {
         console.log(res);
         if (res.data.status === "ok") {
-          sendMail("http://localhost:3000/quen_mat_khau", taiKhoan);
+          sendMail(`http://${api.ip}:3000/quen_mat_khau`, taiKhoan);
         } else {
           alert("sai tai khoan");
         }
@@ -108,28 +133,9 @@ const DangNhap = () => {
       .catch((errors) => console.log(errors));
   };
 
-  // const quenMatKhau = () => {
-  //   const data = {
-  //     taiKhoan: input.taiKhoan,
-  //     matKhau: input.matKhau,
-  //   };
-
-  //   axios
-  //     .post(api.khachHangQuenTaiKhoan, data)
-  //     .then((res) => {
-  //       console.log(res);
-  //       if (res.data.status === "ok") {
-  //       } else {
-  //         navigate("");
-  //       }
-  //       console.log(res);
-  //     })
-  //     .catch((errors) => console.log(errors));
-  // };
-
   return (
     <>
-      <div className="d-flex justify-content-center py-5 mh700">
+      <div className="d-flex justify-content-center py-5">
         <form className="bsd form p-5" onSubmit={handlerSubmit}>
           <p className="form-title">Đăng nhập</p>
           <label>Tài khoản</label>
@@ -152,97 +158,21 @@ const DangNhap = () => {
             />
             <p className="error">{errMatKhau}</p>
           </div>
-          <button type="submit" className="submit">
-            Đăng nhập
-          </button>
+          <div className="input-container">
+            <button type="submit" className="submit">
+              Đăng nhập
+            </button>
+          </div>
+
           <p className="signup-link">
+            <input onChange={ghiNhoDangNhap} type="checkbox" />
             <Link to="/dang_ki">Đăng kí</Link>
-            <div className="cusoclick" onClick={() => checkTaiKhoan()}>
-              {" "}
-              ?Quên mật khấu
+            <div onClick={() => checkTaiKhoan()}>
+              <span className="cusoclick">Quên mật khấu?</span>
             </div>
           </p>
         </form>
       </div>
-
-      {/* <div className="d-flex justify-content-center py-5">
-        <Form
-          className="form bsd "
-          name="basic"
-          labelCol={{
-            span: 8,
-          }}
-          wrapperCol={{
-            span: 16,
-          }}
-          style={{
-            maxWidth: 600,
-          }}
-          initialValues={{
-            remember: true,
-          }}
-          onFinish={onFinish}
-          onFinishQuenMatKhau={onFinishQuenMatKhau}
-          // onFinishFailed={onFinishFailed}
-          autoComplete="off"
-        >
-          <div className="text-center mb-5">
-            <h3>Đăng nhập</h3>
-          </div>
-          <Form.Item
-            label="Tài khoản"
-            name="taiKhoan"
-            rules={[
-              {
-                required: true,
-                message: "Vui lòng nhập vào tài khoản",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item
-            label="Mật khẩu"
-            name="matKhau"
-            rules={[
-              {
-                required: true,
-                message: "Vui lòng nhập vào mật khẩu",
-              },
-            ]}
-          >
-            <Input.Password />
-          </Form.Item>
-          <Form.Item
-            wrapperCol={{
-              offset: 8,
-              span: 16,
-            }}
-          >
-            <Button type="primary" htmlType="submit">
-              Đăng nhập
-            </Button>
-            <button
-              onClick={() => onFinishQuenMatKhau()}
-              type="primary"
-              htmlType="submit"
-            >
-              Quên mật khẩu
-            </button>
-          </Form.Item>
-          <Form.Item
-            wrapperCol={{
-              offset: 8,
-              span: 16,
-            }}
-          >
-            <Link to="/dang_ki" type="primary" htmlType="submit">
-              Đăng kí
-            </Link>
-          </Form.Item>
-        </Form>
-      </div> */}
     </>
   );
 };

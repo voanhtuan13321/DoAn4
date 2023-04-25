@@ -77,7 +77,7 @@ const SanPhamChiTiet = () => {
             console.log(error);
           });
       } else {
-        alert("Bạn chưa bình luận");
+        alert("Vui lòng nhập vào bình luận");
       }
     }
   };

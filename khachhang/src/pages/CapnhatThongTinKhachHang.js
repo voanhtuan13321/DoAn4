@@ -111,7 +111,7 @@ const CapnhatThongTinKhachHang = () => {
   };
 
   return (
-    <div className="d-flex justify-content-center p-5 mh700">
+    <div className="d-flex justify-content-center p-5">
       <form className="form p-5" onSubmit={handlerSubmit}>
         <p className="form-title">Cập nhật tài khoản</p>
         <div className="input-container">
@@ -164,7 +164,9 @@ const CapnhatThongTinKhachHang = () => {
           Cập nhật tài khoản{" "}
         </button>
         <p className="signup-link">
-          <Link to="/quen_mat_khau">Đổi mật khẩu</Link>
+          <Link to={"/quen_mat_khau?tk=" + taiKhoan.taiKhoan}>
+            Đổi mật khẩu
+          </Link>
         </p>
       </form>
     </div>

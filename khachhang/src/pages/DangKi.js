@@ -107,17 +107,23 @@ const DangKi = () => {
       axios
         .post(api.khachHang, data)
         .then((res) => {
-          if (res.data.status === "successful") {
-            console.log(res);
-            navigate("/dang_nhap");
-          } else alert("Trùng tài khoản");
+          console.log(res.data.data);
+
+          // if (res.data.status == "successful") {
+          //   console.log(res);
+
+          if (res.data.status == "unsuccessful") {
+            alert("Tài khoản đả bị trùng");
+            return;
+          }
+          navigate("/dang_nhap");
         })
         .catch((errors) => console.log(errors));
     }
   };
 
   return (
-    <div className="d-flex justify-content-center p-5 mh700">
+    <div className="d-flex justify-content-center p-5">
       <form className="bsd form  p-5" onSubmit={handlerSubmit}>
         <p className="form-title">Đăng kí</p>
         <div className="input-container">
@@ -195,130 +201,6 @@ const DangKi = () => {
         </p>
       </form>
     </div>
-    // <div className="d-flex justify-content-center py-5">
-    //   <Form
-    //     className="form bsd "
-    //     name="basic"
-    //     labelCol={{
-    //       span: 8,
-    //     }}
-    //     wrapperCol={{
-    //       span: 16,
-    //     }}
-    //     style={{
-    //       maxWidth: 600,
-    //     }}
-    //     initialValues={{
-    //       remember: true,
-    //     }}
-    //     onFinish={onFinish}
-    //     // onFinishFailed={onFinishFailed}
-    //     autoComplete="off"
-    //   >
-    //     <div className="text-center mb-5">
-    //       <h3>Đăng kí</h3>
-    //     </div>
-    //     <Form.Item
-    //       label="Tên"
-    //       name="ten"
-    //       rules={[
-    //         {
-    //           required: true,
-    //           message: "Vui lòng nhập vào tên",
-    //         },
-    //       ]}
-    //     >
-    //       <Input />
-    //     </Form.Item>
-
-    //     <Form.Item
-    //       label="Email"
-    //       name="email"
-    //       rules={[
-    //         {
-    //           required: true,
-    //           message: "Vui lòng nhập vào email",
-    //         },
-    //       ]}
-    //     >
-    //       <Input />
-    //     </Form.Item>
-
-    //     <Form.Item
-    //       label="Số điện thoại"
-    //       name="soDienThoai"
-    //       rules={[
-    //         {
-    //           required: true,
-    //           message: "Vui lòng nhập vào số điện thoại",
-    //         },
-    //       ]}
-    //     >
-    //       <Input />
-    //     </Form.Item>
-
-    //     <Form.Item
-    //       label="Địa chỉ"
-    //       name="diaChi"
-    //       rules={[
-    //         {
-    //           required: true,
-    //           message: "Vui lòng nhập vào địa chỉ",
-    //         },
-    //       ]}
-    //     >
-    //       <Input />
-    //     </Form.Item>
-
-    //     <Form.Item
-    //       label="Tài khoản"
-    //       name="taiKhoan"
-    //       rules={[
-    //         {
-    //           required: true,
-    //           message: "Vui lòng nhập vào tài khoản",
-    //         },
-    //       ]}
-    //     >
-    //       <Input />
-    //     </Form.Item>
-    //     <Form.Item
-    //       label="Mật khẩu"
-    //       name="matKhau"
-    //       rules={[
-    //         {
-    //           required: true,
-    //           message: "Vui lòng nhập vào mật khẩu ",
-    //         },
-    //       ]}
-    //     >
-    //       <Input />
-    //     </Form.Item>
-    //     <Form.Item
-    //       wrapperCol={{
-    //         offset: 8,
-    //         span: 16,
-    //       }}
-    //     >
-    //       <Button type="primary" htmlType="submit">
-    //         Đăng kí
-    //       </Button>
-    //     </Form.Item>
-    //     <Form.Item
-    //       wrapperCol={{
-    //         offset: 8,
-    //         span: 16,
-    //       }}
-    //     >
-    //       <Link to="/dang_nhap" type="primary" htmlType="submit">
-    //         Đăng nhập
-    //       </Link>
-    //     </Form.Item>
-    //     {/* <span className="signup-link">
-    //       <Link to="/dang_nhap">Đăng nhập</Link>
-    //     </span> */}
-    //   </Form>
-    // </div>
   );
 };
 
