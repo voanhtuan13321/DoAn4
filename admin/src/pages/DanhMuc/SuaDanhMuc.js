@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import api from "../../components/urlApi";
-
+import { useNavigate } from "react-router-dom";
 const SuaDanhMuc = () => {
+  let navigate = useNavigate();
   const item = JSON.parse(localStorage.getItem("danhmuc"));
   const [input, setInput] = useState({
     idDanhMuc: item.idDanhMuc,
@@ -48,7 +49,8 @@ const SuaDanhMuc = () => {
       axios
         .post(api.getDanhMuc, data)
         .then((res) => {
-          console.log(res);
+          alert("Sửa thành công");
+          navigate("/admin/trang_danh_muc");
           setA(!a);
         })
         .catch((errors) => console.log(errors));

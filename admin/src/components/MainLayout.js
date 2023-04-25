@@ -26,11 +26,11 @@ const MainLayout = () => {
   const navigate = useNavigate();
 
   // Kiểm tra đăng nhập hay chưa
-  let dangNhap = JSON.parse(localStorage.getItem("dangNhapAdmin"));
-  if (!dangNhap) {
-    alert("Vui lòng đăng nhập");
-    navigate("/");
-  }
+  // let dangNhap = JSON.parse(localStorage.getItem("dangNhapAdmin"));
+  // if (!dangNhap) {
+  //   alert("Vui lòng đăng nhập");
+  //   navigate("/");
+  // }
   //////////////////////////////////
   return (
     <Layout /* onContextMenu={(e) => e.preventDefault()} */>
@@ -82,11 +82,6 @@ const MainLayout = () => {
               key: "/admin/binh_luan",
               icon: <AiOutlineComment className="fs-4" />,
               label: "Bình luận",
-            },
-            {
-              key: "/admin/thong_ke",
-              icon: <AiOutlineDashboard className="fs-4" />,
-              label: "Thống kê",
             },
             {
               key: "/admin/thong_ke",

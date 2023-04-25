@@ -12,11 +12,11 @@ const TrangSgSanPham = () => {
   const [currentPage, setCurrentPage] = useState(0);
 
   // Kiểm tra đăng nhập
-  let admin = JSON.parse(localStorage.getItem("admin"));
-  if (!admin) {
-    alert("Bạn phải đăng nhập");
-    navigation("/");
-  }
+  // let admin = JSON.parse(localStorage.getItem("admin"));
+  // if (!admin) {
+  //   alert("Bạn phải đăng nhập");
+  //   navigation("/");
+  // }
 
   // tạo để nhận các giá trị
   const [sanPham, setSapPham] = useState({

@@ -7,11 +7,11 @@ const TrangCuaHang = () => {
   let navigation = useNavigate();
 
   // Kiểm tra đăng nhập hay chưa
-  let dangNhap = JSON.parse(localStorage.getItem("dangNhapAdmin"));
-  if (!dangNhap) {
-    alert("Vui lòng đăng nhập");
-    navigation("/");
-  }
+  // let dangNhap = JSON.parse(localStorage.getItem("dangNhapAdmin"));
+  // if (!dangNhap) {
+  //   alert("Vui lòng đăng nhập");
+  //   navigation("/");
+  // }
   //////////////////////////////////
   const [cuaHang, setCuaHang] = useState([]);
   const [a, setA] = useState(false);

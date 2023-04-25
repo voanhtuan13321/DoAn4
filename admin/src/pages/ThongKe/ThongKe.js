@@ -10,11 +10,11 @@ import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 const ThongKe = () => {
   const ITEMS_PER_PAGE = 5;
   let navigation = useNavigate();
-  let admin = JSON.parse(localStorage.getItem("admin"));
-  if (!admin) {
-    alert("Bạn phải đăng nhập");
-    navigation("/");
-  }
+  // let admin = JSON.parse(localStorage.getItem("admin"));
+  // if (!admin) {
+  //   alert("Bạn phải đăng nhập");
+  //   navigation("/");
+  // }
   // Mặc định lấy tháng 1 ra đầu tiên
   const [thang, setThang] = useState("1");
   const [thongKe, setThongKe] = useState([]);

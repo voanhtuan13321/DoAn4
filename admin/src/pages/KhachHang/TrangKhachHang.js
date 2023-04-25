@@ -5,11 +5,11 @@ import { useNavigate, Link } from "react-router-dom";
 
 const TrangKhachHang = () => {
   let navigation = useNavigate();
-  let admin = JSON.parse(localStorage.getItem("admin"));
-  if (!admin) {
-    alert("Bạn phải đăng nhập");
-    navigation("/");
-  }
+  // let admin = JSON.parse(localStorage.getItem("admin"));
+  // if (!admin) {
+  //   alert("Bạn phải đăng nhập");
+  //   navigation("/");
+  // }
 
   const [khachHang, setKhachHang] = useState([]);
   const [a, setA] = useState(true);
@@ -32,6 +32,7 @@ const TrangKhachHang = () => {
       axios
         .delete(api.khachHangId + getId)
         .then((res) => {
+          alert("Xóa thành công");
           setA(!a);
         })
         .catch((error) => {

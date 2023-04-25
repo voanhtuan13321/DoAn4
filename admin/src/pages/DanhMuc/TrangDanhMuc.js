@@ -50,6 +50,7 @@ const TrangDanhMuc = () => {
     axios
       .delete(api.getDanhMucId + getId)
       .then((res) => {
+        alert("Xóa thành công");
         setA(!a);
       })
       .catch((error) => {
@@ -178,7 +179,7 @@ const TrangDanhMuc = () => {
             }}
           >
             <Button type="primary" htmlType="submit">
-              Thêm sự kiện
+              Thêm danh mục
             </Button>
           </Form.Item>
         </Form>

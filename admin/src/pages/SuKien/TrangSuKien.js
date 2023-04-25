@@ -7,11 +7,11 @@ import { Button, Form, Input } from "antd";
 
 const TrangSuKien = () => {
   let navigation = useNavigate();
-  let admin = JSON.parse(localStorage.getItem("admin"));
-  if (!admin) {
-    alert("Bạn phải đăng nhập");
-    navigation("/");
-  }
+  // let admin = JSON.parse(localStorage.getItem("admin"));
+  // if (!admin) {
+  //   alert("Bạn phải đăng nhập");
+  //   navigation("/");
+  // }
   const [suKien, setSuKien] = useState([]);
   const [a, setA] = useState(true);
 

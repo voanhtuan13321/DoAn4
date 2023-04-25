@@ -4,12 +4,12 @@ import api from "../components/urlApi";
 import { useNavigate } from "react-router-dom";
 
 const DangNhap = () => {
-  // Sóa localAdmin để đăng xuất
-  localStorage.removeItem("dangNhapAdmin");
-  ////////////////////////////
-
   const navigate = useNavigate();
-
+  // let admin = JSON.parse(localStorage.getItem("admin"));
+  // if (!admin) {
+  //   alert("Bạn phải đăng nhập");
+  //   navigate("/");
+  // }
   const [input, setInput] = useState({
     taiKhoan: "",
     matKhau: "",
@@ -146,6 +146,10 @@ const DangNhap = () => {
   //     .catch((errors) => console.log(errors));
   // };
 
+  // Sóa localAdmin để đăng xuất
+  // localStorage.removeItem("dangNhapAdmin");
+  ////////////////////////////
+
   return (
     <div className="d-flex justify-content-center py-5">
       <form className="form" onSubmit={handlerSubmit}>
@@ -171,9 +175,9 @@ const DangNhap = () => {
         <button type="submit" className="submit">
           Đăng nhập
         </button>
-        <p className="signup-link">
-          <button onClick={checkTaiKhoan}>?Quên mật khấu</button>
-        </p>
+        {/* <p className="signup-link">
+          <button onClick={checkTaiKhoan}>Quên mật khấu?</button>
+        </p> */}
       </form>
     </div>
   );

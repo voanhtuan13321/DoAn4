@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import api from "../../components/urlApi";
-
+import { useNavigate } from "react-router-dom";
 const TrangDonHang = () => {
+  let navigation = useNavigate();
+  // let admin = JSON.parse(localStorage.getItem("admin"));
+  // if (!admin) {
+  //   alert("Bạn phải đăng nhập");
+  //   navigation("/");
+  // }
   const [data, setData] = useState([]);
   // Gọi các đơn hàng trong giỏ hàng
   useEffect(() => {
@@ -16,6 +22,7 @@ const TrangDonHang = () => {
   }, []);
 
   const [lichSu, setLichSu] = useState([]);
+
   useEffect(() => {
     axios
       .get(api.lichSuMua)
@@ -47,7 +54,9 @@ const TrangDonHang = () => {
       //////////////////////////
       // navigator("/gio_hang");
 
-      window.location.href = "http://localhost:2000/admin/don_hang";
+      alert("Đơn hàng đả được xác nhận");
+
+      window.location.href = `http://${api.ip}:2000/admin/don_hang`;
     });
   };
 
@@ -80,7 +89,7 @@ const TrangDonHang = () => {
   };
 
   const lichSuMuaHang = () => {
-    return data
+    return lichSu
       .filter((item) => item.trangThai !== "none")
       .map((item, index) => {
         return (

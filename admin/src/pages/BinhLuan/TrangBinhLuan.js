@@ -8,11 +8,11 @@ const TrangBinhLuan = () => {
   let navigate = useNavigate();
 
   // Kiểm tra đăng nhập hay chưa
-  let dangNhap = JSON.parse(localStorage.getItem("dangNhapAdmin"));
-  if (!dangNhap) {
-    alert("Vui lòng đăng nhập");
-    navigate("/");
-  }
+  // let dangNhap = JSON.parse(localStorage.getItem("dangNhapAdmin"));
+  // if (!dangNhap) {
+  //   alert("Vui lòng đăng nhập");
+  //   navigate("/");
+  // }
   //////////////////////////////////
   const [binhLuan, setBinhLuan] = useState([]);
   const [a, setA] = useState(true);
