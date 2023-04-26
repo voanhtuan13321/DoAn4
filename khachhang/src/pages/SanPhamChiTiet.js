@@ -96,9 +96,9 @@ const SanPhamChiTiet = () => {
         <div key={index}>
           <div className="card">
             <div className="card-body">
-              <h5 className="card-title">{item["khachHang"].ten}</h5>
+              <p className="card-title">{item["khachHang"].ten}</p>
               <div className="d-flex justify-content-between">
-                <div>
+                <div className="comment">
                   <p className="card-text">{item.noiDung}</p>
                   <p className="card-text">{thoiGian}</p>
                 </div>
@@ -134,7 +134,12 @@ const SanPhamChiTiet = () => {
   };
   const suaBinhLuan = () => {};
 
-  const themVaoGioHang = (idSach) => {
+  const themVaoGioHang = (Sach) => {
+    let idSach = Sach.idSach;
+    if (Sach.soLuong < 1) {
+      alert("Sản phẩm đả hết hàng");
+      return;
+    }
     let idKhachHang = JSON.parse(localStorage.getItem("idKhachHang"));
     if (!idKhachHang) {
       alert("Bạn chưa đăng nhập");
@@ -220,7 +225,7 @@ const SanPhamChiTiet = () => {
             <p>Ngày phát hành : {sanPham.ngayXuatBan}</p>
             <div>
               <button
-                onClick={() => themVaoGioHang(sanPham.idSach)}
+                onClick={() => themVaoGioHang(sanPham)}
                 className="button"
               >
                 <span>

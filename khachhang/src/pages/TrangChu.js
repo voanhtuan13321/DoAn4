@@ -93,7 +93,7 @@ const TrangChu = () => {
                           alt="..."
                         />
                         <div className="card-body">
-                          <h5 className="card-title">{item.ten}</h5>
+                          <p className="card-title name">{item.ten}</p>
                           <p className="card-text ">
                             Giá sách : {item.giaSach} VND
                           </p>
