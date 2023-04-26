@@ -35,7 +35,7 @@ const DangKi = () => {
 
   // Hàm kiểu tra email nhập vào
   function kiemTraEmail(value) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
     return emailRegex.test(value);
   }
 
@@ -75,6 +75,7 @@ const DangKi = () => {
       if (!kiemTraEmail(input.email)) {
         check = 2;
         setEmail("Email không không hợp lệ");
+        return;
       } else {
         check = 1;
         setEmail("");
@@ -95,7 +96,7 @@ const DangKi = () => {
       setMatKhau("");
     }
 
-    if (check == 1) {
+    if (check === 1) {
       const data = {
         ten: input.ten,
         email: input.email,
@@ -104,19 +105,22 @@ const DangKi = () => {
         taiKhoan: input.taiKhoan,
         matKhau: input.matKhau,
       };
+
       axios
         .post(api.khachHang, data)
         .then((res) => {
-          console.log(res.data.data);
+          console.log(res);
 
           // if (res.data.status == "successful") {
           //   console.log(res);
 
           if (res.data.status == "unsuccessful") {
-            alert("Tài khoản đả bị trùng");
+            setTaiKhoan("Tài khoản đả bị trùng");
             return;
+          } else {
+            alert("Dang ki thanh cong");
+            navigate("/dang_nhap");
           }
-          navigate("/dang_nhap");
         })
         .catch((errors) => console.log(errors));
     }

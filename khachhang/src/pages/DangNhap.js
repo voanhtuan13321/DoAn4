@@ -6,6 +6,8 @@ import { Link, useNavigate } from "react-router-dom";
 // import QuenMatKhau from "./QuenMatKhau";
 
 const DangNhap = () => {
+  const load = document.querySelector("#load");
+
   const navigate = useNavigate();
 
   const [input, setInput] = useState({
@@ -107,30 +109,45 @@ const DangNhap = () => {
           alert("gui mail that bai");
           // navigate('')
         }
+        load.classList.add("d-none");
         console.log(res);
       })
       .catch((errors) => console.log(errors));
   };
 
   const checkTaiKhoan = () => {
-    let taiKhoan = input.taiKhoan;
+    load.classList.remove("d-none");
 
-    const data = {
-      taiKhoan: taiKhoan,
-    };
+    let check = 1;
+    if (input.taiKhoan == "") {
+      check = 2;
+      setTaiKhoan("Vui lòng nhập vào tài khoản để lấy lại mật khẩu");
+    } else {
+      check = 1;
+      setTaiKhoan("");
+    }
 
-    axios
-      .post(api.khachHangQuenTaiKhoan, data)
-      .then((res) => {
-        console.log(res);
-        if (res.data.status === "ok") {
-          sendMail(`http://${api.ip}:3000/quen_mat_khau`, taiKhoan);
-        } else {
-          alert("sai tai khoan");
-        }
-        console.log(res);
-      })
-      .catch((errors) => console.log(errors));
+    if (check == 1) {
+      let taiKhoan = input.taiKhoan;
+
+      const data = {
+        taiKhoan: taiKhoan,
+      };
+
+      axios
+        .post(api.khachHangQuenTaiKhoan, data)
+        .then((res) => {
+          // console.log(res);
+          if (res.data.status === "ok") {
+            sendMail(`http://${api.ip}:3000/quen_mat_khau`, taiKhoan);
+            setMatKhau("");
+          } else {
+            setTaiKhoan("Tài khoản không hợp lệ");
+          }
+          console.log(res);
+        })
+        .catch((errors) => console.log(errors));
+    }
   };
 
   return (
