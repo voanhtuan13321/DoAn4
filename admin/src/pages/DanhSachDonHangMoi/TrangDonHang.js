@@ -29,6 +29,8 @@ const TrangDonHang = () => {
   const [pageCount, setPageCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
 
+  console.log(lichSu);
+
   useEffect(() => {
     axios
       .get(api.lichSuMua)
@@ -82,7 +84,13 @@ const TrangDonHang = () => {
             <td scope="col">
               {item.trangThai == "online"
                 ? "Đả thanh toán"
-                : item["sach"].giaSach * item.soLuong + " VNĐ"}
+                : (item["sach"].giaSach * item.soLuong).toLocaleString(
+                    "vi-VN",
+                    {
+                      style: "currency",
+                      currency: "VND",
+                    }
+                  )}
             </td>
             <td scope="col">{item.trangThai}</td>
             <td scope="col">
@@ -107,6 +115,13 @@ const TrangDonHang = () => {
             <td scope="col">{item["sach"].ten}</td>
             <td scope="col">{item.soLuong}</td>
             <td scope="col">{item.ngayMua}</td>
+            <td scope="col">{item.trangThai}</td>
+            <td scope="col">
+              {(item.soLuong * item["sach"].giaSach).toLocaleString("vi-VN", {
+                style: "currency",
+                currency: "VND",
+              })}
+            </td>
           </tr>
         );
       });
@@ -149,6 +164,8 @@ const TrangDonHang = () => {
               <th scope="col">Tên sách</th>
               <th scope="col">Số lượng</th>
               <th scope="col">Thời gian</th>
+              <th scope="col">Trạng thái</th>
+              <th scope="col">Tổng tiền</th>
               <th scope="col"></th>
             </tr>
           </thead>

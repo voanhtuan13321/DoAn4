@@ -140,7 +140,12 @@ const TrangSgSanPham = () => {
           <td scope="col">{item.ten}</td>
           <td scope="col">{item.tacGia}</td>
           <td scope="col">{item.ngayXuatBan}</td>
-          <td scope="col">{item.giaSach}</td>
+          <td scope="col">
+            {item.giaSach.toLocaleString("vi-VN", {
+              style: "currency",
+              currency: "VND",
+            })}
+          </td>
           <td scope="col">{item.soLuong}</td>
 
           <td scope="col">

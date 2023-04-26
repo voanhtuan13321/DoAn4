@@ -84,6 +84,7 @@ const TrangKhachHang = () => {
   const currentData = khachHang.slice(offset, offset + ITEMS_PER_PAGE);
   return (
     <div>
+      <h4>Thông tin khách hàng</h4>
       <div className="">
         <div className="">
           <table class="table">

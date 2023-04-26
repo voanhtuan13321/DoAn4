@@ -178,6 +178,7 @@ const TrangSuKien = () => {
 
       <div>
         <div className="py-5">
+          <h5>Thông tin sự kiện</h5>
           <table class="table">
             <thead>
               <tr>

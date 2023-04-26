@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { BsBorderStyle, BsFillCalendarEventFill } from "react-icons/bs";
-import { NavLink, Outlet } from "react-router-dom";
+import { BiUserCircle } from "react-icons/bi";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { FaBars } from "react-icons/fa";
 import { GoFileDirectory } from "react-icons/go";
 import {
@@ -12,6 +13,8 @@ import {
 } from "react-icons/ai";
 import { FaProductHunt } from "react-icons/fa";
 const Sidebar = ({ children }) => {
+  let navigate = useNavigate();
+  let admin = JSON.parse(localStorage.getItem("admin"));
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
   const menuItem = [
@@ -61,18 +64,30 @@ const Sidebar = ({ children }) => {
       name: "Đăng xuất",
     },
   ];
+
+  const thayDoi = () => {
+    navigate("/admin/thay_doi_tai_khoan");
+  };
   return (
     <div>
-      <div className="header">
+      <div className="header py-2">
         <div className="container">
           <div className="row">
-            <div className="col-3">ewewe</div>
-            <div className="col-3">wew</div>
+            <div className="col-3">
+              <img src="" />
+            </div>
+            <div className="col-9 d-flex align-items-center justify-content-end  ">
+              <button onClick={thayDoi} className="btn">
+                {/* <div className="widthIcon"> */}
+                <BiUserCircle /> {admin}
+                {/* </div> */}
+              </button>
+            </div>
           </div>
         </div>
       </div>
-      <div className="width">
-        <div style={{ width: "200px" }} className="sidebar">
+      <div className="width vh-100">
+        <div style={{ width: "180px" }} className="sidebar">
           {/* <div className="top_section">
             <div
               style={{ marginLeft: isOpen ? "50px" : "0px" }}

@@ -129,49 +129,8 @@ const TrangDanhMuc = () => {
     });
   };
 
-  // const onFinish = (values) => {
-  //   axios
-  //     .post(api.getDanhMuc, values)
-  //     .then((res) => {
-  //       console.log(res);
-  //       setA(!a);
-  //     })
-  //     .catch((errors) => console.log(errors));
-  // };
-
   return (
     <>
-      {/* <div className="">
-        <form onSubmit={handlerSubmit} className="">
-          <p className=" py-4">Thêm danh mục</p>
-          <div className="input-container">
-            <input
-              type="text"
-              name="ten"
-              onChange={handleInput}
-              placeholder="Nhập tên"
-              className="input_field"
-            />
-            <p className="error">{errTen}</p>
-          </div>
-          <div className="input-container pb-3">
-            <input
-              type="text"
-              name="moTa"
-              onChange={handleInput}
-              placeholder="Nhập mô tả"
-              className="input_field"
-            />
-            <p className="error">{errMota}</p>
-          </div>
-          <button
-            type="submit"
-            className="rounded-pill btn bg-secondary btn-width"
-          >
-            Thêm
-          </button>
-        </form>
-      </div> */}
       <div className="container-xxl">
         <div className="row">
           <div className="col-6">
@@ -215,6 +174,7 @@ const TrangDanhMuc = () => {
       </div>
 
       <div className="py-5">
+        <h5>Danh mục sản phẩm</h5>
         <table class="table">
           <thead>
             <tr>

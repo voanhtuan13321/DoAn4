@@ -24,6 +24,7 @@ const ThongKe = () => {
     axios
       .get(api.thongKeTheoThang + thang)
       .then((res) => {
+        console.log(res);
         setThongKe(res.data.data);
         setPageCount(Math.ceil(res.data.data.length / ITEMS_PER_PAGE));
       })
@@ -34,6 +35,12 @@ const ThongKe = () => {
   const tongDanhThuCuaThang = (data) => {
     return data.reduce((accumulator, currentValue) => {
       return accumulator + currentValue.sach.giaSach * currentValue.soLuong;
+    }, 0);
+  };
+
+  const tongSoLuong = (data) => {
+    return data.reduce((accumulator, currentValue) => {
+      return accumulator + currentValue.soLuong;
     }, 0);
   };
 
@@ -110,10 +117,7 @@ const ThongKe = () => {
         <div className="col-5">
           <h6 className="mb-0">
             Tổng số lượng mặt hàng đả bán :
-            <input
-              className="inputwidth"
-              value={tongDanhThuCuaThang(thongKe)}
-            />
+            <input className="inputwidth" value={tongSoLuong(thongKe)} />
             sản phẩm
           </h6>
         </div>

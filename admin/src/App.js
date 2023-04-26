@@ -19,6 +19,7 @@ import SuaThongTinCuaHang from "../src/pages/CuaHang/SuaThongTinCuaHang";
 import TrangBinhLuan from "../src/pages/BinhLuan/TrangBinhLuan";
 import BinhLuanCuaSanPham from "../src/pages/BinhLuan/BinhLuanCuaSanPham";
 import Sidebar from "./components/Sidebar";
+import ThayDoiTaiKhoan from "./pages/ThayDoiTaiKhoan";
 
 function App() {
   return (
@@ -46,6 +47,10 @@ function App() {
           <Route path="/admin/trang_san_pham" element={<TrangSanPham />} />
           <Route path="/admin/sua_san_pham" element={<SuaSanPham />} />
           <Route path="/admin/thong_ke" element={<ThongKe />} />
+          <Route
+            path="/admin/thay_doi_tai_khoan"
+            element={<ThayDoiTaiKhoan />}
+          />
         </Route>
       </Routes>
     </Router>

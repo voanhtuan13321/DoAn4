@@ -1,20 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
 import api from "../components/urlApi";
-import { useNavigate } from "react-router-dom";
-
-const DangNhap = () => {
-  const navigate = useNavigate();
-  // let admin = JSON.parse(localStorage.getItem("admin"));
-  // if (!admin) {
-  //   alert("Bạn phải đăng nhập");
-  //   navigate("/");
-  // }
+const ThayDoiTaiKhoan = () => {
+  let admin = JSON.parse(localStorage.getItem("admin"));
   const [input, setInput] = useState({
     taiKhoan: "",
     matKhau: "",
   });
-
   let [errTaiKhoan, setErrTaiKhoan] = useState("");
   let [errMatKhau, setErrmatKhau] = useState("");
 
@@ -49,54 +42,44 @@ const DangNhap = () => {
         matKhau: input.matKhau,
       };
 
-      axios
-        .post(api.login, data)
-        .then((res) => {
-          if (res.data.status === "ok") {
-            localStorage.setItem("admin", JSON.stringify(input.taiKhoan));
-            navigate("/admin/don_hang");
-          } else {
-            check = 2;
-            setErrmatKhau("Tài khoản hoặc mật khẩu không hợp lệ");
-            navigate("");
-          }
-          console.log(res);
-        })
-        .catch((errors) => console.log(errors));
+      // axios
+      //   .put(, data)
+      //   .then((res) => {
+      //     console.log(res);
+      //   })
+      //   .catch((errors) => console.log(errors));
     }
   };
 
   return (
     <div className="d-flex justify-content-center py-5">
       <form className="form" onSubmit={handlerSubmit}>
-        <p className="form-title">Đăng nhập</p>
+        <p className="form-title">Cập nhật tài khoản</p>
         <div className="input-container">
           <input
             type="text"
             name="taiKhoan"
             onChange={handleInput}
+            value={admin.taiKhoan}
             placeholder="Nhập tài khoản"
           />
-          <p className="error">{errTaiKhoan}</p>
+          <span></span>
         </div>
         <div className="input-container">
           <input
             type="password"
             name="matKhau"
             onChange={handleInput}
-            placeholder="Nhập vào mật khẩu"
+            value={admin.matKhau}
+            placeholder="Enter password"
           />
-          <p className="error">{errMatKhau}</p>
         </div>
         <button type="submit" className="submit">
-          Đăng nhập
+          Cập nhật tài khoản
         </button>
-        {/* <p className="signup-link">
-          <button onClick={checkTaiKhoan}>Quên mật khấu?</button>
-        </p> */}
       </form>
     </div>
   );
 };
 
-export default DangNhap;
+export default ThayDoiTaiKhoan;

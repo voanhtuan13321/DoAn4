@@ -34,7 +34,6 @@ const TrangCuaHang = () => {
     return cuaHang.map((item, index) => {
       return (
         <tr key={index}>
-          {/* {console.log(item)} */}
           <th scope="row">{index}</th>
           <td>{item.tenCuaHang}</td>
           <td>{item.moTa}</td>
@@ -54,80 +53,8 @@ const TrangCuaHang = () => {
 
   return (
     <>
-      {/* <div className="d-flex align-items-center justify-content-center">
-        <form onSubmit={handlerSubmit} className="width-500">
-          <p className="form-title py-4">Thêm thông tin của hàng</p>
-          <div className="d-flex">
-            <div className="pr-5">
-              <div className="input-container">
-                <label className="input_label">Nhà xuất bản</label>
-                <input
-                  type="text"
-                  name="tenCuaHang"
-                  onChange={handleInput}
-                  placeholder="Nhập tên cửa hàng"
-                />
-                <span></span>
-              </div>
-              <div className="input-container">
-                <label className="input_label">Nhà xuất bản</label>
-                <input
-                  type="text"
-                  name="moTa"
-                  onChange={handleInput}
-                  placeholder="Nhập mô tả"
-                />
-              </div>
-              <label className="input_label">Nhà xuất bản</label>
-              <div className="input-container">
-                <input
-                  type="text"
-                  name="soDienThoai"
-                  onChange={handleInput}
-                  placeholder="Nhập số điện thoại"
-                />
-              </div>
-            </div>
-            <div>
-              <div className="input-container">
-                <label className="input_label">Nhà xuất bản</label>
-                <input
-                  type="text"
-                  name="diaChi"
-                  onChange={handleInput}
-                  placeholder="Nhập số điạ chỉ"
-                />
-              </div>
-              <div className="input-container">
-                <label className="input_label">Nhà xuất bản</label>
-                <input
-                  type="text"
-                  name="website"
-                  onChange={handleInput}
-                  placeholder="Website"
-                />
-              </div>
-              <div className="input-container pb-3">
-                <label className="input_label">Nhà xuất bản</label>
-                <input
-                  type="text"
-                  name="email"
-                  onChange={handleInput}
-                  placeholder="Email"
-                />
-              </div>
-            </div>
-          </div>
-          <button
-            type="submit"
-            className="rounded-pill btn bg-secondary btn-width"
-          >
-            Thêm
-          </button>
-        </form>
-      </div> */}
-
       <div className="">
+        <h5>Thông tin cửa hàng</h5>
         <table class="table">
           <thead>
             <tr>
