@@ -127,7 +127,7 @@ const TrangCuaHang = () => {
         </form>
       </div> */}
 
-      <div className="py-5">
+      <div className="">
         <table class="table">
           <thead>
             <tr>
@@ -138,6 +138,7 @@ const TrangCuaHang = () => {
               <th scope="col">Dia chỉ</th>
               <th scope="col">Website</th>
               <th scope="col">Email</th>
+              <th scope="col"></th>
             </tr>
           </thead>
           <tbody>{renderCuaHang()}</tbody>

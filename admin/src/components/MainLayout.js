@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import {
   AiOutlineDashboard,
@@ -8,14 +9,13 @@ import {
   AiFillAppstore,
   AiOutlineComment,
 } from "react-icons/ai";
-import { BsBorderStyle } from "react-icons/bs";
+import { BsBorderStyle, BsFillCalendarEventFill } from "react-icons/bs";
 
-import { Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 
 import { FaProductHunt } from "react-icons/fa";
 import { GoFileDirectory } from "react-icons/go";
 import { Layout, Menu, theme } from "antd";
-import { useNavigate } from "react-router-dom";
 const { Header, Sider, Content } = Layout;
 
 const MainLayout = () => {
@@ -35,7 +35,7 @@ const MainLayout = () => {
   return (
     <Layout /* onContextMenu={(e) => e.preventDefault()} */>
       <Sider trigger={null} collapsible collapsed={collapsed}>
-        <div className="logo"></div>
+        {/* <div className="logo"></div> */}
         <Menu
           theme="dark"
           mode="inline"
@@ -55,11 +55,11 @@ const MainLayout = () => {
             {
               key: "/admin/trang_danh_muc",
               icon: <GoFileDirectory className="fs-4" />,
-              label: "Danh Mục",
+              label: "Danh mục",
             },
             {
               key: "/admin/trang_su_kien",
-              icon: <AiOutlineShoppingCart className="fs-4" />,
+              icon: <BsFillCalendarEventFill className="fs-4" />,
               label: "Sự kiện",
             },
             {
@@ -97,7 +97,7 @@ const MainLayout = () => {
         />
       </Sider>
       <Layout className="site-layout">
-        <Header
+        {/* <Header
           className="d-flex justify-content-between ps-1 pe-2"
           style={{
             padding: 0,
@@ -111,10 +111,10 @@ const MainLayout = () => {
               onClick: () => setCollapsed(!collapsed),
             }
           )}
-        </Header>
+        </Header> */}
         <Content
           style={{
-            margin: "24px 16px",
+            // margin: "24px 16px",
             padding: 24,
             minHeight: 280,
             background: colorBgContainer,

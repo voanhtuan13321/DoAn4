@@ -2,9 +2,14 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import api from "../../components/urlApi";
 import { useNavigate, Link } from "react-router-dom";
+import ReactPaginate from "react-paginate";
+import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 
 const TrangKhachHang = () => {
   let navigation = useNavigate();
+  const ITEMS_PER_PAGE = 15;
+  const [pageCount, setPageCount] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
   // let admin = JSON.parse(localStorage.getItem("admin"));
   // if (!admin) {
   //   alert("Bạn phải đăng nhập");
@@ -20,6 +25,7 @@ const TrangKhachHang = () => {
       .get(api.khachHang)
       .then((res) => {
         setKhachHang(res.data.data);
+        setPageCount(Math.ceil(res.data.data.length / ITEMS_PER_PAGE));
       })
       .catch((errors) => console.log(errors));
   }, [a]);
@@ -46,7 +52,7 @@ const TrangKhachHang = () => {
 
   // lấy ra từng thông tin của khách hàng
   const renderKhachHang = () => {
-    return khachHang.map((item, index) => {
+    return currentData.map((item, index) => {
       return (
         <tr key={index}>
           <th scope="row">{index}</th>
@@ -58,7 +64,7 @@ const TrangKhachHang = () => {
           <td>{item.matKhau}</td>
           <td>
             <button
-              className="btn btn-warning"
+              className="btn btn-danger"
               value={item.idKhachHang}
               onClick={checkId}
             >
@@ -69,10 +75,17 @@ const TrangKhachHang = () => {
       );
     });
   };
+
+  const handlePageClick = ({ selected }) => {
+    setCurrentPage(selected);
+  };
+
+  const offset = currentPage * ITEMS_PER_PAGE;
+  const currentData = khachHang.slice(offset, offset + ITEMS_PER_PAGE);
   return (
     <div>
       <div className="">
-        <div className="py-5">
+        <div className="">
           <table class="table">
             <thead>
               <tr>
@@ -88,6 +101,25 @@ const TrangKhachHang = () => {
             </thead>
             <tbody>{renderKhachHang()}</tbody>
           </table>
+          <ReactPaginate
+            previousLabel={<AiFillCaretLeft />}
+            nextLabel={<AiFillCaretRight />}
+            breakLabel={"..."}
+            pageCount={pageCount}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={3}
+            onPageChange={handlePageClick}
+            containerClassName={"pagination justify-content-center"}
+            pageClassName={"page-item"}
+            pageLinkClassName={"page-link"}
+            previousClassName={"page-item"}
+            previousLinkClassName={"page-link"}
+            nextClassName={"page-item"}
+            nextLinkClassName={"page-link"}
+            breakClassName={"page-item"}
+            breakLinkClassName={"page-link"}
+            activeClassName={"active"}
+          />
         </div>
       </div>
     </div>

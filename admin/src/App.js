@@ -18,6 +18,7 @@ import DanhSachDonHangMoi from "../src/pages/DanhSachDonHangMoi/TrangDonHang";
 import SuaThongTinCuaHang from "../src/pages/CuaHang/SuaThongTinCuaHang";
 import TrangBinhLuan from "../src/pages/BinhLuan/TrangBinhLuan";
 import BinhLuanCuaSanPham from "../src/pages/BinhLuan/BinhLuanCuaSanPham";
+import Sidebar from "./components/Sidebar";
 
 function App() {
   return (
@@ -25,7 +26,7 @@ function App() {
       <Routes>
         <Route path="/" element={<DangNhap />} />
         {/* <Route path="/admin/check_tai_khoan" element={<SuaDanhMuc/>} /> */}
-        <Route path="/admin" element={<MainLayout />}>
+        <Route path="/admin" element={<Sidebar />}>
           <Route path="/admin/trang_danh_muc" element={<TrangDanhMuc />} />
           <Route path="/admin/sua_danh_muc" element={<SuaDanhMuc />} />
           <Route path="/admin/trang_su_kien" element={<TrangSuKien />} />

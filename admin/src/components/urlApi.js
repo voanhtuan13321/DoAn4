@@ -1,4 +1,4 @@
-const ip = "192.168.1.82";
+const ip = "192.168.1.5";
 
 const api = {
   getDanhMuc: `http://${ip}:8080/api/danh-muc`,
@@ -30,7 +30,7 @@ const api = {
 
   img: "data:image/jpeg;base64,",
 
-  ip: "192.168.1.142",
+  ip: "192.168.1.8",
 };
 
 export default api;

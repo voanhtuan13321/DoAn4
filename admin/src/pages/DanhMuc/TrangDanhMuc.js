@@ -2,45 +2,73 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import api from "../../components/urlApi";
 import { useNavigate } from "react-router-dom";
-import { Button, Form, Input } from "antd";
+import ReactPaginate from "react-paginate";
+import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
+// import { Button, Form, Input } from "antd";
 
 const TrangDanhMuc = () => {
+  const ITEMS_PER_PAGE = 15;
   let navigation = useNavigate();
 
-  // const [input, setInput] = useState({
-  //   ten: "",
-  //   moTa: "",
-  // });
+  const [input, setInput] = useState({
+    ten: "",
+    moTa: "",
+  });
   const [danhMuc, setDanhMuc] = useState([]);
   const [a, setA] = useState(true);
+  const [pageCount, setPageCount] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
+  let [errTen, setErrTen] = useState("");
+  let [errMota, setErrMoTa] = useState("");
 
-  // const handleInput = (e) => {
-  //   let nameKey = e.target.name;
-  //   let nameValue = e.target.value;
-  //   setInput((state) => ({ ...state, [nameKey]: nameValue }));
-  // };
+  const handleInput = (e) => {
+    let nameKey = e.target.name;
+    let nameValue = e.target.value;
+    setInput((state) => ({ ...state, [nameKey]: nameValue }));
+  };
 
-  // const handlerSubmit = (e) => {
-  //   e.preventDefault();
-  //   const data = {
-  //     ten: input.ten,
-  //     moTa: input.moTa,
-  //   };
-  //   axios
-  //     .post(api.getDanhMuc, data)
-  //     .then((res) => {
-  //       console.log(res);
-  //       setA(!a);
-  //     })
-  //     .catch((errors) => console.log(errors));
-  // };
+  const handlerSubmit = (e) => {
+    e.preventDefault();
+    let check = 1;
+    if (input.ten == "") {
+      check = 2;
+      setErrTen("Yêu cầu nhập vào tên");
+      return;
+    } else {
+      check = 1;
+      setErrTen("");
+    }
+    if (input.moTa == "") {
+      check = 2;
+      setErrMoTa("Yêu cầu nhập vào mô tả");
+      return;
+    } else {
+      check = 1;
+      setErrMoTa("");
+    }
+
+    if (check == 1) {
+      const data = {
+        ten: input.ten,
+        moTa: input.moTa,
+      };
+      axios
+        .post(api.getDanhMuc, data)
+        .then((res) => {
+          alert("Thêm danh mục thành công");
+
+          setA(!a);
+        })
+        .catch((errors) => console.log(errors));
+    }
+  };
 
   useEffect(() => {
     axios
       .get(api.getDanhMuc)
       .then((res) => {
-        console.log(res);
         setDanhMuc(res.data.data);
+        setPageCount(Math.ceil(res.data.data.length / ITEMS_PER_PAGE));
       })
       .catch((errors) => console.log(errors));
   }, [a]);
@@ -50,7 +78,11 @@ const TrangDanhMuc = () => {
     axios
       .delete(api.getDanhMucId + getId)
       .then((res) => {
-        alert("Xóa thành công");
+        if (res.data.status == "fail") {
+          alert("Xóa không thành công");
+        } else {
+          alert("Xóa thành công");
+        }
         setA(!a);
       })
       .catch((error) => {
@@ -63,15 +95,25 @@ const TrangDanhMuc = () => {
     navigation("/admin/sua_danh_muc");
   }
 
+  const handlePageClick = ({ selected }) => {
+    setCurrentPage(selected);
+  };
+
+  const offset = currentPage * ITEMS_PER_PAGE;
+  const currentData = danhMuc.slice(offset, offset + ITEMS_PER_PAGE);
+
   const renderDanhMuc = () => {
-    return danhMuc.map((item, index) => {
+    return currentData.map((item, index) => {
       return (
         <tr key={index}>
           <th scope="row">{index}</th>
           <td>{item.ten}</td>
           <td>{item.moTa}</td>
-          <td>
-            <button className="btn btn-danger" onClick={() => checkId(item)}>
+          <td className="d-flex">
+            <button
+              className="btn btn-danger mr3"
+              onClick={() => checkId(item)}
+            >
               Sửa
             </button>
             <button
@@ -87,29 +129,30 @@ const TrangDanhMuc = () => {
     });
   };
 
-  const onFinish = (values) => {
-    axios
-      .post(api.getDanhMuc, values)
-      .then((res) => {
-        console.log(res);
-        setA(!a);
-      })
-      .catch((errors) => console.log(errors));
-  };
+  // const onFinish = (values) => {
+  //   axios
+  //     .post(api.getDanhMuc, values)
+  //     .then((res) => {
+  //       console.log(res);
+  //       setA(!a);
+  //     })
+  //     .catch((errors) => console.log(errors));
+  // };
 
   return (
     <>
-      {/* <div className="d-flex align-items-center justify-content-center">
-        <form onSubmit={handlerSubmit} className="width-500">
-          <p className="form-title py-4">Thêm danh mục</p>
+      {/* <div className="">
+        <form onSubmit={handlerSubmit} className="">
+          <p className=" py-4">Thêm danh mục</p>
           <div className="input-container">
             <input
               type="text"
               name="ten"
               onChange={handleInput}
               placeholder="Nhập tên"
+              className="input_field"
             />
-            <p>{error}</p>
+            <p className="error">{errTen}</p>
           </div>
           <div className="input-container pb-3">
             <input
@@ -117,7 +160,9 @@ const TrangDanhMuc = () => {
               name="moTa"
               onChange={handleInput}
               placeholder="Nhập mô tả"
+              className="input_field"
             />
+            <p className="error">{errMota}</p>
           </div>
           <button
             type="submit"
@@ -127,62 +172,46 @@ const TrangDanhMuc = () => {
           </button>
         </form>
       </div> */}
-      <div className="">
-        <Form
-          name="basic"
-          labelCol={{
-            span: 8,
-          }}
-          wrapperCol={{
-            span: 16,
-          }}
-          style={{
-            maxWidth: 600,
-          }}
-          initialValues={{
-            remember: true,
-          }}
-          onFinish={onFinish}
-          // onFinishFailed={onFinishFailed}
-          autoComplete="off"
-        >
-          <Form.Item
-            label="Nhập vào tên danh mục"
-            name="ten"
-            rules={[
-              {
-                required: true,
-                message: "Nhập vào tên danh mục!",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item
-            label="Nhập vào mô tả danh mục"
-            name="moTa"
-            rules={[
-              {
-                required: true,
-                message: "Nhập vào mô tả danh mục",
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item
-            wrapperCol={{
-              offset: 8,
-              span: 16,
-            }}
-          >
-            <Button type="primary" htmlType="submit">
-              Thêm danh mục
-            </Button>
-          </Form.Item>
-        </Form>
+      <div className="container-xxl">
+        <div className="row">
+          <div className="col-6">
+            <form onSubmit={handlerSubmit}>
+              <div className="mb-3 text-center fsinput">
+                <b className="form-label">Thêm danh mục</b>
+              </div>
+              <div className="mb-3">
+                <label className="form-label">Nhập tên</label>
+                <input
+                  type="text"
+                  name="ten"
+                  placeholder="Nhập tên"
+                  onChange={handleInput}
+                  className="form-control"
+                  id="exampleInputEmail1"
+                  aria-describedby="emailHelp"
+                />
+                <p className="error">{errTen}</p>
+              </div>
+              <div className="mb-3">
+                <label className="form-label">Nhập mô tả</label>
+                <input
+                  type="text"
+                  name="moTa"
+                  placeholder="Nhập mô tả"
+                  onChange={handleInput}
+                  className="form-control"
+                  id="exampleInputPassword1"
+                />
+                <p className="error">{errMota}</p>
+              </div>
+              <div className="text-center">
+                <button type="submit" className="btn btn-primary">
+                  Thêm danh mục
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
 
       <div className="py-5">
@@ -197,6 +226,25 @@ const TrangDanhMuc = () => {
           </thead>
           <tbody>{renderDanhMuc()}</tbody>
         </table>
+        <ReactPaginate
+          previousLabel={<AiFillCaretLeft />}
+          nextLabel={<AiFillCaretRight />}
+          breakLabel={"..."}
+          pageCount={pageCount}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={3}
+          onPageChange={handlePageClick}
+          containerClassName={"pagination justify-content-center"}
+          pageClassName={"page-item"}
+          pageLinkClassName={"page-link"}
+          previousClassName={"page-item"}
+          previousLinkClassName={"page-link"}
+          nextClassName={"page-item"}
+          nextLinkClassName={"page-link"}
+          breakClassName={"page-item"}
+          breakLinkClassName={"page-link"}
+          activeClassName={"active"}
+        />
       </div>
     </>
   );

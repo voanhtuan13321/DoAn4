@@ -8,7 +8,7 @@ import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 // số phần tử trên mỗi trangs
 
 const ThongKe = () => {
-  const ITEMS_PER_PAGE = 5;
+  const ITEMS_PER_PAGE = 15;
   let navigation = useNavigate();
   // let admin = JSON.parse(localStorage.getItem("admin"));
   // if (!admin) {
@@ -67,30 +67,55 @@ const ThongKe = () => {
       return currentData.map((item, index) => {
         return (
           <tr>
-            <th scope="col">{index}</th>
-            <th scope="col">{item["khachHang"].ten}</th>
-            <th scope="col">{item["khachHang"].diaChi}</th>
-            <th scope="col">{item["khachHang"].soDienThoai}</th>
-            <th scope="col">{item["sach"].ten}</th>
-            <th scope="col">{item.soLuong}</th>
+            <td scope="col">{index}</td>
+            <td scope="col">{item["khachHang"].ten}</td>
+            <td scope="col">{item["khachHang"].diaChi}</td>
+            <td scope="col">{item["khachHang"].soDienThoai}</td>
+            <td scope="col">{item["sach"].ten}</td>
+            <td scope="col">{item.soLuong}</td>
           </tr>
         );
       });
     } else {
-      return <h3 text-center>Khong co don hang</h3>;
+      return (
+        <h3 className="d-flex align-item-center">
+          Không có đơn hàng trong tháng {thang}
+        </h3>
+      );
     }
   };
 
   return (
     <div className="container-xxl">
       <div className="row">
-        <div className="col-3">
+        <div className="col-2">
           <select onChange={handleInput} name="status" className="form-select">
             {renderThang()}
           </select>
         </div>
-        <div className="col-3">
-          <h6>Danh thu của tháng đạt được : {tongDanhThuCuaThang(thongKe)}</h6>
+
+        <div className="col-5">
+          <h6 className="mb-0">
+            Danh thu của tháng đạt được :{" "}
+            <input
+              className="inputwidth"
+              value={tongDanhThuCuaThang(thongKe).toLocaleString("vi-VN", {
+                style: "currency",
+                currency: "VND",
+              })}
+            />{" "}
+            VND
+          </h6>
+        </div>
+        <div className="col-5">
+          <h6 className="mb-0">
+            Tổng số lượng mặt hàng đả bán :
+            <input
+              className="inputwidth"
+              value={tongDanhThuCuaThang(thongKe)}
+            />
+            sản phẩm
+          </h6>
         </div>
       </div>
       <div className="row">
@@ -112,12 +137,20 @@ const ThongKe = () => {
         <ReactPaginate
           previousLabel={<AiFillCaretLeft />}
           nextLabel={<AiFillCaretRight />}
-          // breakLabel={"..."}
+          breakLabel={"..."}
           pageCount={pageCount}
           marginPagesDisplayed={2}
           pageRangeDisplayed={3}
           onPageChange={handlePageClick}
-          containerClassName={"pagination"}
+          containerClassName={"pagination justify-content-center"}
+          pageClassName={"page-item"}
+          pageLinkClassName={"page-link"}
+          previousClassName={"page-item"}
+          previousLinkClassName={"page-link"}
+          nextClassName={"page-item"}
+          nextLinkClassName={"page-link"}
+          breakClassName={"page-item"}
+          breakLinkClassName={"page-link"}
           activeClassName={"active"}
         />
       </div>

@@ -2,8 +2,12 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import api from "../../components/urlApi";
 import { useNavigate } from "react-router-dom";
+import ReactPaginate from "react-paginate";
+import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 const TrangDonHang = () => {
+  const ITEMS_PER_PAGE = 15;
   let navigation = useNavigate();
+
   // let admin = JSON.parse(localStorage.getItem("admin"));
   // if (!admin) {
   //   alert("Bạn phải đăng nhập");
@@ -22,6 +26,8 @@ const TrangDonHang = () => {
   }, []);
 
   const [lichSu, setLichSu] = useState([]);
+  const [pageCount, setPageCount] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
 
   useEffect(() => {
     axios
@@ -29,6 +35,7 @@ const TrangDonHang = () => {
       .then((res) => {
         console.log(res.data.data);
         setLichSu(res.data.data);
+        setPageCount(Math.ceil(res.data.data.length / ITEMS_PER_PAGE));
       })
       .catch((errors) => console.log(errors));
   }, []);
@@ -67,46 +74,54 @@ const TrangDonHang = () => {
       .map((item, index) => {
         return (
           <tr>
-            <th scope="col">{index}</th>
-            <th scope="col">{item["khachHang"].ten}</th>
-            <th scope="col">{item["khachHang"].soDienThoai}</th>
-            <th scope="col">{item["sach"].ten}</th>
-            <th scope="col">{item.soLuong}</th>
-            <th scope="col">
+            <td scope="col">{index}</td>
+            <td scope="col">{item["khachHang"].ten}</td>
+            <td scope="col">{item["khachHang"].soDienThoai}</td>
+            <td scope="col">{item["sach"].ten}</td>
+            <td scope="col">{item.soLuong}</td>
+            <td scope="col">
               {item.trangThai == "online"
                 ? "Đả thanh toán"
                 : item["sach"].giaSach * item.soLuong + " VNĐ"}
-            </th>
-            <th scope="col">{item.trangThai}</th>
-            <th scope="col">
+            </td>
+            <td scope="col">{item.trangThai}</td>
+            <td scope="col">
               <button onClick={() => checkId(item)} className="btn btn-success">
                 Xác nhận
               </button>
-            </th>
+            </td>
           </tr>
         );
       });
   };
 
   const lichSuMuaHang = () => {
-    return lichSu
+    return currentData
       .filter((item) => item.trangThai !== "none")
       .map((item, index) => {
         return (
           <tr>
-            <th scope="col">{index}</th>
-            <th scope="col">{item["khachHang"].ten}</th>
-            <th scope="col">{item["khachHang"].soDienThoai}</th>
-            <th scope="col">{item["sach"].ten}</th>
-            <th scope="col">{item.soLuong}</th>
+            <td scope="col">{index}</td>
+            <td scope="col">{item["khachHang"].ten}</td>
+            <td scope="col">{item["khachHang"].soDienThoai}</td>
+            <td scope="col">{item["sach"].ten}</td>
+            <td scope="col">{item.soLuong}</td>
+            <td scope="col">{item.ngayMua}</td>
           </tr>
         );
       });
   };
+
+  const handlePageClick = ({ selected }) => {
+    setCurrentPage(selected);
+  };
+
+  const offset = currentPage * ITEMS_PER_PAGE;
+  const currentData = lichSu.slice(offset, offset + ITEMS_PER_PAGE);
   return (
     <div>
-      <div className="py-5">
-        <h2>Đơn hàng</h2>
+      <div className="">
+        <h5>Đơn hàng</h5>
         <table class="table">
           <thead>
             <tr>
@@ -124,7 +139,7 @@ const TrangDonHang = () => {
         </table>
       </div>
       <div className="py-5">
-        <h2>Lịch sử đơn hàng</h2>
+        <h5>Lịch sử đơn hàng</h5>
         <table class="table">
           <thead>
             <tr>
@@ -133,11 +148,31 @@ const TrangDonHang = () => {
               <th scope="col">Số điện thoại</th>
               <th scope="col">Tên sách</th>
               <th scope="col">Số lượng</th>
+              <th scope="col">Thời gian</th>
               <th scope="col"></th>
             </tr>
           </thead>
           <tbody>{lichSuMuaHang()}</tbody>
         </table>
+        <ReactPaginate
+          previousLabel={<AiFillCaretLeft />}
+          nextLabel={<AiFillCaretRight />}
+          breakLabel={"..."}
+          pageCount={pageCount}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={3}
+          onPageChange={handlePageClick}
+          containerClassName={"pagination justify-content-center"}
+          pageClassName={"page-item"}
+          pageLinkClassName={"page-link"}
+          previousClassName={"page-item"}
+          previousLinkClassName={"page-link"}
+          nextClassName={"page-item"}
+          nextLinkClassName={"page-link"}
+          breakClassName={"page-item"}
+          breakLinkClassName={"page-link"}
+          activeClassName={"active"}
+        />
       </div>
     </div>
   );

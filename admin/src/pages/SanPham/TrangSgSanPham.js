@@ -7,7 +7,7 @@ import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 const TrangSgSanPham = () => {
   let navigation = useNavigate();
 
-  const ITEMS_PER_PAGE = 10; //Số lượng sản phẩm hiển thị
+  const ITEMS_PER_PAGE = 15; //Số lượng sản phẩm hiển thị
   const [pageCount, setPageCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
 
@@ -26,15 +26,17 @@ const TrangSgSanPham = () => {
     giaSach: "",
     moTa: "",
     ngayXuatBan: "",
-    soLuong: parseInt(""),
+    // soLuong: parseInt(""),
+    soLuong: "",
   });
 
   const [a, setA] = useState(true);
   const [danhMuc, setDanhMuc] = useState([]);
   const [file, setFile] = useState("");
   const [avatar, setAvatar] = useState("");
-  const [valuedanhMuc, setValueDanhMuc] = useState("");
+  const [valuedanhMuc, setValueDanhMuc] = useState(1);
   const [data, setData] = useState([]);
+
   let [errTen, setErrTen] = useState("");
   let [errTacGia, setErrTacGia] = useState("");
   let [errNhaXuatBan, setErrNhaXuatBan] = useState("");
@@ -42,6 +44,8 @@ const TrangSgSanPham = () => {
   let [errMoTa, setErrMoTa] = useState("");
   let [errNgayXuatBan, setErrNgayXuatBan] = useState("");
   let [errSoLuong, setErrSoLuong] = useState("");
+  let [errDanhMuc, setErrDanhMuc] = useState("");
+  let [errHinhAnh, setErrHinhAnh] = useState("");
 
   // Gọi api lấy tất cả các sách đả được thêm
   useEffect(() => {
@@ -65,7 +69,7 @@ const TrangSgSanPham = () => {
     axios
       .get(api.getDanhMuc)
       .then((res) => {
-        console.log(res);
+        console.log(res.data.data);
         setDanhMuc(res.data.data);
       })
       .catch((errors) => console.log(errors));
@@ -84,6 +88,7 @@ const TrangSgSanPham = () => {
     reader.onload = (e) => {
       setAvatar(e.target.result); //Cái này để gởi qua api
       setFile(files[0]);
+      // sanPham.hinhAnh == "fnwnw";
     };
     reader.readAsDataURL(files[0]);
   };
@@ -131,20 +136,20 @@ const TrangSgSanPham = () => {
     return currentData.map((item, index) => {
       return (
         <tr key={index}>
-          <th scope="col">{index}</th>
-          <th scope="col">{item.ten}</th>
-          <th scope="col">{item.tacGia}</th>
-          <th scope="col">{item.ngayXuatBan}</th>
-          <th scope="col">{item.giaSach}</th>
-          <th scope="col">{item.soLuong}</th>
+          <td scope="col">{index}</td>
+          <td scope="col">{item.ten}</td>
+          <td scope="col">{item.tacGia}</td>
+          <td scope="col">{item.ngayXuatBan}</td>
+          <td scope="col">{item.giaSach}</td>
+          <td scope="col">{item.soLuong}</td>
 
-          <th scope="col">
+          <td scope="col">
             <img
               className="img-thumbnail image-w image-h"
               src={api.img + item.hinhAnh}
             />
-          </th>
-          <th scope="col">
+          </td>
+          <td scope="col">
             <button
               className="btn btn-warning mr3"
               onClick={() => checkId(item)}
@@ -158,7 +163,7 @@ const TrangSgSanPham = () => {
             >
               Xóa
             </button>
-          </th>
+          </td>
         </tr>
       );
     });
@@ -166,12 +171,14 @@ const TrangSgSanPham = () => {
 
   const handlerSubmit = (e) => {
     e.preventDefault();
-    console.log(typeof sanPham.soLuong);
+    // console.log(sanPham.hinhAnh);
 
     let check = 1;
+
     if (sanPham.ten == "") {
       check = 2;
       setErrTen("Vui lòng nhập vào tên");
+      return;
     } else {
       check = 1;
       setErrTen("");
@@ -179,6 +186,7 @@ const TrangSgSanPham = () => {
     if (sanPham.tacGia == "") {
       check = 2;
       setErrTacGia("Vui lòng nhập vào tác giả");
+      return;
     } else {
       check = 1;
       setErrTacGia("");
@@ -186,6 +194,7 @@ const TrangSgSanPham = () => {
     if (sanPham.nhaXuatBan == "") {
       check = 2;
       setErrNhaXuatBan("Vui lòng nhập vào nhà xuất bản");
+      return;
     } else {
       check = 1;
       setErrNhaXuatBan("");
@@ -193,6 +202,7 @@ const TrangSgSanPham = () => {
     if (sanPham.giaSach == "") {
       check = 2;
       setErrGiaSach("Vui lòng nhập vào giá sách");
+      return;
     } else {
       check = 1;
       setErrGiaSach("");
@@ -200,6 +210,7 @@ const TrangSgSanPham = () => {
     if (sanPham.moTa == "") {
       check = 2;
       setErrMoTa("Vui lòng nhập vào mô tả");
+      return;
     } else {
       check = 1;
       setErrMoTa("");
@@ -207,6 +218,7 @@ const TrangSgSanPham = () => {
     if (sanPham.ngayXuatBan == "") {
       check = 2;
       setErrNgayXuatBan("Vui lòng nhập vào ngày xuất bản");
+      return;
     } else {
       check = 1;
       setErrNgayXuatBan("");
@@ -214,46 +226,56 @@ const TrangSgSanPham = () => {
     if (sanPham.soLuong == "") {
       check = 2;
       setErrSoLuong("Vui lòng nhập vào số lượng");
+      return;
     } else {
       check = 1;
       setErrSoLuong("");
     }
-    // if (sanPham.soLuong == "") {
-    //   check = 2;
-    //   setErrSoLuong("Vui lòng nhập vào tên");
-    // } else {
-    //   check = 1;
-    //   setErrSoLuong("");
-    // }
+    if (valuedanhMuc == "") {
+      check = 2;
+      setErrDanhMuc("Vui lòng chọn danh mục");
+      return;
+    } else {
+      check = 1;
+      setErrDanhMuc("");
+    }
+    if (avatar == "") {
+      check = 2;
+      setErrHinhAnh("Vui lòng chọn hình ảnh");
+      return;
+    } else {
+      check = 1;
+      setErrHinhAnh("");
+    }
 
     if (check == 1) {
-      let admin = JSON.parse(localStorage.getItem("admin"));
-      if (admin) {
-        const data = {
-          ten: sanPham.ten,
-          tacGia: sanPham.tacGia,
-          nhaXuatBan: sanPham.nhaXuatBan,
-          giaSach: parseInt(sanPham.giaSach),
-          moTa: sanPham.moTa,
-          ngayXuatBan: sanPham.ngayXuatBan,
-          soLuong: parseInt(sanPham.soLuong),
-          hinhAnh: avatar.replace("data:image/jpeg;base64,", ""),
-          idDanhMuc: parseInt(valuedanhMuc),
-        };
+      // let admin = JSON.parse(localStorage.getItem("admin"));
+      // if (admin) {
+      const data = {
+        ten: sanPham.ten,
+        tacGia: sanPham.tacGia,
+        nhaXuatBan: sanPham.nhaXuatBan,
+        giaSach: parseInt(sanPham.giaSach),
+        moTa: sanPham.moTa,
+        ngayXuatBan: sanPham.ngayXuatBan,
+        soLuong: parseInt(sanPham.soLuong),
+        hinhAnh: avatar.replace("data:image/jpeg;base64,", ""),
+        idDanhMuc: valuedanhMuc,
+      };
 
-        axios
-          .post(api.sach, data)
-          .then((res) => {
-            alert("Thêm thành công");
-            setA(!a);
-            navigation("/admin/trang_san_pham");
-          })
-          .catch((errors) => console.log(errors));
-      } else {
-        alert("Bạn chưa đăng nhập");
-        navigation("/");
-      }
+      axios
+        .post(api.sach, data)
+        .then((res) => {
+          alert("Thêm sản phẩm thành công");
+          setA(!a);
+          // navigation("/admin/trang_san_pham");
+        })
+        .catch((errors) => console.log(errors));
+      // } else {
+      //   alert("Bạn chưa đăng nhập");
+      //   navigation("/");
     }
+    // }
   };
 
   return (
@@ -360,12 +382,11 @@ const TrangSgSanPham = () => {
                     onChange={handleFile}
                     id="file"
                   />
+                  <span className="error">{errHinhAnh}</span>
                 </div>
                 <div className="input_container pt-5">
-                  <select onChange={handleDanhMuc}>
-                    <option>Chọn danh mục</option>
-                    {rederDanhMuc()}
-                  </select>
+                  <select onChange={handleDanhMuc}>{rederDanhMuc()}</select>
+                  <span className="error">{errDanhMuc}</span>
                 </div>
               </div>
             </div>
@@ -402,20 +423,26 @@ const TrangSgSanPham = () => {
               </tr>
             </thead>
             <tbody>{rederSanPham()}</tbody>
-            <tfoot>
-              <ReactPaginate
-                previousLabel={<AiFillCaretLeft />}
-                nextLabel={<AiFillCaretRight />}
-                breakLabel={"..."}
-                pageCount={pageCount}
-                marginPagesDisplayed={2}
-                pageRangeDisplayed={3}
-                onPageChange={handlePageClick}
-                containerClassName={"pagination"}
-                activeClassName={"active"}
-              />
-            </tfoot>
           </table>
+          <ReactPaginate
+            previousLabel={<AiFillCaretLeft />}
+            nextLabel={<AiFillCaretRight />}
+            breakLabel={"..."}
+            pageCount={pageCount}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={3}
+            onPageChange={handlePageClick}
+            containerClassName={"pagination justify-content-center"}
+            pageClassName={"page-item"}
+            pageLinkClassName={"page-link"}
+            previousClassName={"page-item"}
+            previousLinkClassName={"page-link"}
+            nextClassName={"page-item"}
+            nextLinkClassName={"page-link"}
+            breakClassName={"page-item"}
+            breakLinkClassName={"page-link"}
+            activeClassName={"active"}
+          />
         </div>
       </div>
     </div>

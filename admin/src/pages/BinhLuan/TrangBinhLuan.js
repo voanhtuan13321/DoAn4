@@ -67,7 +67,7 @@ const TrangBinhLuan = () => {
   };
 
   return (
-    <div className="py-5">
+    <div className="">
       <table class="table">
         <thead>
           <tr>

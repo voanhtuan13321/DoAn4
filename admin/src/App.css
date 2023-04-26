@@ -8,8 +8,21 @@
   background-color: #ccc;
 }
 
+.list-group-item:hover{
+  background-color: #4F46E5;
+}
+
+.fsinput{
+  font-size: 30px;
+}
+
 .h100vh{
   height: 100vh !important;
+}
+
+.inputwidth{
+  width: 100px;
+  outline: none;
 }
 
 .w100{
@@ -341,6 +354,82 @@
   width: 100px;
 }
 
- /* 
-  */
+
+
+
+
+
+
+
+
+/* css Nav */
+.header{
+  height: 60px;
+  background: #a8a3a3;
+}
+
+
+.width{
+  display:flex;
+}
+main{
+  width: 100%;
+  padding-top: 10px;
+  padding-left: 20px;
+}
+.sidebar{
+  background: #a8a3a3;
+  color: #000;
+  height: 100vh;
+  width: 200px;
+  transition: all 0.5s;
+}
+.top_section{
+  display: flex;
+  align-items:center;
+  padding:20px 15px;
+}
+.logo{
+  font-size: 30px;
+}
+.bars{
+  display: flex;
+  font-size: 25px;
+  margin-left: 50px;
+}
+.link{
+  display: flex;
+  color: #fff;
+  padding: 10px 15px;
+  gap: 15px;
+  transition: all 0.5s;
+}
+.link:hover{
+  background:lightskyblue;
+  color: #000;
+  transition: all 0.5s;
+}
+.active{
+  background: lightskyblue;
+  color: #000;
+}
+.icon, .link_text{
+  font-size: 16px;
+  /* text-decoration: none; */
+}
+
+a{text-decoration: none;}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
