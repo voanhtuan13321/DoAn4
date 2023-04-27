@@ -7,7 +7,7 @@ import { BsSearch } from "react-icons/bs";
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 const TrangSgSanPham = () => {
   let navigate = useNavigate();
-  const [timKiemSach, setTimKiem] = useState("");
+
 
   const ITEMS_PER_PAGE = 15; //Số lượng sản phẩm hiển thị
   const [pageCount, setPageCount] = useState(0);
@@ -52,22 +52,6 @@ const TrangSgSanPham = () => {
       });
   }
 
-  const handleSearch = (event) => {
-    setTimKiem(event.target.value);
-  };
-
-  const timKiem = () => {
-    if (timKiemSach == "") {
-      alert("Bạn chưa nhập");
-    } else {
-      axios
-        .get(api.timKiem, { params: { search: timKiemSach } })
-        .then((res) => {
-          localStorage.setItem("timKiemSach", JSON.stringify(res.data.data));
-          navigate("admin/tim_kiem");
-        });
-    }
-  };
 
   // Lấy phần tủ sách đả được chọn sửa bỏ vào local
   function checkId(item) {
@@ -147,22 +131,7 @@ const TrangSgSanPham = () => {
         <button className="btn btn-success" onClick={themSanPham}>
           Thêm sản phẩm
         </button>
-        <form className="d-flex">
-          <input
-            className="form-control me-2"
-            type="search"
-            placeholder="Tìm kiếm"
-            onChange={handleSearch}
-            aria-label="Search"
-          />
-          <button
-            onClick={timKiem}
-            className="btn btn-outline-success"
-            type="submit"
-          >
-            <BsSearch />
-          </button>
-        </form>
+
         <div className="py-5">
           <table class="table">
             <thead>
