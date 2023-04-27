@@ -75,11 +75,21 @@ const ThongKe = () => {
         return (
           <tr>
             <td scope="col">{index}</td>
-            <td scope="col">{item["khachHang"].ten}</td>
-            <td scope="col">{item["khachHang"].diaChi}</td>
-            <td scope="col">{item["khachHang"].soDienThoai}</td>
-            <td scope="col">{item["sach"].ten}</td>
-            <td scope="col">{item.soLuong}</td>
+            <td scope="col">
+              <p className="fs14 mb-0">{item["khachHang"].ten}</p>
+            </td>
+            <td scope="col">
+              <p className="fs14 mb-0">{item["khachHang"].diaChi}</p>
+            </td>
+            <td scope="col">
+              <p className="fs14 mb-0">{item["khachHang"].soDienThoai}</p>
+            </td>
+            <td scope="col">
+              <p className="fs14 mb-0">{item["sach"].ten}</p>
+            </td>
+            <td scope="col">
+              <p className="fs14 mb-0">{item.soLuong}</p>
+            </td>
           </tr>
         );
       });
@@ -128,11 +138,21 @@ const ThongKe = () => {
             <thead>
               <tr>
                 <th scope="col">#</th>
-                <th scope="col">Tên người mua</th>
-                <th scope="col">Địa chỉ</th>
-                <th scope="col">Số điện thoại</th>
-                <th scope="col">Tên sách</th>
-                <th scope="col">Số lượng</th>
+                <th scope="col">
+                  <p className="fs14 mb-0">Tên người </p>
+                </th>
+                <th scope="col">
+                  <p className="fs14 mb-0">Địa chỉ</p>
+                </th>
+                <th scope="col">
+                  <p className="fs14 mb-0">Số điện thoại</p>
+                </th>
+                <th scope="col">
+                  <p className="fs14 mb-0">Tên sách</p>
+                </th>
+                <th scope="col">
+                  <p className="fs14 mb-0">Số lượng</p>
+                </th>
               </tr>
             </thead>
             <tbody>{render()}</tbody>

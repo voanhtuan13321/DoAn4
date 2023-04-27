@@ -4,7 +4,7 @@ import { useNavigate, NavLink, Link } from "react-router-dom";
 import api from "../components/urlApi";
 import axios from "axios";
 const Header = (props) => {
-  let navigator = useNavigate();
+  let navigate = useNavigate();
   const [timKiemSach, setTimKiem] = useState("");
   const [danhMuc, setDanhMuc] = useState([]);
   useEffect(() => {
@@ -94,11 +94,16 @@ const Header = (props) => {
     if (timKiemSach == "") {
       alert("Bạn chưa nhập");
     } else {
+      // navigate("/admin/tim_kiem");
       axios
         .get(api.timKiem, { params: { search: timKiemSach } })
         .then((res) => {
-          localStorage.setItem("timKiem", JSON.stringify(res.data.data));
-          window.location.href = `http://${api.ip}:3000/tim_kiem`;
+          // localStorage.setItem("timKiem", JSON.stringify(res.data.data));
+          window.sessionStorage.setItem(
+            "timKiem",
+            JSON.stringify(res.data.data)
+          );
+          window.location.href = `http://${api.ip1}:3000/tim_kiem`;
         });
     }
   };

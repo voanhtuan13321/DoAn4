@@ -30,7 +30,11 @@ const api = {
 
   img: "data:image/jpeg;base64,",
 
-  ip: "192.168.1.8",
+  timKiem: `http://${ip}:8080/api/sach/searching`,
+
+  capNhat: `http://${ip}:8080/api/quan-ly/1`,
+
+  ip: "192.168.1.12",
 };
 
 export default api;

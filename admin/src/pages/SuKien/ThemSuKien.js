@@ -1,23 +1,21 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import api from "../../components/urlApi";
+import { useNavigate, Link } from "react-router-dom";
 
-import { useNavigate } from "react-router-dom";
-
-const TrangSuaSuKien = () => {
+const ThemSuKien = () => {
   let navigate = useNavigate();
-  let admin = JSON.parse(localStorage.getItem("admin"));
-  if (!admin) {
-    alert("Bạn phải đăng nhập");
-    navigate("/");
-  }
-  const item = JSON.parse(localStorage.getItem("sukien"));
+  // let admin = JSON.parse(localStorage.getItem("admin"));
+  // if (!admin) {
+  //   alert("Bạn phải đăng nhập");
+  //   navigation("/");
+  // }
+
   const [input, setInput] = useState({
-    id: item.id,
-    tieuDe: item.tieuDe,
-    noiDung: item.noiDung,
+    tieuDe: "",
+    noiDung: "",
   });
+
   let [errTieuDe, setErrTieuDe] = useState("");
   let [errNoiDung, setErrNoiDung] = useState("");
 
@@ -26,49 +24,56 @@ const TrangSuaSuKien = () => {
     let nameValue = e.target.value;
     setInput((state) => ({ ...state, [nameKey]: nameValue }));
   };
+
   const handlerSubmit = (e) => {
     e.preventDefault();
     let check = 1;
     if (input.tieuDe == "") {
       check = 2;
-      setErrTieuDe("Yêu cầu nhập tiêu đề");
+      setErrTieuDe("Yêu cầu nhập vào tiêu đề");
+      return;
     } else {
       check = 1;
       setErrTieuDe("");
     }
     if (input.noiDung == "") {
       check = 2;
-      setErrNoiDung("Yêu cầu nhập nội dung");
+      setErrNoiDung("Yêu cầu nhập vào nội dung");
+      return;
     } else {
       check = 1;
       setErrNoiDung("");
     }
 
-    if (check === 1) {
+    if (check == 1) {
       const data = {
-        id: input.id,
         tieuDe: input.tieuDe,
         noiDung: input.noiDung,
       };
-
       axios
         .post(api.suKien, data)
         .then((res) => {
-          alert("Cập nhật thành công");
-          navigate("/admin/xem_su_kien");
+          alert("Thêm sự kiện thành công");
         })
         .catch((errors) => console.log(errors));
     }
   };
 
+  const xemSuKien = () => {
+    navigate("/admin/xem_su_kien");
+  };
+
   return (
-    <>
+    <div className="">
+      <button className="btn btn-success" onClick={xemSuKien}>
+        Xem sự kiện
+      </button>
       <div className="container-xxl">
         <div className="row">
           <div className="col-6">
             <form onSubmit={handlerSubmit}>
               <div className="mb-3 text-center fsinput">
-                <b className="form-label">Cập nhật sự kiện</b>
+                <b className="form-label">Thêm sự kiện</b>
               </div>
               <div className="mb-3">
                 <label className="form-label">Nhập tiêu đề</label>
@@ -77,7 +82,6 @@ const TrangSuaSuKien = () => {
                   name="tieuDe"
                   placeholder="Nhập tiêu đề"
                   onChange={handleInput}
-                  value={input.tieuDe}
                   className="form-control"
                   id="exampleInputEmail1"
                   aria-describedby="emailHelp"
@@ -92,7 +96,6 @@ const TrangSuaSuKien = () => {
                   rows={5}
                   placeholder="Nhập nội dung"
                   onChange={handleInput}
-                  value={input.noiDung}
                   className="form-control"
                   id="exampleInputPassword1"
                 />
@@ -100,15 +103,15 @@ const TrangSuaSuKien = () => {
               </div>
               <div className="text-center">
                 <button type="submit" className="btn btn-primary">
-                  Cập nhật sự kiện
+                  Thêm sự kiện
                 </button>
               </div>
             </form>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
-export default TrangSuaSuKien;
+export default ThemSuKien;

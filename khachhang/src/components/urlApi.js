@@ -44,7 +44,7 @@ const api = {
 
   img: "data:image/jpeg;base64,",
 
-  ip: "192.168.1.8",
+  ip1: "192.168.1.12",
 };
 
 export default api;

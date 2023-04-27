@@ -1,114 +1,117 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import api from "../../components/urlApi";
-
 import { useNavigate } from "react-router-dom";
 
-const TrangSuaSuKien = () => {
+const TrangDanhMuc = () => {
   let navigate = useNavigate();
-  let admin = JSON.parse(localStorage.getItem("admin"));
-  if (!admin) {
-    alert("Bạn phải đăng nhập");
-    navigate("/");
-  }
-  const item = JSON.parse(localStorage.getItem("sukien"));
+
   const [input, setInput] = useState({
-    id: item.id,
-    tieuDe: item.tieuDe,
-    noiDung: item.noiDung,
+    ten: "",
+    moTa: "",
   });
-  let [errTieuDe, setErrTieuDe] = useState("");
-  let [errNoiDung, setErrNoiDung] = useState("");
+  const [a, setA] = useState(true);
+
+  let [errTen, setErrTen] = useState("");
+  let [errMota, setErrMoTa] = useState("");
 
   const handleInput = (e) => {
     let nameKey = e.target.name;
     let nameValue = e.target.value;
     setInput((state) => ({ ...state, [nameKey]: nameValue }));
   };
+
   const handlerSubmit = (e) => {
     e.preventDefault();
     let check = 1;
-    if (input.tieuDe == "") {
+    if (input.ten == "") {
       check = 2;
-      setErrTieuDe("Yêu cầu nhập tiêu đề");
+      setErrTen("Yêu cầu nhập vào tên");
+      return;
     } else {
       check = 1;
-      setErrTieuDe("");
+      setErrTen("");
     }
-    if (input.noiDung == "") {
+    if (input.moTa == "") {
       check = 2;
-      setErrNoiDung("Yêu cầu nhập nội dung");
+      setErrMoTa("Yêu cầu nhập vào mô tả");
+      return;
     } else {
       check = 1;
-      setErrNoiDung("");
+      setErrMoTa("");
     }
 
-    if (check === 1) {
+    if (check == 1) {
       const data = {
-        id: input.id,
-        tieuDe: input.tieuDe,
-        noiDung: input.noiDung,
+        ten: input.ten,
+        moTa: input.moTa,
       };
-
       axios
-        .post(api.suKien, data)
+        .post(api.getDanhMuc, data)
         .then((res) => {
-          alert("Cập nhật thành công");
-          navigate("/admin/xem_su_kien");
+          alert("Thêm danh mục thành công");
+
+          setA(!a);
         })
         .catch((errors) => console.log(errors));
     }
   };
 
+  const xemDanhMuc = () => {
+    navigate("/admin/xem_danh_muc");
+  };
+
   return (
     <>
       <div className="container-xxl">
+        <button className="btn btn-success" onClick={xemDanhMuc}>
+          Xem danh mục
+        </button>
         <div className="row">
+          <div className="col-3"></div>
           <div className="col-6">
             <form onSubmit={handlerSubmit}>
               <div className="mb-3 text-center fsinput">
-                <b className="form-label">Cập nhật sự kiện</b>
+                <b className="form-label">Thêm danh mục</b>
               </div>
               <div className="mb-3">
-                <label className="form-label">Nhập tiêu đề</label>
+                <label className="form-label">Nhập tên</label>
                 <input
                   type="text"
-                  name="tieuDe"
-                  placeholder="Nhập tiêu đề"
+                  name="ten"
+                  placeholder="Nhập tên"
                   onChange={handleInput}
-                  value={input.tieuDe}
                   className="form-control"
                   id="exampleInputEmail1"
                   aria-describedby="emailHelp"
                 />
-                <p className="error">{errTieuDe}</p>
+                <p className="error">{errTen}</p>
               </div>
               <div className="mb-3">
-                <label className="form-label">Nhập nội dung</label>
+                <label className="form-label">Nhập mô tả</label>
                 <textarea
                   type="text"
-                  name="noiDung"
+                  name="moTa"
                   rows={5}
-                  placeholder="Nhập nội dung"
+                  placeholder="Nhập mô tả"
                   onChange={handleInput}
-                  value={input.noiDung}
                   className="form-control"
                   id="exampleInputPassword1"
                 />
-                <p className="error">{errNoiDung}</p>
+                <p className="error">{errMota}</p>
               </div>
               <div className="text-center">
                 <button type="submit" className="btn btn-primary">
-                  Cập nhật sự kiện
+                  Thêm danh mục
                 </button>
               </div>
             </form>
           </div>
+          <div className="col-3"></div>
         </div>
       </div>
     </>
   );
 };
 
-export default TrangSuaSuKien;
+export default TrangDanhMuc;

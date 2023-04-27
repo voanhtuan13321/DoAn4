@@ -35,15 +35,27 @@ const TrangCuaHang = () => {
       return (
         <tr key={index}>
           <th scope="row">{index}</th>
-          <td>{item.tenCuaHang}</td>
-          <td>{item.moTa}</td>
-          <td>{item.soDienThoai}</td>
-          <td>{item.diaChi}</td>
-          <td>{item.website}</td>
-          <td>{item.email}</td>
+          <td>
+            <p className="fs14 mb-0">{item.tenCuaHang}</p>
+          </td>
+          <td>
+            <p className="fs14 mb-0">{item.moTa}</p>
+          </td>
+          <td>
+            <p className="fs14 mb-0">{item.soDienThoai}</p>
+          </td>
+          <td>
+            <p className="fs14 mb-0">{item.diaChi}</p>
+          </td>
+          <td>
+            <p className="fs14 mb-0">{item.website}</p>
+          </td>
+          <td>
+            <p className="fs14 mb-0">{item.email}</p>
+          </td>
           <td>
             <button className="btn btn-warning" onClick={() => checkId(item)}>
-              Sửa
+              <p className="fs14 mb-0">Sửa</p>
             </button>
           </td>
         </tr>
@@ -59,12 +71,24 @@ const TrangCuaHang = () => {
           <thead>
             <tr>
               <th scope="col">#</th>
-              <th scope="col">Tên cửa hàng</th>
-              <th scope="col">Mô tả</th>
-              <th scope="col">Số điện thoại</th>
-              <th scope="col">Dia chỉ</th>
-              <th scope="col">Website</th>
-              <th scope="col">Email</th>
+              <th scope="col">
+                <p className="fs14 mb-0">Tên cửa hàng</p>
+              </th>
+              <th scope="col">
+                <p className="fs14 mb-0">Mô tả</p>
+              </th>
+              <th scope="col">
+                <p className="fs14 mb-0">Số điện thoại</p>
+              </th>
+              <th scope="col">
+                <p className="fs14 mb-0">Dia chỉ</p>
+              </th>
+              <th scope="col">
+                <p className="fs14 mb-0">Website</p>
+              </th>
+              <th scope="col">
+                <p className="fs14 mb-0">Email</p>
+              </th>
               <th scope="col"></th>
             </tr>
           </thead>

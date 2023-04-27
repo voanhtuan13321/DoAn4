@@ -76,26 +76,40 @@ const TrangDonHang = () => {
       .map((item, index) => {
         return (
           <tr>
-            <td scope="col">{index}</td>
-            <td scope="col">{item["khachHang"].ten}</td>
-            <td scope="col">{item["khachHang"].soDienThoai}</td>
-            <td scope="col">{item["sach"].ten}</td>
-            <td scope="col">{item.soLuong}</td>
             <td scope="col">
-              {item.trangThai == "online"
-                ? "Đả thanh toán"
-                : (item["sach"].giaSach * item.soLuong).toLocaleString(
-                    "vi-VN",
-                    {
-                      style: "currency",
-                      currency: "VND",
-                    }
-                  )}
+              <p className="fs14">{index}</p>
             </td>
-            <td scope="col">{item.trangThai}</td>
+            <td scope="col">
+              <p className="fs14">{item["khachHang"].ten}</p>
+            </td>
+            <td scope="col">
+              <p className="fs14">{item["khachHang"].soDienThoai}</p>
+            </td>
+            <td scope="col">
+              <p className="fs14">{item["sach"].ten}</p>
+            </td>
+            <td scope="col">
+              <p className="fs14">{item.soLuong}</p>
+            </td>
+            <td scope="col">
+              <p className="fs14">
+                {item.trangThai == "online"
+                  ? "Đả thanh toán"
+                  : (item["sach"].giaSach * item.soLuong).toLocaleString(
+                      "vi-VN",
+                      {
+                        style: "currency",
+                        currency: "VND",
+                      }
+                    )}
+              </p>
+            </td>
+            <td scope="col">
+              <p className="fs14">{item.trangThai}</p>
+            </td>
             <td scope="col">
               <button onClick={() => checkId(item)} className="btn btn-success">
-                Xác nhận
+                <p className="fs14">Xác nhận</p>
               </button>
             </td>
           </tr>
@@ -109,18 +123,34 @@ const TrangDonHang = () => {
       .map((item, index) => {
         return (
           <tr>
-            <td scope="col">{index}</td>
-            <td scope="col">{item["khachHang"].ten}</td>
-            <td scope="col">{item["khachHang"].soDienThoai}</td>
-            <td scope="col">{item["sach"].ten}</td>
-            <td scope="col">{item.soLuong}</td>
-            <td scope="col">{item.ngayMua}</td>
-            <td scope="col">{item.trangThai}</td>
             <td scope="col">
-              {(item.soLuong * item["sach"].giaSach).toLocaleString("vi-VN", {
-                style: "currency",
-                currency: "VND",
-              })}
+              <p className="fs14">{index}</p>
+            </td>
+            <td scope="col">
+              <p className="fs14">{item["khachHang"].ten}</p>
+            </td>
+            <td scope="col">
+              <p className="fs14">{item["khachHang"].soDienThoai}</p>
+            </td>
+            <td scope="col">
+              <p className="fs14">{item["sach"].ten}</p>
+            </td>
+            <td scope="col">
+              <p className="fs14">{item.soLuong}</p>
+            </td>
+            <td scope="col">
+              <p className="fs14">{item.ngayMua}</p>
+            </td>
+            <td scope="col">
+              <p className="fs14">{item.trangThai}</p>
+            </td>
+            <td scope="col">
+              <p className="fs14">
+                {(item.soLuong * item["sach"].giaSach).toLocaleString("vi-VN", {
+                  style: "currency",
+                  currency: "VND",
+                })}
+              </p>
             </td>
           </tr>
         );
@@ -140,13 +170,25 @@ const TrangDonHang = () => {
         <table class="table">
           <thead>
             <tr>
-              <th scope="col">#</th>
-              <th scope="col">Tên khách hàng</th>
-              <th scope="col">Số điện thoại</th>
-              <th scope="col">Tên sách</th>
-              <th scope="col">Số lượng</th>
-              <th scope="col">Giá tiền</th>
-              <th scope="col">Thanh toán</th>
+              <th scope="col"></th>
+              <th scope="col">
+                <p className="fs14 mb-0">Tên khách hàng</p>
+              </th>
+              <th scope="col">
+                <p className="fs14 mb-0">Số điện thoại</p>
+              </th>
+              <th scope="col">
+                <p className="fs14 mb-0">Tên sách</p>
+              </th>
+              <th scope="col">
+                <p className="fs14 mb-0">Số lượng</p>
+              </th>
+              <th scope="col">
+                <p className="fs14 mb-0">Giá tiền</p>
+              </th>
+              <th scope="col">
+                <p className="fs14 mb-0">Thanh toán</p>
+              </th>
               <th scope="col"></th>
             </tr>
           </thead>
@@ -158,14 +200,28 @@ const TrangDonHang = () => {
         <table class="table">
           <thead>
             <tr>
-              <th scope="col">#</th>
-              <th scope="col">Tên khách hàng</th>
-              <th scope="col">Số điện thoại</th>
-              <th scope="col">Tên sách</th>
-              <th scope="col">Số lượng</th>
-              <th scope="col">Thời gian</th>
-              <th scope="col">Trạng thái</th>
-              <th scope="col">Tổng tiền</th>
+              <th scope="col"></th>
+              <th scope="col">
+                <p className="fs14 mb-0">Tên khách hàng</p>
+              </th>
+              <th scope="col">
+                <p className="fs14 mb-0">Số điện thoại</p>
+              </th>
+              <th scope="col">
+                <p className="fs14 mb-0">Tên sách</p>
+              </th>
+              <th scope="col">
+                <p className="fs14 mb-0">Số lượng</p>
+              </th>
+              <th scope="col">
+                <p className="fs14 mb-0">Thời gian</p>
+              </th>
+              <th scope="col">
+                <p className="fs14 mb-0">Trạng thái</p>
+              </th>
+              <th scope="col">
+                <p className="fs14 mb-0">Tổng tiền</p>
+              </th>
               <th scope="col"></th>
             </tr>
           </thead>

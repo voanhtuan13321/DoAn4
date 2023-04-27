@@ -4,64 +4,15 @@ import api from "../../components/urlApi";
 import { useNavigate } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
-// import { Button, Form, Input } from "antd";
 
-const TrangDanhMuc = () => {
+const XemDanhMuc = () => {
   const ITEMS_PER_PAGE = 15;
-  let navigation = useNavigate();
+  let navigate = useNavigate();
 
-  const [input, setInput] = useState({
-    ten: "",
-    moTa: "",
-  });
   const [danhMuc, setDanhMuc] = useState([]);
-  const [a, setA] = useState(true);
   const [pageCount, setPageCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
-  let [errTen, setErrTen] = useState("");
-  let [errMota, setErrMoTa] = useState("");
-
-  const handleInput = (e) => {
-    let nameKey = e.target.name;
-    let nameValue = e.target.value;
-    setInput((state) => ({ ...state, [nameKey]: nameValue }));
-  };
-
-  const handlerSubmit = (e) => {
-    e.preventDefault();
-    let check = 1;
-    if (input.ten == "") {
-      check = 2;
-      setErrTen("Yêu cầu nhập vào tên");
-      return;
-    } else {
-      check = 1;
-      setErrTen("");
-    }
-    if (input.moTa == "") {
-      check = 2;
-      setErrMoTa("Yêu cầu nhập vào mô tả");
-      return;
-    } else {
-      check = 1;
-      setErrMoTa("");
-    }
-
-    if (check == 1) {
-      const data = {
-        ten: input.ten,
-        moTa: input.moTa,
-      };
-      axios
-        .post(api.getDanhMuc, data)
-        .then((res) => {
-          alert("Thêm danh mục thành công");
-
-          setA(!a);
-        })
-        .catch((errors) => console.log(errors));
-    }
-  };
+  const [a, setA] = useState(true);
 
   useEffect(() => {
     axios
@@ -92,7 +43,7 @@ const TrangDanhMuc = () => {
 
   function checkId(item) {
     localStorage.setItem("danhmuc", JSON.stringify(item));
-    navigation("/admin/sua_danh_muc");
+    navigate("/admin/sua_danh_muc");
   }
 
   const handlePageClick = ({ selected }) => {
@@ -133,58 +84,27 @@ const TrangDanhMuc = () => {
     });
   };
 
+  const themDanhMuc = () => {
+    navigate("/admin/them_danh_muc");
+  };
+
   return (
     <>
-      <div className="container-xxl">
-        <div className="row">
-          <div className="col-6">
-            <form onSubmit={handlerSubmit}>
-              <div className="mb-3 text-center fsinput">
-                <b className="form-label">Thêm danh mục</b>
-              </div>
-              <div className="mb-3">
-                <label className="form-label">Nhập tên</label>
-                <input
-                  type="text"
-                  name="ten"
-                  placeholder="Nhập tên"
-                  onChange={handleInput}
-                  className="form-control"
-                  id="exampleInputEmail1"
-                  aria-describedby="emailHelp"
-                />
-                <p className="error">{errTen}</p>
-              </div>
-              <div className="mb-3">
-                <label className="form-label">Nhập mô tả</label>
-                <input
-                  type="text"
-                  name="moTa"
-                  placeholder="Nhập mô tả"
-                  onChange={handleInput}
-                  className="form-control"
-                  id="exampleInputPassword1"
-                />
-                <p className="error">{errMota}</p>
-              </div>
-              <div className="text-center">
-                <button type="submit" className="btn btn-primary">
-                  Thêm danh mục
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-
-      <div className="py-5">
+      <button className="btn btn-success" onClick={themDanhMuc}>
+        Thêm danh mục
+      </button>
+      <div className="py-2">
         <h5>Danh mục sản phẩm</h5>
         <table class="table">
           <thead>
             <tr>
               <th scope="col">#</th>
-              <th scope="col">Tên</th>
-              <th scope="col">Mô tả</th>
+              <th scope="col">
+                <p className="fs14 mb-0">Tên</p>
+              </th>
+              <th scope="col">
+                <p className="fs14 mb-0">Mô tả</p>
+              </th>
               <th scope="col"></th>
             </tr>
           </thead>
@@ -214,4 +134,4 @@ const TrangDanhMuc = () => {
   );
 };
 
-export default TrangDanhMuc;
+export default XemDanhMuc;

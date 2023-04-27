@@ -1,15 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../components/urlApi";
 const ThayDoiTaiKhoan = () => {
-  let admin = JSON.parse(localStorage.getItem("admin"));
+  let capNhat = JSON.parse(localStorage.getItem("capNhatTaiKhoan"));
+  console.log(capNhat.taiKhoan);
+  const navigate = useNavigate();
   const [input, setInput] = useState({
-    taiKhoan: "",
-    matKhau: "",
+    ten: capNhat.ten,
+    email: capNhat.email,
+    soDienThoai: capNhat.soDienThoai,
+    taiKhoan: capNhat.taiKhoan,
+    matKhau: capNhat.matKhau,
   });
-  let [errTaiKhoan, setErrTaiKhoan] = useState("");
-  let [errMatKhau, setErrmatKhau] = useState("");
+
+  let [errTen, setTen] = useState("");
+  let [errSoDienThoai, setSoDienThoai] = useState("");
+  let [errEmail, setEmail] = useState("");
+  let [errTaiKhoan, setTaiKhoan] = useState("");
+  let [errMatKhau, setMatKhau] = useState("");
 
   function handleInput(e) {
     let nameKey = e.target.name;
@@ -17,37 +26,90 @@ const ThayDoiTaiKhoan = () => {
     setInput((state) => ({ ...state, [nameKey]: nameValue }));
   }
 
+  // Hàm kiểu tra só điện thoại nhập vào
+  function kiemTraSoDienThoai(value) {
+    const phoneNumberRegex = /^\d{10}$/;
+    return phoneNumberRegex.test(value);
+  }
+
+  // Hàm kiểu tra email nhập vào
+  function kiemTraEmail(value) {
+    const emailRegex = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+    return emailRegex.test(value);
+  }
+
   const handlerSubmit = (e) => {
     e.preventDefault();
-
     let check = 1;
-    if (input.taiKhoan == "") {
+    if (input.ten == "") {
       check = 2;
-      setErrTaiKhoan("Yêu cầu nhập tài khoản");
+      setTen("Yêu cầu nhập vào tên");
+      return;
     } else {
       check = 1;
-      setErrTaiKhoan("");
+      setTen("");
+    }
+    if (input.soDienThoai == "") {
+      check = 2;
+      setSoDienThoai("Yêu cầu nhập vào số điện thoại");
+      return;
+    } else {
+      if (!kiemTraSoDienThoai(input.soDienThoai)) {
+        check = 2;
+        setSoDienThoai("Yêu cầu nhập vào số điện thoại hợp lệ");
+        return;
+      } else {
+        check = 1;
+        setSoDienThoai("");
+      }
+    }
+    if (input.email == "") {
+      check = 2;
+      setEmail("Yêu cầu nhập vào địa chỉ");
+      return;
+    } else {
+      if (!kiemTraEmail(input.email)) {
+        check = 2;
+        setEmail("Email không không hợp lệ");
+        return;
+      } else {
+        check = 1;
+        setEmail("");
+      }
+    }
+    if (input.taiKhoan == "") {
+      check = 2;
+      setTaiKhoan("Yêu cầu nhập tài khoản");
+      return;
+    } else {
+      check = 1;
+      setTaiKhoan("");
     }
     if (input.matKhau == "") {
       check = 2;
-      setErrmatKhau("Yêu cầu nhập mật khẩu");
+      setMatKhau("Yêu cầu nhập mật khẩu");
+      return;
     } else {
       check = 1;
-      setErrmatKhau("");
+      setMatKhau("");
     }
 
     if (check == 1) {
       const data = {
+        id: 1,
+        ten: input.ten,
+        email: input.email,
+        soDienThoai: input.soDienThoai,
         taiKhoan: input.taiKhoan,
         matKhau: input.matKhau,
       };
 
-      // axios
-      //   .put(, data)
-      //   .then((res) => {
-      //     console.log(res);
-      //   })
-      //   .catch((errors) => console.log(errors));
+      axios
+        .put(api.capNhat, data)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((errors) => console.log(errors));
     }
   };
 
@@ -58,21 +120,52 @@ const ThayDoiTaiKhoan = () => {
         <div className="input-container">
           <input
             type="text"
-            name="taiKhoan"
+            name="ten"
             onChange={handleInput}
-            value={admin.taiKhoan}
+            value={input.ten}
             placeholder="Nhập tài khoản"
           />
-          <span></span>
+          <p className="error">{errTen}</p>
+        </div>
+        <div className="input-container">
+          <input
+            type="email"
+            name="email"
+            onChange={handleInput}
+            value={input.email}
+            placeholder="Nhập email"
+          />
+          <p className="error">{errEmail}</p>
+        </div>
+        <div className="input-container">
+          <input
+            type="number"
+            name="soDienThoai"
+            onChange={handleInput}
+            value={input.soDienThoai}
+            placeholder="Nhập so dien thoai"
+          />
+          <p className="error">{errSoDienThoai}</p>
+        </div>
+        <div className="input-container">
+          <input
+            type="text"
+            name="taiKhoan"
+            onChange={handleInput}
+            value={input.taiKhoan}
+            placeholder="Nhập tài khoản"
+          />
+          <p className="error">{errTaiKhoan}</p>
         </div>
         <div className="input-container">
           <input
             type="password"
             name="matKhau"
             onChange={handleInput}
-            value={admin.matKhau}
+            value={input.matKhau}
             placeholder="Enter password"
           />
+          <p className="error">{errMatKhau}</p>
         </div>
         <button type="submit" className="submit">
           Cập nhật tài khoản

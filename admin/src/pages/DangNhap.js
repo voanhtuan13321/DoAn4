@@ -53,7 +53,11 @@ const DangNhap = () => {
         .post(api.login, data)
         .then((res) => {
           if (res.data.status === "ok") {
-            localStorage.setItem("admin", JSON.stringify(input.taiKhoan));
+            localStorage.setItem(
+              "taiKhoanAdmin",
+              JSON.stringify(input.taiKhoan)
+            );
+            localStorage.setItem("matKhauAdmin", JSON.stringify(input.matKhau));
             navigate("/admin/don_hang");
           } else {
             check = 2;

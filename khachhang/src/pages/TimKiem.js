@@ -3,14 +3,17 @@ import api from "../components/urlApi";
 import { Link } from "react-router-dom";
 
 const TimKiem = () => {
-  let sach = JSON.parse(localStorage.getItem("timKiem"));
-  if (sach == "") {
+  // let sach = JSON.parse(localStorage.getItem("timKiem"));
+  let sach = JSON.parse(sessionStorage.getItem("timKiem"));
+  if (sach == "" || sach == null) {
     return (
       <div className="container-xxl py-5 mh400 text-center">
         <h3>Không tìm thấy sản phẩm</h3>
       </div>
     );
   }
+
+  alert(sach);
 
   return (
     <div className="container-xxl py-5 mh700">

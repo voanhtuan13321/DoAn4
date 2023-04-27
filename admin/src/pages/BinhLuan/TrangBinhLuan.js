@@ -43,17 +43,29 @@ const TrangBinhLuan = () => {
       return (
         <tr key={index}>
           <th scope="row">{index}</th>
-          <td>{item.ten}</td>
-          <td>{item.tacGia}</td>
-          <td>{item.nhaXuatBan}</td>
-          <td>{item.giaSach}</td>
-          <td>{item.ngayXuatBan}</td>
+          <td>
+            <p className="fs14 mb-0">{item.ten}</p>
+          </td>
+          <td>
+            <p className="fs14 mb-0">{item.tacGia}</p>
+          </td>
+          <td>
+            <p className="fs14 mb-0">{item.nhaXuatBan}</p>
+          </td>
+          <td>
+            <p className="fs14 mb-0">{item.giaSach}</p>
+          </td>
+          <td>
+            <p className="fs14 mb-0">{item.ngayXuatBan}</p>
+          </td>
           <td>
             <button
               onClick={() => xemBinhLuan(item.idSach)}
               className="btn btn-success text-white"
             >
-              <GrView />
+              <p className="fs14 mb-0">
+                <GrView />
+              </p>
             </button>
           </td>
         </tr>

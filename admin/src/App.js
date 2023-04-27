@@ -19,7 +19,17 @@ import SuaThongTinCuaHang from "../src/pages/CuaHang/SuaThongTinCuaHang";
 import TrangBinhLuan from "../src/pages/BinhLuan/TrangBinhLuan";
 import BinhLuanCuaSanPham from "../src/pages/BinhLuan/BinhLuanCuaSanPham";
 import Sidebar from "./components/Sidebar";
+
 import ThayDoiTaiKhoan from "./pages/ThayDoiTaiKhoan";
+import ThemDanhMuc from "./pages/DanhMuc/ThemDanhMuc";
+import XemDanhMuc from "./pages/DanhMuc/XemDanhMuc";
+
+import ThemSuKien from "./pages/SuKien/ThemSuKien";
+import XemSuKien from "./pages/SuKien/XemSuKien";
+
+import ThemSanPham from "./pages/SanPham/ThemSanPham";
+import XemSanPham from "./pages/SanPham/XemSanPham";
+import TimKiem from "./pages/SanPham/TiemKiem";
 
 function App() {
   return (
@@ -29,9 +39,18 @@ function App() {
         {/* <Route path="/admin/check_tai_khoan" element={<SuaDanhMuc/>} /> */}
         <Route path="/admin" element={<Sidebar />}>
           <Route path="/admin/trang_danh_muc" element={<TrangDanhMuc />} />
+
+          <Route path="/admin/them_danh_muc" element={<ThemDanhMuc />} />
+          <Route path="/admin/xem_danh_muc" element={<XemDanhMuc />} />
           <Route path="/admin/sua_danh_muc" element={<SuaDanhMuc />} />
-          <Route path="/admin/trang_su_kien" element={<TrangSuKien />} />
+
+          <Route path="/admin/them_su_kien" element={<ThemSuKien />} />
           <Route path="/admin/sua_su_kien" element={<SuaSuKien />} />
+          <Route path="/admin/xem_su_kien" element={<XemSuKien />} />
+
+          <Route path="/admin/them_san_pham" element={<ThemSanPham />} />
+          <Route path="/admin/xem_san_pham" element={<XemSanPham />} />
+
           <Route path="/admin/trang_cua_hang" element={<TrangCuaHang />} />
           <Route path="/admin/binh_luan" element={<TrangBinhLuan />} />
           <Route
@@ -47,8 +66,11 @@ function App() {
           <Route path="/admin/trang_san_pham" element={<TrangSanPham />} />
           <Route path="/admin/sua_san_pham" element={<SuaSanPham />} />
           <Route path="/admin/thong_ke" element={<ThongKe />} />
+
+          <Route path="/admin/tim_kiem" element={<TimKiem />} />
+
           <Route
-            path="/admin/thay_doi_tai_khoan"
+            path="/admin/cap_nhat_tai_khoan"
             element={<ThayDoiTaiKhoan />}
           />
         </Route>

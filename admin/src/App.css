@@ -420,7 +420,14 @@ main{
 
 a{text-decoration: none;}
 
+.fs14 {
+  font-size: 14px;
+}
 
+.text12 {
+  text-align: left;
+  font-size: 12px;
+}
 
 
 

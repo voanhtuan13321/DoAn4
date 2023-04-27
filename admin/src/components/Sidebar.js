@@ -2,17 +2,19 @@ import React, { useState } from "react";
 import { BsBorderStyle, BsFillCalendarEventFill } from "react-icons/bs";
 import { BiUserCircle } from "react-icons/bi";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
-import { FaBars } from "react-icons/fa";
+import { BsSearch } from "react-icons/bs";
 import { GoFileDirectory } from "react-icons/go";
 import {
   AiOutlineDashboard,
-  AiOutlineLogout,
   AiOutlineUserAdd,
   AiFillAppstore,
   AiOutlineComment,
 } from "react-icons/ai";
 import { FaProductHunt } from "react-icons/fa";
-const Sidebar = ({ children }) => {
+import api from "./urlApi";
+import axios from "axios";
+const Sidebar = () => {
+  const [timKiemSach, setTimKiem] = useState("");
   let navigate = useNavigate();
   let admin = JSON.parse(localStorage.getItem("admin"));
   const [isOpen, setIsOpen] = useState(false);
@@ -24,12 +26,12 @@ const Sidebar = ({ children }) => {
       icon: <BsBorderStyle />,
     },
     {
-      path: "/admin/trang_danh_muc",
+      path: "/admin/them_danh_muc",
       name: "Danh mục",
       icon: <GoFileDirectory />,
     },
     {
-      path: "/admin/trang_su_kien",
+      path: "/admin/them_su_kien",
       name: "Sự kiện",
       icon: <BsFillCalendarEventFill />,
     },
@@ -44,7 +46,7 @@ const Sidebar = ({ children }) => {
       icon: <AiFillAppstore />,
     },
     {
-      path: "/admin/trang_san_pham",
+      path: "/admin/them_san_pham",
       name: "Sản phẩm",
       icon: <FaProductHunt />,
     },
@@ -58,30 +60,96 @@ const Sidebar = ({ children }) => {
       icon: <AiOutlineDashboard className="fs-4" />,
       name: "Thống kê",
     },
-    {
-      path: "/",
-      icon: <AiOutlineLogout className="fs-4" />,
-      name: "Đăng xuất",
-    },
   ];
 
-  const thayDoi = () => {
-    navigate("/admin/thay_doi_tai_khoan");
+  const handleSearch = (event) => {
+    setTimKiem(event.target.value);
+  };
+
+  const dangXuat = () => {
+    localStorage.removeItem("admin");
+    navigate("/");
+  };
+
+  const capNhatTaiKhoan = () => {
+    axios.get(api.capNhat).then((res) => {
+      localStorage.setItem("capNhatTaiKhoan", JSON.stringify(res.data.data));
+    });
+    navigate("/admin/cap_nhat_tai_khoan");
+  };
+
+  const timKiem = () => {
+    if (timKiemSach == "") {
+      alert("Bạn chưa nhập");
+    } else {
+      axios
+        .get(api.timKiem, { params: { search: timKiemSach } })
+        .then((res) => {
+          localStorage.setItem("timKiemSach", JSON.stringify(res.data.data));
+          window.location.href = `http://${api.ip}:2000/admin/tim_kiem`;
+          // navigate("/admin/tim_kiem");
+        });
+    }
+    // navigate("/admin/tim_kiem");
   };
   return (
     <div>
       <div className="header py-2">
         <div className="container">
           <div className="row">
-            <div className="col-3">
+            <div className="col-2">
               <img src="" />
             </div>
-            <div className="col-9 d-flex align-items-center justify-content-end  ">
-              <button onClick={thayDoi} className="btn">
-                {/* <div className="widthIcon"> */}
+            <div className="col-5">
+              <div className="d-flex">
+                <input
+                  className="form-control me-2"
+                  type="search"
+                  placeholder="Tìm kiếm"
+                  onChange={handleSearch}
+                  aria-label="Search"
+                />
+                <button
+                  onClick={timKiem}
+                  className="btn btn-outline-success"
+                  type="submit"
+                >
+                  <BsSearch />
+                </button>
+              </div>
+            </div>
+            <div className="col-5 d-flex align-items-center justify-content-end  ">
+              <div class="dropdown">
+                <button
+                  class="btn btn-secondary dropdown-toggle"
+                  type="button"
+                  id="dropdownMenuButton1"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <BiUserCircle /> {admin}
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  <li>
+                    <button className="btn w-100 fs-6 text" onClick={dangXuat}>
+                      <span className="text12"> Đăng xuất</span>
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      className="btn w-100 fs-6 text"
+                      onClick={capNhatTaiKhoan}
+                    >
+                      <span className="text12">Cap nhat tai khoan</span>
+                    </button>
+                  </li>
+                </ul>
+              </div>
+              {/* <button onClick={thayDoi} className="btn">
+                <div className="widthIcon">
                 <BiUserCircle /> {admin}
-                {/* </div> */}
-              </button>
+                </div>
+              </button> */}
             </div>
           </div>
         </div>

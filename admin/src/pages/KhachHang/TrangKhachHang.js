@@ -56,19 +56,31 @@ const TrangKhachHang = () => {
       return (
         <tr key={index}>
           <th scope="row">{index}</th>
-          <td>{item.ten}</td>
-          <td>{item.email}</td>
-          <td>{item.soDienThoai}</td>
-          <td>{item.diaChi}</td>
-          <td>{item.taiKhoan}</td>
-          <td>{item.matKhau}</td>
+          <td>
+            <p className="fs14 mb-0">{item.ten}</p>
+          </td>
+          <td>
+            <p className="fs14 mb-0">{item.email}</p>
+          </td>
+          <td>
+            <p className="fs14 mb-0">{item.soDienThoai}</p>
+          </td>
+          <td>
+            <p className="fs14 mb-0">{item.diaChi}</p>
+          </td>
+          <td>
+            <p className="fs14 mb-0">{item.taiKhoan}</p>
+          </td>
+          <td>
+            <p className="fs14 mb-0">{item.matKhau}</p>
+          </td>
           <td>
             <button
               className="btn btn-danger"
               value={item.idKhachHang}
               onClick={checkId}
             >
-              Xóa
+              <p className="fs14 mb-0">Xóa</p>
             </button>
           </td>
         </tr>
@@ -91,12 +103,24 @@ const TrangKhachHang = () => {
             <thead>
               <tr>
                 <th scope="col">#</th>
-                <th scope="col">Tên</th>
-                <th scope="col">Email</th>
-                <th scope="col">Số điện thoại</th>
-                <th scope="col">Địa chỉ</th>
-                <th scope="col">Tài khoản</th>
-                <th scope="col">Mật khẩu</th>
+                <th scope="col">
+                  <p className="fs14 mb-0">Tên</p>
+                </th>
+                <th scope="col">
+                  <p className="fs14 mb-0">Email</p>
+                </th>
+                <th scope="col">
+                  <p className="fs14 mb-0">Số điện thoại</p>
+                </th>
+                <th scope="col">
+                  <p className="fs14 mb-0">Địa chỉ</p>
+                </th>
+                <th scope="col">
+                  <p className="fs14 mb-0">Tài khoản</p>
+                </th>
+                <th scope="col">
+                  <p className="fs14 mb-0">Mật khẩu</p>
+                </th>
                 <th scope="col"></th>
               </tr>
             </thead>

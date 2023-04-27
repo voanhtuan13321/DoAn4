@@ -50,40 +50,58 @@ const SuaDanhMuc = () => {
         .post(api.getDanhMuc, data)
         .then((res) => {
           alert("Sửa thành công");
-          navigate("/admin/trang_danh_muc");
+          navigate("/admin/xem_danh_muc");
           setA(!a);
         })
         .catch((errors) => console.log(errors));
     }
   };
   return (
-    <div className="d-flex justify-content-center py-5">
-      <form className="form" onSubmit={handlerSubmit}>
-        <p className="form-title">Sửa danh mục</p>
-        <div className="input-container">
-          <input
-            type="text"
-            name="ten"
-            value={input.ten}
-            onChange={handleInput}
-            placeholder="Nhập tên"
-          />
-          <span className="error">{errTen}</span>
+    <div className="container-xxl">
+      <div className="row">
+        <div className="col-3"></div>
+        <div className="col-6">
+          <form onSubmit={handlerSubmit}>
+            <div className="mb-3 text-center fsinput">
+              <b className="form-label">Cập nhật danh mục</b>
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Nhập tên</label>
+              <input
+                type="text"
+                name="ten"
+                placeholder="Nhập tên"
+                onChange={handleInput}
+                value={input.ten}
+                className="form-control"
+                id="exampleInputEmail1"
+                aria-describedby="emailHelp"
+              />
+              <p className="error">{errTen}</p>
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Nhập mô tả</label>
+              <textarea
+                type="text"
+                name="moTa"
+                rows={5}
+                placeholder="Nhập mô tả"
+                onChange={handleInput}
+                value={input.moTa}
+                className="form-control"
+                id="exampleInputPassword1"
+              />
+              <p className="error">{errMoTa}</p>
+            </div>
+            <div className="text-center">
+              <button type="submit" className="btn btn-primary">
+                Cập nhật danh mục
+              </button>
+            </div>
+          </form>
         </div>
-        <div className="input-container">
-          <input
-            type="text"
-            name="moTa"
-            value={input.moTa}
-            onChange={handleInput}
-            placeholder="Nhập mô tả"
-          />
-        </div>
-        <span className="error">{errMoTa}</span>
-        <button type="submit" className="submit">
-          Sửa
-        </button>
-      </form>
+        <div className="col-3"></div>
+      </div>
     </div>
   );
 };
