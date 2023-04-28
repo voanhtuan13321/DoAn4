@@ -59,12 +59,24 @@ const TimKiem = () => {
           <thead>
             <tr>
               <th scope="col">#</th>
-              <th scope="col">Tên</th>
-              <th scope="col">Tác giả</th>
-              <th scope="col">Nhà xuất bản</th>
-              <th scope="col">Giá sách</th>
-              <th scope="col">Số lượng</th>
-              <th scope="col">Ảnh</th>
+              <th scope="col">
+                <p className="fs14 mb-0">Tên</p>
+              </th>
+              <th scope="col">
+                <p className="fs14 mb-0">Tác giả</p>
+              </th>
+              <th scope="col">
+                <p className="fs14 mb-0">Nhà xuất bản</p>
+              </th>
+              <th scope="col">
+                <p className="fs14 mb-0">Giá sách</p>
+              </th>
+              <th scope="col">
+                <p className="fs14 mb-0">Số lượng</p>
+              </th>
+              <th scope="col">
+                <p className="fs14 mb-0">Ảnh</p>
+              </th>
               <th scope="col"></th>
             </tr>
           </thead>

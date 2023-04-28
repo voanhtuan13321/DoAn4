@@ -65,11 +65,12 @@ const ThemSuKien = () => {
 
   return (
     <div className="">
-      <button className="btn btn-success" onClick={xemSuKien}>
+      <button className="btn btn-outline-success" onClick={xemSuKien}>
         Xem sự kiện
       </button>
       <div className="container-xxl">
         <div className="row">
+          <div className="col-3"></div>
           <div className="col-6">
             <form onSubmit={handlerSubmit}>
               <div className="mb-3 text-center fsinput">
@@ -108,6 +109,7 @@ const ThemSuKien = () => {
               </div>
             </form>
           </div>
+          <div className="col-3"></div>
         </div>
       </div>
     </div>

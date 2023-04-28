@@ -16,8 +16,27 @@ const SuaThongTinCuaHang = () => {
     email: item.email,
   });
 
+  let [errTen, setErrTen] = useState("");
+  let [errMoTa, setErrMoTa] = useState("");
+  let [errSoDienThoai, setErrSoDienThoai] = useState("");
+  let [errDiaChi, setErrDiaChi] = useState("");
+  let [errWebsite, setErrWebsite] = useState("");
+  let [errEmail, setErrEmail] = useState("");
+
   console.log(input.id);
   const [a, setA] = useState(false);
+
+  // Hàm kiểu tra só điện thoại nhập vào
+  function kiemTraSoDienThoai(value) {
+    const phoneNumberRegex = /^\d{10}$/;
+    return phoneNumberRegex.test(value);
+  }
+
+  // Hàm kiểu tra email nhập vào
+  function kiemTraEmail(value) {
+    const emailRegex = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+    return emailRegex.test(value);
+  }
 
   const handleInput = (e) => {
     let nameKey = e.target.name;
@@ -27,6 +46,48 @@ const SuaThongTinCuaHang = () => {
 
   const handlerSubmit = (e) => {
     e.preventDefault();
+    let check = 1;
+
+    if (input.tenCuaHang == "") {
+      setErrTen("Vui lòng nhập vào tên cửa hàng");
+    }
+    if (input.diaChi == "") {
+      setErrDiaChi("Vui lòng nhập vào địa chỉ cửa hàng");
+    }
+    if (input.moTa == "") {
+      setErrMoTa("Vui lòng nhập vào mô tả cửa hàng");
+    }
+    if (input.website == "") {
+      setErrWebsite("Vui lòng nhập vào website cửa hàng");
+    }
+    if (input.soDienThoai == "") {
+      check = 2;
+      setErrSoDienThoai("Yêu cầu nhập vào số điện thoại");
+      return;
+    } else {
+      if (!kiemTraSoDienThoai(input.soDienThoai)) {
+        check = 2;
+        setErrSoDienThoai("Yêu cầu nhập vào số điện thoại hợp lệ");
+        return;
+      } else {
+        check = 1;
+        setErrSoDienThoai("");
+      }
+    }
+    if (input.email == "") {
+      check = 2;
+      setErrEmail("Yêu cầu nhập vào email cửa hàng");
+      return;
+    } else {
+      if (!kiemTraEmail(input.email)) {
+        check = 2;
+        setErrEmail("Email không không hợp lệ");
+        return;
+      } else {
+        check = 1;
+        setErrEmail("");
+      }
+    }
 
     const data = {
       id: input.id,
@@ -63,7 +124,7 @@ const SuaThongTinCuaHang = () => {
                   value={input.tenCuaHang}
                   placeholder="Nhập tên cửa hàng"
                 />
-                <span></span>
+                <p className="error">{errTen}</p>
               </div>
               <div className="input-container">
                 <label className="input_label">NHập mô tả</label>
@@ -74,6 +135,7 @@ const SuaThongTinCuaHang = () => {
                   onChange={handleInput}
                   placeholder="Nhập mô tả"
                 />
+                <p className="error">{errMoTa}</p>
               </div>
               <label className="input_label">Nhập số điện thoại</label>
               <div className="input-container">
@@ -84,6 +146,7 @@ const SuaThongTinCuaHang = () => {
                   onChange={handleInput}
                   placeholder="Nhập số điện thoại"
                 />
+                <p className="error">{errSoDienThoai}</p>
               </div>
             </div>
             <div>
@@ -96,6 +159,7 @@ const SuaThongTinCuaHang = () => {
                   onChange={handleInput}
                   placeholder="Nhập số điạ chỉ"
                 />
+                <p className="error">{errDiaChi}</p>
               </div>
               <div className="input-container">
                 <label className="input_label">NHập website</label>
@@ -106,6 +170,7 @@ const SuaThongTinCuaHang = () => {
                   onChange={handleInput}
                   placeholder="Website"
                 />
+                <p className="error">{errWebsite}</p>
               </div>
               <div className="input-container pb-3">
                 <label className="input_label">Nhập email cửa hàng</label>
@@ -116,6 +181,7 @@ const SuaThongTinCuaHang = () => {
                   onChange={handleInput}
                   placeholder="Email"
                 />
+                <p className="error">{errEmail}</p>
               </div>
             </div>
           </div>

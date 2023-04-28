@@ -145,17 +145,12 @@ const Sidebar = () => {
                   </li>
                 </ul>
               </div>
-              {/* <button onClick={thayDoi} className="btn">
-                <div className="widthIcon">
-                <BiUserCircle /> {admin}
-                </div>
-              </button> */}
             </div>
           </div>
         </div>
       </div>
       <div className="width vh-100">
-        <div style={{ width: "180px" }} className="sidebar">
+        <div style={{ width: "190px" }} className="sidebar">
           {/* <div className="top_section">
             <div
               style={{ marginLeft: isOpen ? "50px" : "0px" }}
@@ -169,7 +164,7 @@ const Sidebar = () => {
               className="link"
               activeclassName="active"
             >
-              <div className="icon">{item.icon}</div>
+              <div className="">{item.icon}</div>
               <div
                 // style={{ display: isOpen ? "block" : "none" }}
                 className="link_text"

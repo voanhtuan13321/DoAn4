@@ -60,55 +60,62 @@ const TrangSuaSuKien = () => {
         .catch((errors) => console.log(errors));
     }
   };
-
-  return (
-    <>
-      <div className="container-xxl">
-        <div className="row">
-          <div className="col-6">
-            <form onSubmit={handlerSubmit}>
-              <div className="mb-3 text-center fsinput">
-                <b className="form-label">Cập nhật sự kiện</b>
-              </div>
-              <div className="mb-3">
-                <label className="form-label">Nhập tiêu đề</label>
-                <input
-                  type="text"
-                  name="tieuDe"
-                  placeholder="Nhập tiêu đề"
-                  onChange={handleInput}
-                  value={input.tieuDe}
-                  className="form-control"
-                  id="exampleInputEmail1"
-                  aria-describedby="emailHelp"
-                />
-                <p className="error">{errTieuDe}</p>
-              </div>
-              <div className="mb-3">
-                <label className="form-label">Nhập nội dung</label>
-                <textarea
-                  type="text"
-                  name="noiDung"
-                  rows={5}
-                  placeholder="Nhập nội dung"
-                  onChange={handleInput}
-                  value={input.noiDung}
-                  className="form-control"
-                  id="exampleInputPassword1"
-                />
-                <p className="error">{errNoiDung}</p>
-              </div>
-              <div className="text-center">
-                <button type="submit" className="btn btn-primary">
-                  Cập nhật sự kiện
-                </button>
-              </div>
-            </form>
-          </div>
+const xemSuKien = () => {
+  navigate("/admin/xem_su_kien");
+};
+return (
+  <>
+    <div className="container-xxl">
+      <button className="btn btn-outline-success" onClick={xemSuKien}>
+        Xem sự kiện
+      </button>
+      <div className="row">
+        <div className="col-3"></div>
+        <div className="col-6">
+          <form onSubmit={handlerSubmit}>
+            <div className="mb-3 text-center fsinput">
+              <b className="form-label">Cập nhật sự kiện</b>
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Nhập tiêu đề</label>
+              <input
+                type="text"
+                name="tieuDe"
+                placeholder="Nhập tiêu đề"
+                onChange={handleInput}
+                value={input.tieuDe}
+                className="form-control"
+                id="exampleInputEmail1"
+                aria-describedby="emailHelp"
+              />
+              <p className="error">{errTieuDe}</p>
+            </div>
+            <div className="mb-3">
+              <label className="form-label">Nhập nội dung</label>
+              <textarea
+                type="text"
+                name="noiDung"
+                rows={5}
+                placeholder="Nhập nội dung"
+                onChange={handleInput}
+                value={input.noiDung}
+                className="form-control"
+                id="exampleInputPassword1"
+              />
+              <p className="error">{errNoiDung}</p>
+            </div>
+            <div className="text-center">
+              <button type="submit" className="btn btn-primary">
+                Cập nhật sự kiện
+              </button>
+            </div>
+          </form>
         </div>
+        <div className="col-3"></div>
       </div>
-    </>
-  );
+    </div>
+  </>
+);
 };
 
 export default TrangSuaSuKien;

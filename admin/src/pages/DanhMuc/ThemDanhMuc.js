@@ -64,7 +64,7 @@ const TrangDanhMuc = () => {
   return (
     <>
       <div className="container-xxl">
-        <button className="btn btn-success" onClick={xemDanhMuc}>
+        <button className="btn btn-outline-success" onClick={xemDanhMuc}>
           Xem danh mục
         </button>
         <div className="row">
@@ -79,7 +79,7 @@ const TrangDanhMuc = () => {
                 <input
                   type="text"
                   name="ten"
-                  placeholder="Nhập tên"
+                  placeholder="Nhập tên danh mục"
                   onChange={handleInput}
                   className="form-control"
                   id="exampleInputEmail1"
@@ -93,7 +93,7 @@ const TrangDanhMuc = () => {
                   type="text"
                   name="moTa"
                   rows={5}
-                  placeholder="Nhập mô tả"
+                  placeholder="Nhập mô tả danh mục"
                   onChange={handleInput}
                   className="form-control"
                   id="exampleInputPassword1"

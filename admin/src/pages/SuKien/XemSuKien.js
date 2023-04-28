@@ -86,7 +86,7 @@ const TrangSuKien = () => {
 
   return (
     <div className="">
-      <button className="btn btn-success" onClick={themSuKien}>
+      <button className="btn btn-outline-success" onClick={themSuKien}>
         Thêm sự kiện
       </button>
       <div>
@@ -103,25 +103,29 @@ const TrangSuKien = () => {
             </thead>
             <tbody>{renderSuKien()}</tbody>
           </table>
-          <ReactPaginate
-            previousLabel={<AiFillCaretLeft />}
-            nextLabel={<AiFillCaretRight />}
-            breakLabel={"..."}
-            pageCount={pageCount}
-            marginPagesDisplayed={2}
-            pageRangeDisplayed={3}
-            onPageChange={handlePageClick}
-            containerClassName={"pagination justify-content-center"}
-            pageClassName={"page-item"}
-            pageLinkClassName={"page-link"}
-            previousClassName={"page-item"}
-            previousLinkClassName={"page-link"}
-            nextClassName={"page-item"}
-            nextLinkClassName={"page-link"}
-            breakClassName={"page-item"}
-            breakLinkClassName={"page-link"}
-            activeClassName={"active"}
-          />
+          {currentData.length < 15 ? (
+            ""
+          ) : (
+            <ReactPaginate
+              previousLabel={<AiFillCaretLeft />}
+              nextLabel={<AiFillCaretRight />}
+              breakLabel={"..."}
+              pageCount={pageCount}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={3}
+              onPageChange={handlePageClick}
+              containerClassName={"pagination justify-content-center"}
+              pageClassName={"page-item"}
+              pageLinkClassName={"page-link"}
+              previousClassName={"page-item"}
+              previousLinkClassName={"page-link"}
+              nextClassName={"page-item"}
+              nextLinkClassName={"page-link"}
+              breakClassName={"page-item"}
+              breakLinkClassName={"page-link"}
+              activeClassName={"active"}
+            />
+          )}
         </div>
       </div>
     </div>

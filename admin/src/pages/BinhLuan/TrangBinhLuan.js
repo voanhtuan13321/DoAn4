@@ -3,8 +3,10 @@ import axios from "axios";
 import api from "../../components/urlApi";
 import { GrView } from "react-icons/gr";
 import { useNavigate } from "react-router-dom";
-
+import ReactPaginate from "react-paginate";
+import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 const TrangBinhLuan = () => {
+  const ITEMS_PER_PAGE = 15;
   let navigate = useNavigate();
 
   // Kiểm tra đăng nhập hay chưa
@@ -16,6 +18,8 @@ const TrangBinhLuan = () => {
   //////////////////////////////////
   const [binhLuan, setBinhLuan] = useState([]);
   const [a, setA] = useState(true);
+  const [pageCount, setPageCount] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
 
   // Gọi api lấy tất cả các sản phẩm có bình luận ra
   useEffect(() => {
@@ -24,11 +28,19 @@ const TrangBinhLuan = () => {
       .then((res) => {
         console.log(res);
         setBinhLuan(res.data.data);
+        setPageCount(Math.ceil(res.data.data.length / ITEMS_PER_PAGE));
       })
       .catch((error) => {
         console.log(error);
       });
   }, [a]);
+
+  const handlePageClick = ({ selected }) => {
+    setCurrentPage(selected);
+  };
+
+  const offset = currentPage * ITEMS_PER_PAGE;
+  const currentData = binhLuan.slice(offset, offset + ITEMS_PER_PAGE);
 
   const sanPham = () => {
     return binhLuan.map((item, index) => {
@@ -61,7 +73,7 @@ const TrangBinhLuan = () => {
           <td>
             <button
               onClick={() => xemBinhLuan(item.idSach)}
-              className="btn btn-success text-white"
+              className="btn btn-outline-success text-white"
             >
               <p className="fs14 mb-0">
                 <GrView />
@@ -94,6 +106,29 @@ const TrangBinhLuan = () => {
         </thead>
         <tbody>{sanPham()}</tbody>
       </table>
+      {currentData.length < 15 ? (
+        ""
+      ) : (
+        <ReactPaginate
+          previousLabel={<AiFillCaretLeft />}
+          nextLabel={<AiFillCaretRight />}
+          breakLabel={"..."}
+          pageCount={pageCount}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={3}
+          onPageChange={handlePageClick}
+          containerClassName={"pagination justify-content-center"}
+          pageClassName={"page-item"}
+          pageLinkClassName={"page-link"}
+          previousClassName={"page-item"}
+          previousLinkClassName={"page-link"}
+          nextClassName={"page-item"}
+          nextLinkClassName={"page-link"}
+          breakClassName={"page-item"}
+          breakLinkClassName={"page-link"}
+          activeClassName={"active"}
+        />
+      )}
     </div>
   );
 };

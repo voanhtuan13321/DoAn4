@@ -56,8 +56,14 @@ const SuaDanhMuc = () => {
         .catch((errors) => console.log(errors));
     }
   };
+  const suaDanhMuc = () => {
+    navigate("/admin/xem_danh_muc");
+  };
   return (
     <div className="container-xxl">
+      <button className="btn btn-outline-success" onClick={suaDanhMuc}>
+        Xem danh mục
+      </button>
       <div className="row">
         <div className="col-3"></div>
         <div className="col-6">
@@ -70,7 +76,7 @@ const SuaDanhMuc = () => {
               <input
                 type="text"
                 name="ten"
-                placeholder="Nhập tên"
+                placeholder="Nhập tên danh mục"
                 onChange={handleInput}
                 value={input.ten}
                 className="form-control"
@@ -85,7 +91,7 @@ const SuaDanhMuc = () => {
                 type="text"
                 name="moTa"
                 rows={5}
-                placeholder="Nhập mô tả"
+                placeholder="Nhập mô tả danh mục"
                 onChange={handleInput}
                 value={input.moTa}
                 className="form-control"

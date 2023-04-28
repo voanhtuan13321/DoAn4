@@ -95,9 +95,9 @@ const ThongKe = () => {
       });
     } else {
       return (
-        <h3 className="d-flex align-item-center">
+        <h5 className="d-flex align-item-center">
           Không có đơn hàng trong tháng {thang}
-        </h3>
+        </h5>
       );
     }
   };
@@ -158,25 +158,29 @@ const ThongKe = () => {
             <tbody>{render()}</tbody>
           </table>
         </div>
-        <ReactPaginate
-          previousLabel={<AiFillCaretLeft />}
-          nextLabel={<AiFillCaretRight />}
-          breakLabel={"..."}
-          pageCount={pageCount}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={3}
-          onPageChange={handlePageClick}
-          containerClassName={"pagination justify-content-center"}
-          pageClassName={"page-item"}
-          pageLinkClassName={"page-link"}
-          previousClassName={"page-item"}
-          previousLinkClassName={"page-link"}
-          nextClassName={"page-item"}
-          nextLinkClassName={"page-link"}
-          breakClassName={"page-item"}
-          breakLinkClassName={"page-link"}
-          activeClassName={"active"}
-        />
+        {currentData.length < 15 ? (
+          ""
+        ) : (
+          <ReactPaginate
+            previousLabel={<AiFillCaretLeft />}
+            nextLabel={<AiFillCaretRight />}
+            breakLabel={"..."}
+            pageCount={pageCount}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={3}
+            onPageChange={handlePageClick}
+            containerClassName={"pagination justify-content-center"}
+            pageClassName={"page-item"}
+            pageLinkClassName={"page-link"}
+            previousClassName={"page-item"}
+            previousLinkClassName={"page-link"}
+            nextClassName={"page-item"}
+            nextLinkClassName={"page-link"}
+            breakClassName={"page-item"}
+            breakLinkClassName={"page-link"}
+            activeClassName={"active"}
+          />
+        )}
       </div>
     </div>
   );
