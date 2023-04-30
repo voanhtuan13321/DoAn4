@@ -337,7 +337,7 @@ const GioHang = () => {
                   <option value="1">Thanh toán Online</option>
                   <option value="2">Thanh toán trực tiếp</option>
                 </select>
-                <button onClick={() => thanhToan()} className="btn button">
+                <button onClick={() => thanhToan()} className="button">
                   Thanh toán
                 </button>
               </div>

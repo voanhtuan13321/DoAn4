@@ -67,8 +67,8 @@ const TrangCuaHang = () => {
     <>
       <div className="">
         <h5>Thông tin cửa hàng</h5>
-        <table class="table">
-          <thead>
+        <table className="table">
+          <thead className="table-dark">
             <tr>
               <th scope="col">#</th>
               <th scope="col">

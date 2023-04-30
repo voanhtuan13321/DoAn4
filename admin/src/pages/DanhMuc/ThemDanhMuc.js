@@ -50,7 +50,7 @@ const TrangDanhMuc = () => {
         .post(api.getDanhMuc, data)
         .then((res) => {
           alert("Thêm danh mục thành công");
-
+          navigate("/admin/xem_danh_muc");
           setA(!a);
         })
         .catch((errors) => console.log(errors));
@@ -65,7 +65,7 @@ const TrangDanhMuc = () => {
     <>
       <div className="container-xxl">
         <button className="btn btn-outline-success" onClick={xemDanhMuc}>
-          Xem danh mục
+          <p className="fs14 mb-0">Xem danh mục</p>
         </button>
         <div className="row">
           <div className="col-3"></div>

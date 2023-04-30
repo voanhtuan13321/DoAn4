@@ -13,7 +13,7 @@ const TimKiem = () => {
   }
 
   const rederSanPham = () => {
-    return sach.map((item, index) => {
+    return sach?.map((item, index) => {
       return (
         <tr key={index}>
           <td scope="col">
@@ -54,9 +54,9 @@ const TimKiem = () => {
 
   return (
     <>
-      <div className="py-5">
-        <table class="table">
-          <thead>
+      <div className="">
+        <table className="table">
+          <thead className="table-dark">
             <tr>
               <th scope="col">#</th>
               <th scope="col">

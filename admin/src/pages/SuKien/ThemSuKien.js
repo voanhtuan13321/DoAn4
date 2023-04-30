@@ -54,6 +54,7 @@ const ThemSuKien = () => {
         .post(api.suKien, data)
         .then((res) => {
           alert("Thêm sự kiện thành công");
+          navigate("/admin/xem_su_kien");
         })
         .catch((errors) => console.log(errors));
     }
@@ -66,7 +67,7 @@ const ThemSuKien = () => {
   return (
     <div className="">
       <button className="btn btn-outline-success" onClick={xemSuKien}>
-        Xem sự kiện
+        <p className="fs14 mb-0">Xem sự kiện</p>
       </button>
       <div className="container-xxl">
         <div className="row">

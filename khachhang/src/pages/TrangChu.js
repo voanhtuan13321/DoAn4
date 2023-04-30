@@ -40,29 +40,29 @@ const TrangChu = () => {
             </div>
           </div>
           <div className="col-6">
-            <div className="d-flex flex-wrap gap-5 justify-content-between align-items-center">
-              <div className="small-banner position-relative">
+            <div className="d-flex flex-wrap justify-content-between align-items-center">
+              <div className="small-banner">
                 <img
                   src="https://cdn0.fahasa.com/media/magentothem/banner7/AZ_T04_slide_840x320.jpg"
                   className="img-fluid rounded-3"
                   alt="main banner"
                 />
               </div>
-              <div className="small-banner position-relative">
+              <div className="small-banner">
                 <img
                   src="https://cdn0.fahasa.com/media/magentothem/banner7/PLATINUM_NCCDINHTY_T42023_Slide_840x320.jpg"
                   className="img-fluid rounded-3"
                   alt="main banner"
                 />
               </div>
-              <div className="small-banner position-relative ">
+              <div className="small-banner">
                 <img
                   src="https://cdn0.fahasa.com/media/wysiwyg/Thang-04-2023/FahasaT4w3_T423_Bo1_392x156.jpg"
                   className="img-fluid rounded-3"
                   alt="main banner"
                 />
               </div>
-              <div className="small-banner position-relative ">
+              <div className="small-banner ">
                 <img
                   src="https://cdn0.fahasa.com/media/wysiwyg/Thang-04-2023/FahasaT4w2_LDP_Mainbanner_web.jpg"
                   className="img-fluid rounded-3"
@@ -77,9 +77,20 @@ const TrangChu = () => {
         <>
           {productsByCategory.map((categoryProducts, index) => (
             <div className="mt-5">
-              <h3>{categoryProducts[0]["danhMuc"].ten}</h3>
+              <div className="d-flex">
+                <h3>{categoryProducts[0]["danhMuc"].ten}</h3>
+                <Link
+                  className=""
+                  to={
+                    "/san_theo_danh_muc/" +
+                    categoryProducts[0]["danhMuc"]?.idDanhMuc
+                  }
+                >
+                  Xem thêm
+                </Link>
+              </div>
               <div className="row mb-5" key={index}>
-                {categoryProducts.slice(0, 5).map((item, index) => (
+                {categoryProducts.slice(0, 8).map((item, index) => (
                   <div key={index} className="col-3 mb-3">
                     <Link
                       to={"/san_pham/" + item.idSach}

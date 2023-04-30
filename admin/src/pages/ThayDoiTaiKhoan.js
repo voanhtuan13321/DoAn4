@@ -4,14 +4,15 @@ import { Link, useNavigate } from "react-router-dom";
 import api from "../components/urlApi";
 const ThayDoiTaiKhoan = () => {
   let capNhat = JSON.parse(localStorage.getItem("capNhatTaiKhoan"));
+  console.log(capNhat);
   console.log(capNhat.taiKhoan);
   const navigate = useNavigate();
   const [input, setInput] = useState({
-    ten: capNhat.ten,
-    email: capNhat.email,
-    soDienThoai: capNhat.soDienThoai,
-    taiKhoan: capNhat.taiKhoan,
-    matKhau: capNhat.matKhau,
+    ten: capNhat[0].ten,
+    email: capNhat[0].email,
+    soDienThoai: capNhat[0].soDienThoai,
+    taiKhoan: capNhat[0].taiKhoan,
+    matKhau: capNhat[0].matKhau,
   });
 
   let [errTen, setTen] = useState("");
@@ -96,7 +97,7 @@ const ThayDoiTaiKhoan = () => {
 
     if (check == 1) {
       const data = {
-        id: 1,
+        idQuanLy: 1,
         ten: input.ten,
         email: input.email,
         soDienThoai: input.soDienThoai,
@@ -104,9 +105,12 @@ const ThayDoiTaiKhoan = () => {
         matKhau: input.matKhau,
       };
 
+      console.log(data);
+
       axios
         .put(api.capNhat, data)
         .then((res) => {
+          alert("Cập nhật thành công");
           console.log(res);
         })
         .catch((errors) => console.log(errors));

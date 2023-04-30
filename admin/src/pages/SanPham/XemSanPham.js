@@ -106,14 +106,14 @@ const TrangSgSanPham = () => {
               className="btn btn-warning mr3"
               onClick={() => checkId(item)}
             >
-              <p className="fs14">Sửa</p>
+              Sửa
             </button>
             <button
               className="btn btn-danger"
               value={item.idSach}
               onClick={deleteId}
             >
-              <p className="fs14">Xóa</p>
+              Xóa
             </button>
           </td>
         </tr>
@@ -128,13 +128,13 @@ const TrangSgSanPham = () => {
   return (
     <div>
       <div className="">
-        <button className="btn btn-success" onClick={themSanPham}>
-          Thêm sản phẩm
+        <button className="btn btn-outline-success" onClick={themSanPham}>
+          <p className="fs14 mb-0">Thêm sản phẩm</p>
         </button>
 
-        <div className="py-5">
-          <table class="table">
-            <thead>
+        <div className="py-1">
+          <table className="table">
+            <thead className="table-dark">
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Tên</th>

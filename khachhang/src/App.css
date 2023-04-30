@@ -78,6 +78,7 @@ a {
   font-size: 14px;
   padding: 13px 33px;
   border-radius: 25px;
+  transition: 0.3s;
 }
 .button:hover {
   background-color: var(--color-febd69);
@@ -204,6 +205,7 @@ footer .input-group-text {
 }
 .small-banner {
   width: 49%;
+  margin-bottom: 10px;
 }
 
 /* home wrapper 2 */
@@ -922,7 +924,7 @@ img.heightImage{
 }
 
 .height400 {
-  height: 240px;
+  height: 246px !important;
 }
 
 .border:hover{
@@ -965,7 +967,9 @@ img.heightImage{
 
 
 
-
+a {
+  text-decoration: none !important;
+}
 
 
 /* Load ẩn ...... */
@@ -1044,3 +1048,27 @@ html {
 
 
 
+
+/*  */
+.link {
+  color: #fff;
+  transition: all 0.5s;
+}
+
+.link:hover {
+  color: #000;
+  transition: all 0.5s;
+}
+
+.active {
+  color: #da7f7f !important;
+}
+
+.card {
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+
+}

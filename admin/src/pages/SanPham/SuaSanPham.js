@@ -153,17 +153,6 @@ const SuaSanPham = () => {
                     value={input.giaSach}
                   />
                 </div>
-                <div className="input_container">
-                  <label className="input_label">Mô tả</label>
-                  <input
-                    placeholder="Mô tả"
-                    name="moTa"
-                    type="text"
-                    className="input_field"
-                    onChange={handleInput}
-                    value={input.moTa}
-                  />
-                </div>
               </div>
               <div className="p-3">
                 <div className="input_container">
@@ -190,19 +179,6 @@ const SuaSanPham = () => {
                     value={input.soLuong}
                   />
                 </div>
-                {/* <div className="input_container">
-                  <label className="input_label" htmlFor="password_field">
-                    Khuyến mãi
-                  </label>
-                  <input
-                    placeholder="Khuyến mãi"
-                    name="khuyenMai"
-                    type="text"
-                    className="input_field"
-                    onChange={handleInput}
-                    value={input.khuyenMai}
-                  />
-                </div> */}
                 <div className="input_container">
                   <label className="input_label" htmlFor="password_field">
                     Hình ảnh
@@ -222,6 +198,18 @@ const SuaSanPham = () => {
                   </select>
                 </div>
               </div>
+            </div>
+            <div className="input_container mb-5">
+              <label className="input_label">Mô tả</label>
+              <textarea
+                placeholder="Mô tả"
+                name="moTa"
+                type="text"
+                rows={5}
+                className="input_field"
+                onChange={handleInput}
+                value={input.moTa}
+              />
             </div>
             <button title="Sign In" type="submit" className="sign-in_btn">
               <span>Cập nhật</span>

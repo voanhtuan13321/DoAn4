@@ -195,7 +195,7 @@ const DangKi = () => {
           <p className="error">{errMatKhau}</p>
         </div>
         <div className="input-container">
-          <button type="submit" className="submit btn">
+          <button type="submit" className="submit">
             Đăng kí
           </button>
         </div>

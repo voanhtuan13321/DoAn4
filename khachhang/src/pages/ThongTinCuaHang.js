@@ -35,7 +35,7 @@ const ThongTinCuaHang = () => {
               <div className="text-start ml5 ">
                 <p>Tên cửa hàng :</p>
                 <p>Mô tả :</p>
-                <p>ố điện thoại :</p>
+                <p>Số điện thoại :</p>
                 <p>Địa chỉ :</p>
                 <p>Website :</p>
                 <ps>Email cửa hàng :</ps>

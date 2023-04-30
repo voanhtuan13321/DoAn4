@@ -3,10 +3,13 @@ import { BsSearch, BsFillCartCheckFill } from "react-icons/bs";
 import { useNavigate, NavLink, Link } from "react-router-dom";
 import api from "../components/urlApi";
 import axios from "axios";
-const Header = (props) => {
+
+const Header = () => {
   let navigate = useNavigate();
   const [timKiemSach, setTimKiem] = useState("");
   const [danhMuc, setDanhMuc] = useState([]);
+  // let [ten, setTen] = useState("Đăng nhập");
+
   useEffect(() => {
     axios
       .get(api.getDanhMuc)
@@ -81,7 +84,7 @@ const Header = (props) => {
             </Link>
           </li>
           <li>
-            <Link to="/dang_nhap" className="dropdown-item" href="#">
+            <Link to="/dang_nhap" className="dropdown-item">
               Đăng nhập
             </Link>
           </li>
@@ -89,6 +92,15 @@ const Header = (props) => {
       );
     }
   }
+
+  // const handle = () => {
+  //   let ten = window.location.pathname;
+  //   if (ten == "/dang_nhap") {
+  //     setTen("Đăng nhập");
+  //   } else if (ten == "/dang_ki") {
+  //     setTen("Đăng kí");
+  //   }
+  // };
 
   const timKiem = () => {
     if (timKiemSach == "") {
@@ -156,6 +168,7 @@ const Header = (props) => {
                       id="dropdownMenuButton1"
                       data-bs-toggle="dropdown"
                       aria-expanded="false"
+                      // onClick={handle}
                     >
                       {tenKhachHang()}
                     </button>
@@ -222,9 +235,21 @@ const Header = (props) => {
                 </div>
                 <div className="menu-links">
                   <div className="d-flex align-items-center gap-15">
-                    <NavLink to="/">Trang chủ</NavLink>
-                    <NavLink to="/su_kien">Thông tin sự kiện</NavLink>
-                    <NavLink to="/thong_tin_cua_hang">
+                    <NavLink to="/" className="link" activeclassName="active">
+                      Trang chủ
+                    </NavLink>
+                    <NavLink
+                      to="/su_kien"
+                      className="link"
+                      activeclassName="active"
+                    >
+                      Thông tin sự kiện
+                    </NavLink>
+                    <NavLink
+                      to="/thong_tin_cua_hang"
+                      className="link"
+                      activeclassName="active"
+                    >
                       Thông tin cửa hàng
                     </NavLink>
                   </div>

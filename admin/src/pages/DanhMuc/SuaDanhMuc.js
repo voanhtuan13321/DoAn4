@@ -62,7 +62,7 @@ const SuaDanhMuc = () => {
   return (
     <div className="container-xxl">
       <button className="btn btn-outline-success" onClick={suaDanhMuc}>
-        Xem danh mục
+        <p className="fs14 mb-0">Xem danh mục</p>
       </button>
       <div className="row">
         <div className="col-3"></div>

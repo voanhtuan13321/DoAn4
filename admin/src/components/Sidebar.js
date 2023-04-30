@@ -26,12 +26,12 @@ const Sidebar = () => {
       icon: <BsBorderStyle />,
     },
     {
-      path: "/admin/them_danh_muc",
+      path: "/admin/xem_danh_muc",
       name: "Danh mục",
       icon: <GoFileDirectory />,
     },
     {
-      path: "/admin/them_su_kien",
+      path: "/admin/xem_su_kien",
       name: "Sự kiện",
       icon: <BsFillCalendarEventFill />,
     },
@@ -46,7 +46,7 @@ const Sidebar = () => {
       icon: <AiFillAppstore />,
     },
     {
-      path: "/admin/them_san_pham",
+      path: "/admin/xem_san_pham",
       name: "Sản phẩm",
       icon: <FaProductHunt />,
     },
@@ -149,8 +149,8 @@ const Sidebar = () => {
           </div>
         </div>
       </div>
-      <div className="width vh-100">
-        <div style={{ width: "190px" }} className="sidebar">
+      <div className="d-flex vh-100">
+        <div className="sidebar">
           {/* <div className="top_section">
             <div
               style={{ marginLeft: isOpen ? "50px" : "0px" }}
@@ -174,9 +174,9 @@ const Sidebar = () => {
             </NavLink>
           ))}
         </div>
-        <main>
+        <div className="content mt60px">
           <Outlet />
-        </main>
+        </div>
       </div>
     </div>
   );

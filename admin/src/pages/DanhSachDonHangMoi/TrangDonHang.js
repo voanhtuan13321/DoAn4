@@ -109,7 +109,7 @@ const TrangDonHang = () => {
             </td>
             <td scope="col">
               <button onClick={() => checkId(item)} className="btn btn-success">
-                <p className="fs14">Xác nhận</p>
+                Xác nhận
               </button>
             </td>
           </tr>
@@ -167,8 +167,8 @@ const TrangDonHang = () => {
     <div>
       <div className="">
         <h5>Đơn hàng</h5>
-        <table class="table">
-          <thead>
+        <table className="table">
+          <thead className="table-dark">
             <tr>
               <th scope="col"></th>
               <th scope="col">
@@ -197,8 +197,8 @@ const TrangDonHang = () => {
       </div>
       <div className="py-5">
         <h5>Lịch sử đơn hàng</h5>
-        <table class="table">
-          <thead>
+        <table className="table">
+          <thead className="table-dark">
             <tr>
               <th scope="col"></th>
               <th scope="col">

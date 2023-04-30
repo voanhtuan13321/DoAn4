@@ -96,11 +96,11 @@ const TrangKhachHang = () => {
   const currentData = khachHang.slice(offset, offset + ITEMS_PER_PAGE);
   return (
     <div>
-      <h4>Thông tin khách hàng</h4>
+      <h5>Thông tin khách hàng</h5>
       <div className="">
         <div className="">
           <table class="table">
-            <thead>
+            <thead className="table-dark">
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">
@@ -110,7 +110,7 @@ const TrangKhachHang = () => {
                   <p className="fs14 mb-0">Email</p>
                 </th>
                 <th scope="col">
-                  <p className="fs14 mb-0">Số điện thoại</p>
+                  <p className="fs14 mb-0 w100">Số điện thoại</p>
                 </th>
                 <th scope="col">
                   <p className="fs14 mb-0">Địa chỉ</p>

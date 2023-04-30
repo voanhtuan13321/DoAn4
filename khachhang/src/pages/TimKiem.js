@@ -13,12 +13,12 @@ const TimKiem = () => {
     );
   }
 
-  alert(sach);
+  // alert(sach);
 
   return (
     <div className="container-xxl py-5 mh700">
       <div className="row">
-        {sach.map((item, index) => (
+        {sach?.map((item, index) => (
           <div key={index} className="col-3 mb-3">
             <Link
               to={"/san_pham/" + item.idSach}

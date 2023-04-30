@@ -205,8 +205,8 @@ const TrangSgSanPham = () => {
   return (
     <div>
       <div className="">
-        <button className="btn btn-success" onClick={xemSanPham}>
-          Xem sản phẩm
+        <button className="btn btn-outline-success" onClick={xemSanPham}>
+          <p className="fs14 mb-0">Xem sản phẩm</p>
         </button>
         <div className="d-flex justify-content-center py-4">
           <form className="" onSubmit={handlerSubmit}>

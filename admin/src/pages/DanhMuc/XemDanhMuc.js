@@ -66,17 +66,17 @@ const XemDanhMuc = () => {
           </td>
           <td className="d-flex">
             <button
-              className="btn btn-danger mr3"
+              className="btn btn-warning  mr3"
               onClick={() => checkId(item)}
             >
-              <p className="fs14 mb-0">Sửa</p>
+              Sửa
             </button>
             <button
-              className="btn btn-warning"
+              className="btn btn-warning btn btn-danger"
               value={item.idDanhMuc}
               onClick={deleteId}
             >
-              <p className="fs14 mb-0">Xóa</p>
+              Xóa
             </button>
           </td>
         </tr>
@@ -91,12 +91,12 @@ const XemDanhMuc = () => {
   return (
     <>
       <button className="btn btn-outline-success" onClick={themDanhMuc}>
-        Thêm danh mục
+        <p className="fs14 mb-0">Thêm danh mục</p>
       </button>
       <div className="py-2">
         <h5>Danh mục sản phẩm</h5>
-        <table class="table">
-          <thead>
+        <table className="table">
+          <thead className="table-dark">
             <tr>
               <th scope="col">#</th>
               <th scope="col">

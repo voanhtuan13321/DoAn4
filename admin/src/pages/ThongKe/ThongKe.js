@@ -134,8 +134,8 @@ const ThongKe = () => {
       </div>
       <div className="row">
         <div className="py-5">
-          <table class="table">
-            <thead>
+          <table className="table">
+            <thead className="table-dark">
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">

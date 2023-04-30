@@ -103,6 +103,7 @@ const SuaThongTinCuaHang = () => {
       .post(api.cuaHang, data)
       .then((res) => {
         console.log(res);
+        alert("Cập nhật thành công");
         navigation("/admin/trang_cua_hang");
         setA(!a);
       })

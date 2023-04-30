@@ -59,17 +59,23 @@ const TrangSuKien = () => {
       return (
         <tr key={index}>
           <th scope="row">{index}</th>
-          <td>{item.tieuDe}</td>
-          <td>{item.noiDung}</td>
+          <td>
+            {" "}
+            <p className="fs14 mb-0">{item.tieuDe}</p>
+          </td>
+          <td>
+            {" "}
+            <p className="fs14 mb-0">{item.noiDung}</p>
+          </td>
           <td>
             <button
               className="btn btn-warning mr3"
               onClick={() => checkId(item)}
             >
-              Cập nhật
+              Sửa
             </button>
             <button
-              className="btn btn-danger "
+              className=" btn btn-danger"
               value={item.id}
               onClick={deleteId}
             >
@@ -87,13 +93,13 @@ const TrangSuKien = () => {
   return (
     <div className="">
       <button className="btn btn-outline-success" onClick={themSuKien}>
-        Thêm sự kiện
+        <p className="fs14 mb-0">Thêm sự kiện</p>
       </button>
       <div>
-        <div className="py-5">
+        <div className="">
           <h5>Thông tin sự kiện</h5>
-          <table class="table">
-            <thead>
+          <table className="table">
+            <thead className="table-dark">
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Tiêu đề</th>

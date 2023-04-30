@@ -93,7 +93,7 @@ const TrangBinhLuan = () => {
   return (
     <div className="">
       <table class="table">
-        <thead>
+        <thead className="table-dark">
           <tr>
             <th scope="col">#</th>
             <th scope="col">Tên</th>
