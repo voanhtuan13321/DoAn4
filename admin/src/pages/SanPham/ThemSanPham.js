@@ -203,7 +203,7 @@ const TrangSgSanPham = () => {
     navigate("/admin/xem_san_pham");
   };
   return (
-    <div>
+    <div className="pl5px">
       <div className="">
         <button className="btn btn-outline-success" onClick={xemSanPham}>
           <p className="fs14 mb-0">Xem sản phẩm</p>

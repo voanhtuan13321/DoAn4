@@ -110,7 +110,7 @@ const SuaThongTinCuaHang = () => {
       .catch((errors) => console.log(errors));
   };
   return (
-    <div className="text-center">
+    <div className="pl5px">
       <div className="d-flex align-items-center justify-content-center">
         <form onSubmit={handlerSubmit} className="width-500">
           <p className="form-title py-4">Cập nhật thông tin của hàng</p>

@@ -55,7 +55,7 @@ const BinhLuanCuaSanPham = () => {
   };
 
   return (
-    <div className="py-5">
+    <div className="pl5px">
       <table class="table">
         <thead className="table-dark">
           <tr>

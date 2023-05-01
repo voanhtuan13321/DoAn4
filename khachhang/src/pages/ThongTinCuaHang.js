@@ -27,7 +27,7 @@ const ThongTinCuaHang = () => {
 
   return (
     <>
-      <div className="text-center py-5 mh400">
+      <div className="text-center py-5 mh400 mt150px">
         <div className="d-flex align-items-center justify-content-center">
           <form className="width-500">
             <p className="form-title py-4">Thông tin của hàng</p>

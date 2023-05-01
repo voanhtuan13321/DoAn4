@@ -66,13 +66,13 @@ const XemDanhMuc = () => {
           </td>
           <td className="d-flex">
             <button
-              className="btn btn-warning  mr3"
+              className="btn mr3 btn-outline-warning fw-bolder"
               onClick={() => checkId(item)}
             >
               Sửa
             </button>
             <button
-              className="btn btn-warning btn btn-danger"
+              className="btn btn-outline-danger fw-bolder"
               value={item.idDanhMuc}
               onClick={deleteId}
             >
@@ -89,7 +89,7 @@ const XemDanhMuc = () => {
   };
 
   return (
-    <>
+    <div className="pl5px">
       <button className="btn btn-outline-success" onClick={themDanhMuc}>
         <p className="fs14 mb-0">Thêm danh mục</p>
       </button>
@@ -134,7 +134,7 @@ const XemDanhMuc = () => {
           />
         )}
       </div>
-    </>
+    </div>
   );
 };
 

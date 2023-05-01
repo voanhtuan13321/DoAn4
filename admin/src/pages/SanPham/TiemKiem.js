@@ -54,7 +54,7 @@ const TimKiem = () => {
 
   return (
     <>
-      <div className="">
+      <div className="pl5px">
         <table className="table">
           <thead className="table-dark">
             <tr>

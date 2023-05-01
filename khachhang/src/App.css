@@ -746,7 +746,8 @@ footer .input-group-text {
   border-bottom: 1px solid #eaeaea;
 }
 .cart-header h4 {
-  font-size: 13px;
+  font-size: 17px;
+    font-weight: bold;
   color: var(--color-777777);
 }
 .cart-col-1 {
@@ -924,7 +925,7 @@ img.heightImage{
 }
 
 .height400 {
-  height: 246px !important;
+  height: 255px !important;
 }
 
 .border:hover{
@@ -1057,7 +1058,10 @@ html {
 
 .link:hover {
   color: #000;
+  transform: scale(1.05);
   transition: all 0.5s;
+  color: #da7f7f !important;
+    font-weight: bold;
 }
 
 .active {
@@ -1071,4 +1075,26 @@ html {
 .card:hover {
   transform: scale(1.05);
 
+}
+/*  */
+.figtop {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 999;
+
+}
+
+.mt150px {
+  margin-top: 150px !important;
+}
+
+.mr5 {
+  margin-right: 10px;
+}
+
+.h-25 {
+  height: 25px;
 }

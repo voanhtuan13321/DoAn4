@@ -69,13 +69,13 @@ const TrangSuKien = () => {
           </td>
           <td>
             <button
-              className="btn btn-warning mr3"
+              className="btn btn-outline-warning mr3 fw-bolder"
               onClick={() => checkId(item)}
             >
               Sửa
             </button>
             <button
-              className=" btn btn-danger"
+              className=" btn btn-outline-danger fw-bolder"
               value={item.id}
               onClick={deleteId}
             >
@@ -91,7 +91,7 @@ const TrangSuKien = () => {
   };
 
   return (
-    <div className="">
+    <div className="pl5px">
       <button className="btn btn-outline-success" onClick={themSuKien}>
         <p className="fs14 mb-0">Thêm sự kiện</p>
       </button>

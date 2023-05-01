@@ -27,7 +27,7 @@ const TrangChu = () => {
   }, [data]);
 
   return (
-    <div className="rimary mh700">
+    <div className="rimary mh700 mt150px">
       <div className="container-xxl py-2">
         <div className="row">
           <div className="col-6">
@@ -77,8 +77,8 @@ const TrangChu = () => {
         <>
           {productsByCategory.map((categoryProducts, index) => (
             <div className="mt-5">
-              <div className="d-flex">
-                <h3>{categoryProducts[0]["danhMuc"].ten}</h3>
+              <div className="d-flex align-items-center mb-4">
+                <h4 className="mr5">{categoryProducts[0]["danhMuc"].ten}</h4>
                 <Link
                   className=""
                   to={
@@ -86,7 +86,7 @@ const TrangChu = () => {
                     categoryProducts[0]["danhMuc"]?.idDanhMuc
                   }
                 >
-                  Xem thêm
+                  Xem thêm >>
                 </Link>
               </div>
               <div className="row mb-5" key={index}>
@@ -104,9 +104,13 @@ const TrangChu = () => {
                           alt="..."
                         />
                         <div className="card-body">
-                          <p className="card-title name">{item.ten}</p>
+                          <h5 className="card-title name">{item.ten}</h5>
                           <p className="card-text ">
-                            Giá sách : {item.giaSach} VND
+                            Giá sách :{" "}
+                            {item.giaSach.toLocaleString("vi-VN", {
+                              style: "currency",
+                              currency: "VND",
+                            })}{" "}
                           </p>
                         </div>
                       </div>

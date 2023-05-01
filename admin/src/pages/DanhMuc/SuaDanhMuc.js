@@ -60,7 +60,7 @@ const SuaDanhMuc = () => {
     navigate("/admin/xem_danh_muc");
   };
   return (
-    <div className="container-xxl">
+    <div className="container-xxl ">
       <button className="btn btn-outline-success" onClick={suaDanhMuc}>
         <p className="fs14 mb-0">Xem danh mục</p>
       </button>

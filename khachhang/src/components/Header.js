@@ -52,11 +52,11 @@ const Header = () => {
   let tong = JSON.parse(localStorage.getItem("tong"));
 
   const dangXuat = () => {
-    localStorage.removeItem("dataKhachHang");
-    localStorage.removeItem("ten");
-    localStorage.removeItem("khachHang");
-    localStorage.removeItem("idKhachHang");
-    navigator("dang_nhap");
+    localStorage?.removeItem("dataKhachHang");
+    localStorage?.removeItem("ten");
+    localStorage?.removeItem("khachHang");
+    localStorage?.removeItem("idKhachHang");
+    navigate("dang_nhap");
   };
   function renderTaiKhoan() {
     let getLocalStolore = localStorage.getItem("khachHang");
@@ -115,13 +115,13 @@ const Header = () => {
             "timKiem",
             JSON.stringify(res.data.data)
           );
-          window.location.href = `http://${api.ip1}:3000/tim_kiem`;
+          window.location.href = `http://${api.ip}:3000/tim_kiem`;
         });
     }
   };
 
   return (
-    <>
+    <div className="figtop">
       <header className="header-upper py-3">
         <div className="container-xxl">
           <div className="row align-items-center">
@@ -259,7 +259,7 @@ const Header = () => {
           </div>
         </div>
       </header>
-    </>
+    </div>
   );
 };
 

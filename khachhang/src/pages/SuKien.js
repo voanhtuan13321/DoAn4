@@ -22,7 +22,7 @@ const SuKien = () => {
   };
 
   return (
-    <div className="container-xxl py-4 mh400">
+    <div className="container-xxl py-4 mh400 mt150px">
       <div className="row">{renderSuKien()}</div>
     </div>
   );

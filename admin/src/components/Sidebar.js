@@ -149,7 +149,7 @@ const Sidebar = () => {
           </div>
         </div>
       </div>
-      <div className="d-flex vh-100">
+      <div className="d-flex vh-100 mt55px">
         <div className="sidebar">
           {/* <div className="top_section">
             <div

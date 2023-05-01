@@ -35,7 +35,14 @@ const SanPhamTheoDanhMuc = () => {
                 />
                 <div className="card-body">
                   <h5 className="card-title">{item.ten}</h5>
-                  <p className="card-text ">Giá sách : {item.giaSach} VND</p>
+                  <p className="card-text ">
+                    Giá sách :{" "}
+                    {item.giaSach.toLocaleString("vi-VN", {
+                      style: "currency",
+                      currency: "VND",
+                    })}{" "}
+                    VND
+                  </p>
                 </div>
               </div>
             </Link>
@@ -45,13 +52,13 @@ const SanPhamTheoDanhMuc = () => {
     } else {
       return (
         <div className="text-center">
-          <p>Không có sản phẩm</p>
+          <h4>Không có sản phẩm</h4>
         </div>
       );
     }
   };
   return (
-    <div className="container-xxl py-4 mh700">
+    <div className="container-xxl py-4 mh700 mt150px">
       <div className="row">{sanPhamTheoDanhMuc()}</div>
     </div>
   );

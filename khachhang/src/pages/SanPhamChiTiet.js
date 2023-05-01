@@ -60,6 +60,7 @@ const SanPhamChiTiet = () => {
     e.preventDefault();
     if (!idKhachHang) {
       alert("Bạn chưa đăng nhập");
+      navigate("/dang_nhap");
     } else {
       if (input) {
         let data = {
@@ -182,7 +183,7 @@ const SanPhamChiTiet = () => {
   };
   return (
     <>
-      <div className="container-xxl py-4 mh700">
+      <div className="container-xxl py-4 mh700 mt150px">
         <div className="row rounded border-light border-4 bg-light bg-gradient p-5">
           <div className="col-4 ">
             <img
@@ -212,7 +213,11 @@ const SanPhamChiTiet = () => {
               <div className="py-2">
                 <div className="d-flex ">
                   <b className="text-danger fs-3">
-                    Giá : {sanPham.giaSach} VND
+                    Giá :{" "}
+                    {sanPham.giaSach?.toLocaleString("vi-VN", {
+                      style: "currency",
+                      currency: "VND",
+                    })}
                   </b>
                 </div>
                 <div className="d-flex py-2">

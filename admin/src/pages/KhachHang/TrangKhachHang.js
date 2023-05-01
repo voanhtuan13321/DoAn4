@@ -76,7 +76,7 @@ const TrangKhachHang = () => {
           </td>
           <td>
             <button
-              className="btn btn-danger"
+              className="btn btn-outline-danger fw-bolder"
               value={item.idKhachHang}
               onClick={checkId}
             >
@@ -95,7 +95,7 @@ const TrangKhachHang = () => {
   const offset = currentPage * ITEMS_PER_PAGE;
   const currentData = khachHang.slice(offset, offset + ITEMS_PER_PAGE);
   return (
-    <div>
+    <div className="pl5px">
       <h5>Thông tin khách hàng</h5>
       <div className="">
         <div className="">

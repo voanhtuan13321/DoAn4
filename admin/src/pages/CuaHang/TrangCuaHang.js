@@ -54,7 +54,10 @@ const TrangCuaHang = () => {
             <p className="fs14 mb-0">{item.email}</p>
           </td>
           <td>
-            <button className="btn btn-warning" onClick={() => checkId(item)}>
+            <button
+              className="btn btn-outline-warning fw-bolder"
+              onClick={() => checkId(item)}
+            >
               <p className="fs14 mb-0">Sửa</p>
             </button>
           </td>
@@ -65,7 +68,7 @@ const TrangCuaHang = () => {
 
   return (
     <>
-      <div className="">
+      <div className="pl5px">
         <h5>Thông tin cửa hàng</h5>
         <table className="table">
           <thead className="table-dark">

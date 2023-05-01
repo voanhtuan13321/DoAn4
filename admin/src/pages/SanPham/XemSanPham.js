@@ -103,13 +103,13 @@ const TrangSgSanPham = () => {
           </td>
           <td scope="col">
             <button
-              className="btn btn-warning mr3"
+              className="btn btn-outline-warning fw-bolder mr3"
               onClick={() => checkId(item)}
             >
               Sửa
             </button>
             <button
-              className="btn btn-danger"
+              className="btn btn-outline-danger fw-bolder"
               value={item.idSach}
               onClick={deleteId}
             >
@@ -127,7 +127,7 @@ const TrangSgSanPham = () => {
 
   return (
     <div>
-      <div className="">
+      <div className="pl5px">
         <button className="btn btn-outline-success" onClick={themSanPham}>
           <p className="fs14 mb-0">Thêm sản phẩm</p>
         </button>

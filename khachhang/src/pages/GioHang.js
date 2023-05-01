@@ -88,22 +88,12 @@ const GioHang = () => {
   };
 
   const themSoLuongSanPham = (item) => {
-    // kiểm tra số lượng sách so với số lượng tăng
-    // const [soLuong, setSoLuong] = useState("");
+    // console.log(item);
+    if (item.soLuong > item["sach"].soLuong) {
+      alert("Sách đả hết");
+      return;
+    }
 
-    // axios
-    //   .get(api.sachId + item.idSach)
-    //   .then((res) => {
-    //     console.log(res.data.data);
-    //     setSoLuong(res.data.data);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
-
-    // if (item.soLuong > soLuong) {
-    //   alert("Hết sản phẩm");
-    // } else {
     let idKhachHang = item["khachHang"].idKhachHang;
     let idSach = item["sach"].idSach;
     const data = {
@@ -186,7 +176,7 @@ const GioHang = () => {
               className="form-check-input"
               type="checkbox"
             />
-            <div className="w-25">
+            <div className="w-25 h-25">
               <img
                 className="img-fluid imageHeight"
                 src={api.img + item["sach"].hinhAnh}
@@ -202,7 +192,13 @@ const GioHang = () => {
             <h5 className="price">{item["sach"].ten}</h5>
           </div>
           <div className="cart-col-2">
-            <h5 className="price">{item["sach"].giaSach} VNĐ</h5>
+            <h5 className="price">
+              {item["sach"].giaSach.toLocaleString("vi-VN", {
+                style: "currency",
+                currency: "VND",
+              })}{" "}
+              VNĐ
+            </h5>
           </div>
           <div className="cart-col-3 d-flex align-items-center gap-15">
             <div
@@ -214,7 +210,11 @@ const GioHang = () => {
                 onClick={() => {
                   themSoLuongSanPham(item);
                 }}
-                className="btn"
+                className={
+                  item.soLuong == item["sach"].soLuong
+                    ? "btn d-none anButtun"
+                    : "btn"
+                }
               >
                 +
               </button>
@@ -239,7 +239,13 @@ const GioHang = () => {
           </div>
           <div className="cart-col-4">
             <h5 className="price">
-              {Number(item["sach"].giaSach) * Number(item.soLuong)} VND
+              {(
+                Number(item["sach"].giaSach) * Number(item.soLuong)
+              ).toLocaleString("vi-VN", {
+                style: "currency",
+                currency: "VND",
+              })}{" "}
+              VND
             </h5>
           </div>
           <button
@@ -305,7 +311,7 @@ const GioHang = () => {
   };
 
   return (
-    <div className="container-xxl mh700">
+    <div className="container-xxl mh700 mt150px">
       <div className="row">
         <div className="pt-5">
           <h3>Giỏ hàng</h3>
@@ -317,6 +323,7 @@ const GioHang = () => {
             <h4 className="cart-col-2">Giá</h4>
             <h4 className="cart-col-3">Số lượng</h4>
             <h4 className="cart-col-4">Tổng tiền</h4>
+            <h4 className=""></h4>
           </div>
           {renderGioHang()}
           {/* {ra()} */}
@@ -330,7 +337,13 @@ const GioHang = () => {
               Lịch sử mua hàng
             </Link>
             <div className="d-flex flex-column align-items-end">
-              <h4>Tổng tiền: {total} VND</h4>
+              <h4>
+                Tổng tiền:{" "}
+                {total.toLocaleString("vi-VN", {
+                  style: "currency",
+                  currency: "VND",
+                })}{" "}
+              </h4>
               <p></p>
               <div className="d-flex">
                 <select id="luaChon" className="rounded">

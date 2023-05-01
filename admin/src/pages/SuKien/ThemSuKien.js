@@ -65,7 +65,7 @@ const ThemSuKien = () => {
   };
 
   return (
-    <div className="">
+    <div className="pl5px">
       <button className="btn btn-outline-success" onClick={xemSuKien}>
         <p className="fs14 mb-0">Xem sự kiện</p>
       </button>

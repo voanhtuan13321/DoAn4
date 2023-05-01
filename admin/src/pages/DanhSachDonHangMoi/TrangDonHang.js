@@ -108,7 +108,10 @@ const TrangDonHang = () => {
               <p className="fs14">{item.trangThai}</p>
             </td>
             <td scope="col">
-              <button onClick={() => checkId(item)} className="btn btn-success">
+              <button
+                onClick={() => checkId(item)}
+                className="btn btn-outline-success fw-bolder"
+              >
                 Xác nhận
               </button>
             </td>
@@ -164,7 +167,7 @@ const TrangDonHang = () => {
   const offset = currentPage * ITEMS_PER_PAGE;
   const currentData = lichSu.slice(offset, offset + ITEMS_PER_PAGE);
   return (
-    <div>
+    <div className="pl5px">
       <div className="">
         <h5>Đơn hàng</h5>
         <table className="table">

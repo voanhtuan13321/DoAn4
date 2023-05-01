@@ -45,7 +45,7 @@ const LichSuMuaHang = () => {
     });
   };
   return (
-    <div className="container-xxl mh700">
+    <div className="container-xxl mh700 mt150px">
       <div className="row">
         <div className="pt-5">
           <h3>Lịch sử mua hàng</h3>

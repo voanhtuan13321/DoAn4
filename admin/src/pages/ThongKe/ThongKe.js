@@ -133,7 +133,7 @@ const ThongKe = () => {
         </div>
       </div>
       <div className="row">
-        <div className="py-5">
+        <div className="py-2">
           <table className="table">
             <thead className="table-dark">
               <tr>

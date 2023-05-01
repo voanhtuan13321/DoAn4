@@ -152,7 +152,7 @@ const DangNhap = () => {
 
   return (
     <>
-      <div className="d-flex justify-content-center py-5">
+      <div className="d-flex justify-content-center py-5 mt150px">
         <form className="bsd form p-5" onSubmit={handlerSubmit}>
           <p className="form-title">Đăng nhập</p>
           <label>Tài khoản</label>
@@ -182,7 +182,6 @@ const DangNhap = () => {
           </div>
 
           <p className="signup-link">
-            <input onChange={ghiNhoDangNhap} type="checkbox" />
             <Link to="/dang_ki">Đăng kí</Link>
             <div onClick={() => checkTaiKhoan()}>
               <span className="cusoclick">Quên mật khấu?</span>

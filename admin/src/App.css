@@ -374,8 +374,14 @@
 
 /* css Nav */
 .header{
-  /* height: 60px; */
-  background: #a8a3a3;
+  height: 55px !important;
+    background: #000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    /* margin-bottom: 55px; */
 }
 
 
@@ -384,15 +390,18 @@
 }
 .content {
   /* flex: 1; */
+  margin-top: 55px;
+    margin-left: 15% !important;
   width: 85% !important;
   /* padding-top: 10px;
   padding-left: 20px; */
 }
 .sidebar{
-  background: #a8a3a3;
-  color: #000;
+  background: #23272c;
+    color: #fff;
   height: 100vh;
   width: 15%;
+  position: fixed;
   transition: all 0.5s;
 }
 .top_section{
@@ -416,7 +425,7 @@
   transition: all 0.5s;
 }
 .link:hover{
-  background:lightskyblue;
+  background: #f56349;
   color: #000;
   transition: all 0.5s;
 }
@@ -449,6 +458,14 @@ a {
 }
 
 
+.mt55px {
+  margin-top: 55px;
+}
+
+.pl5px {
+  padding-left: 5px;
+  padding-right: 5px;
+}
 
 
 

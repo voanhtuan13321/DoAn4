@@ -73,7 +73,7 @@ const TrangBinhLuan = () => {
           <td>
             <button
               onClick={() => xemBinhLuan(item.idSach)}
-              className="btn btn-outline-success text-white"
+              className="btn btn-outline-success fw-bolder text-white"
             >
               <p className="fs14 mb-0">
                 <GrView />
@@ -91,7 +91,7 @@ const TrangBinhLuan = () => {
   };
 
   return (
-    <div className="">
+    <div className="pl5px">
       <table class="table">
         <thead className="table-dark">
           <tr>
