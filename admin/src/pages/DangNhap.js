@@ -49,15 +49,19 @@ const DangNhap = () => {
         matKhau: input.matKhau,
       };
 
+
       axios
         .post(api.login, data)
         .then((res) => {
           if (res.data.status === "ok") {
-            localStorage.setItem(
-              "taiKhoanAdmin",
-              JSON.stringify(input.taiKhoan)
-            );
-            localStorage.setItem("matKhauAdmin", JSON.stringify(input.matKhau));
+            const thongtin = {
+              ten: res.data.data.ten,
+              email: res.data.data.email,
+              soDienThoai: res.data.data.soDienThoai,
+              taiKhoan: res.data.data.taiKhoan,
+              matKhau: res.data.data.matKhau,
+            };
+            localStorage.setItem("taiKhoanAdmin", JSON.stringify(thongtin));
             navigate("/admin/don_hang");
           } else {
             check = 2;

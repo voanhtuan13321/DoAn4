@@ -72,9 +72,6 @@ const Sidebar = () => {
   };
 
   const capNhatTaiKhoan = () => {
-    axios.get(api.capNhat).then((res) => {
-      localStorage.setItem("capNhatTaiKhoan", JSON.stringify(res.data.data));
-    });
     navigate("/admin/cap_nhat_tai_khoan");
   };
 
