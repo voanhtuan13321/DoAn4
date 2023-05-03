@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import api from "../components/urlApi";
 const ThayDoiTaiKhoan = () => {
   let capNhat = JSON.parse(localStorage.getItem("capNhatTaiKhoan"));
@@ -24,7 +24,7 @@ const ThayDoiTaiKhoan = () => {
   function handleInput(e) {
     let nameKey = e.target.name;
     let nameValue = e.target.value;
-    setInput((state) => ({ ...state, [nameKey]: nameValue }));
+    setInput((state) => ({...state, [nameKey]: nameValue}));
   }
 
   // Hàm kiểu tra só điện thoại nhập vào
@@ -122,23 +122,11 @@ const ThayDoiTaiKhoan = () => {
       <form className="form" onSubmit={handlerSubmit}>
         <p className="form-title">Cập nhật tài khoản</p>
         <div className="input-container">
-          <input
-            type="text"
-            name="ten"
-            onChange={handleInput}
-            value={input.ten}
-            placeholder="Nhập tài khoản"
-          />
+          <input type="text" name="ten" onChange={handleInput} value={input.ten} placeholder="Nhập tài khoản" />
           <p className="error">{errTen}</p>
         </div>
         <div className="input-container">
-          <input
-            type="email"
-            name="email"
-            onChange={handleInput}
-            value={input.email}
-            placeholder="Nhập email"
-          />
+          <input type="email" name="email" onChange={handleInput} value={input.email} placeholder="Nhập email" />
           <p className="error">{errEmail}</p>
         </div>
         <div className="input-container">
