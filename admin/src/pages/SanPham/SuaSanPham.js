@@ -28,6 +28,16 @@ const SuaSanPham = () => {
   const [valuedanhMuc, setValueDanhMuc] = useState("");
   console.log(danhMuc);
 
+  let [errTen, setErrTen] = useState("");
+  let [errTacGia, setErrTacGia] = useState("");
+  let [errNhaXuatBan, setErrNhaXuatBan] = useState("");
+  let [errGiaSach, setErrGiaSach] = useState("");
+  let [errMoTa, setErrMoTa] = useState("");
+  let [errNgayXuatBan, setErrNgayXuatBan] = useState("");
+  let [errSoLuong, setErrSoLuong] = useState("");
+  let [errDanhMuc, setErrDanhMuc] = useState("");
+  let [errHinhAnh, setErrHinhAnh] = useState("");
+
   const handleDanhMuc = (e) => {
     let value = e.target.value;
     setValueDanhMuc(value);
@@ -72,29 +82,106 @@ const SuaSanPham = () => {
   const handlerSubmit = (e) => {
     e.preventDefault();
 
-    const data = {
-      idSach: input.idSach,
-      ten: input.ten,
-      tacGia: input.tacGia,
-      nhaXuatBan: input.nhaXuatBan,
-      giaSach: parseInt(input.giaSach),
-      moTa: input.moTa,
-      ngayXuatBan: input.ngayXuatBan,
-      soLuong: parseInt(input.soLuong),
-      hinhAnh: avatar.replace("data:image/jpeg;base64,", ""),
-      idDanhMuc: input.idDanhMuc,
-    };
+    let check = 1;
 
-    console.log(typeof data.hinhAnh);
+    if (input.ten == "") {
+      check = 2;
+      setErrTen("Vui lòng nhập vào tên");
+      return;
+    } else {
+      check = 1;
+      setErrTen("");
+    }
+    if (input.tacGia == "") {
+      check = 2;
+      setErrTacGia("Vui lòng nhập vào tác giả");
+      return;
+    } else {
+      check = 1;
+      setErrTacGia("");
+    }
+    if (input.nhaXuatBan == "") {
+      check = 2;
+      setErrNhaXuatBan("Vui lòng nhập vào nhà xuất bản");
+      return;
+    } else {
+      check = 1;
+      setErrNhaXuatBan("");
+    }
+    if (input.giaSach == "") {
+      check = 2;
+      setErrGiaSach("Vui lòng nhập vào giá sách");
+      return;
+    } else {
+      check = 1;
+      setErrGiaSach("");
+    }
+    if (input.moTa == "") {
+      check = 2;
+      setErrMoTa("Vui lòng nhập vào mô tả");
+      return;
+    } else {
+      check = 1;
+      setErrMoTa("");
+    }
+    if (input.ngayXuatBan == "") {
+      check = 2;
+      setErrNgayXuatBan("Vui lòng nhập vào ngày xuất bản");
+      return;
+    } else {
+      check = 1;
+      setErrNgayXuatBan("");
+    }
+    if (input.soLuong == "") {
+      check = 2;
+      setErrSoLuong("Vui lòng nhập vào số lượng");
+      return;
+    } else {
+      check = 1;
+      setErrSoLuong("");
+    }
+    if (valuedanhMuc == "") {
+      check = 2;
+      setErrDanhMuc("Vui lòng chọn danh mục");
+      return;
+    } else {
+      check = 1;
+      setErrDanhMuc("");
+    }
+    if (avatar == "") {
+      check = 2;
+      setErrHinhAnh("Vui lòng chọn hình ảnh");
+      return;
+    } else {
+      check = 1;
+      setErrHinhAnh("");
+    }
 
-    axios
-      .post(api.sach, data)
-      .then((res) => {
-        console.log(res);
-        alert("Cập nhật thành công");
-        navigator("/admin/trang_san_pham");
-      })
-      .catch((errors) => console.log(errors));
+    if (check == 1) {
+      const data = {
+        idSach: input.idSach,
+        ten: input.ten,
+        tacGia: input.tacGia,
+        nhaXuatBan: input.nhaXuatBan,
+        giaSach: parseInt(input.giaSach),
+        moTa: input.moTa,
+        ngayXuatBan: input.ngayXuatBan,
+        soLuong: parseInt(input.soLuong),
+        hinhAnh: avatar.replace("data:image/jpeg;base64,", ""),
+        idDanhMuc: input.idDanhMuc,
+      };
+
+      console.log(typeof data.hinhAnh);
+
+      axios
+        .post(api.sach, data)
+        .then((res) => {
+          console.log(res);
+          alert("Cập nhật thành công");
+          navigator("/admin/trang_san_pham");
+        })
+        .catch((errors) => console.log(errors));
+    }
   };
 
   return (
@@ -117,6 +204,7 @@ const SuaSanPham = () => {
                     onChange={handleInput}
                     value={input.ten}
                   />
+                  <span className="error">{errTen}</span>
                 </div>
                 <div className="input_container">
                   <label className="input_label" htmlFor="password_field">
@@ -130,6 +218,7 @@ const SuaSanPham = () => {
                     onChange={handleInput}
                     value={input.tacGia}
                   />
+                  <span className="error">{errTacGia}</span>
                 </div>
                 <div className="input_container">
                   <label className="input_label">Nhà xuất bản</label>
@@ -141,6 +230,7 @@ const SuaSanPham = () => {
                     onChange={handleInput}
                     value={input.nhaXuatBan}
                   />
+                  <span className="error">{errNhaXuatBan}</span>
                 </div>
                 <div className="input_container">
                   <label className="input_label">Giá sách</label>
@@ -152,6 +242,7 @@ const SuaSanPham = () => {
                     onChange={handleInput}
                     value={input.giaSach}
                   />
+                  <span className="error">{errGiaSach}</span>
                 </div>
               </div>
               <div className="p-3">
@@ -165,6 +256,7 @@ const SuaSanPham = () => {
                     onChange={handleInput}
                     value={new Date(input.ngayXuatBan)}
                   />
+                  <span className="error">{errNgayXuatBan}</span>
                 </div>
                 <div className="input_container">
                   <label className="input_label" htmlFor="password_field">
@@ -178,6 +270,7 @@ const SuaSanPham = () => {
                     onChange={handleInput}
                     value={input.soLuong}
                   />
+                  <span className="error">{errSoLuong}</span>
                 </div>
                 <div className="input_container">
                   <label className="input_label" htmlFor="password_field">
@@ -190,6 +283,7 @@ const SuaSanPham = () => {
                     onChange={handleFile}
                     id="file"
                   />
+                  <span className="error">{errHinhAnh}</span>
                 </div>
                 <div className="input_container pt-5">
                   <select onChange={handleDanhMuc} value={input.idDanhMuc}>
@@ -210,6 +304,7 @@ const SuaSanPham = () => {
                 onChange={handleInput}
                 value={input.moTa}
               />
+              <span className="error">{errMoTa}</span>
             </div>
             <button title="Sign In" type="submit" className="sign-in_btn">
               <span>Cập nhật</span>

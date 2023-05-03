@@ -3,17 +3,20 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../components/urlApi";
 const ThayDoiTaiKhoan = () => {
-  let capNhat = JSON.parse(localStorage.getItem("capNhatTaiKhoan"));
+  const capNhat = JSON.parse(localStorage.getItem("taiKhoanAdmin"));
   console.log(capNhat);
+
   console.log(capNhat.taiKhoan);
   const navigate = useNavigate();
   const [input, setInput] = useState({
-    ten: capNhat[0].ten,
-    email: capNhat[0].email,
-    soDienThoai: capNhat[0].soDienThoai,
-    taiKhoan: capNhat[0].taiKhoan,
-    matKhau: capNhat[0].matKhau,
+    ten: capNhat.ten,
+    email: capNhat.email,
+    soDienThoai: capNhat.soDienThoai,
+    taiKhoan: capNhat.taiKhoan,
+    matKhau: capNhat.matKhau,
   });
+
+  console.log(input.ten);
 
   let [errTen, setTen] = useState("");
   let [errSoDienThoai, setSoDienThoai] = useState("");
