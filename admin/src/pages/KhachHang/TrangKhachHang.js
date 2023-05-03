@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import api from "../../components/urlApi";
-import { useNavigate, Link } from "react-router-dom";
+import {useNavigate, Link} from "react-router-dom";
 import ReactPaginate from "react-paginate";
-import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
+import {AiFillCaretLeft, AiFillCaretRight} from "react-icons/ai";
 
 const TrangKhachHang = () => {
   let navigation = useNavigate();
@@ -32,22 +32,22 @@ const TrangKhachHang = () => {
 
   // Khi click vào nút này sẻ lấy đc id của khách hàng đó vào xóa theo id của khách hàng
   function checkId(e) {
-    let getLocalStolore = JSON.parse(localStorage.getItem("admin"));
-    if (getLocalStolore) {
-      let getId = e.target.value;
-      axios
-        .delete(api.khachHangId + getId)
-        .then((res) => {
-          alert("Xóa thành công");
-          setA(!a);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } else {
-      alert("Bạn chưa đăng nhập");
-      navigation("/");
-    }
+    // let getLocalStolore = JSON.parse(localStorage.getItem("admin"));
+    // if (getLocalStolore) {
+    let getId = e.target.value;
+    axios
+      .delete(api.khachHangId + getId)
+      .then((res) => {
+        alert("Xóa thành công");
+        setA(!a);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    // } else {
+    //   alert("Bạn chưa đăng nhập");
+    //   navigation("/");
+    // }
   }
 
   // lấy ra từng thông tin của khách hàng
@@ -55,7 +55,7 @@ const TrangKhachHang = () => {
     return currentData.map((item, index) => {
       return (
         <tr key={index}>
-          <th scope="row">{index}</th>
+          {/* <th scope="row">{index}</th> */}
           <td>
             <p className="fs14 mb-0">{item.ten}</p>
           </td>
@@ -75,11 +75,7 @@ const TrangKhachHang = () => {
             <p className="fs14 mb-0">{item.matKhau}</p>
           </td>
           <td>
-            <button
-              className="btn btn-outline-danger fw-bolder"
-              value={item.idKhachHang}
-              onClick={checkId}
-            >
+            <button className="btn btn-outline-danger fw-bolder" value={item.idKhachHang} onClick={checkId}>
               <p className="fs14 mb-0">Xóa</p>
             </button>
           </td>
@@ -88,7 +84,7 @@ const TrangKhachHang = () => {
     });
   };
 
-  const handlePageClick = ({ selected }) => {
+  const handlePageClick = ({selected}) => {
     setCurrentPage(selected);
   };
 
@@ -102,7 +98,7 @@ const TrangKhachHang = () => {
           <table class="table">
             <thead className="table-dark">
               <tr>
-                <th scope="col">#</th>
+                {/* <th scope="col">#</th> */}
                 <th scope="col">
                   <p className="fs14 mb-0">Tên</p>
                 </th>
@@ -126,29 +122,26 @@ const TrangKhachHang = () => {
             </thead>
             <tbody>{renderKhachHang()}</tbody>
           </table>
-          {currentData.length < 15 ? (
-            ""
-          ) : (
-            <ReactPaginate
-              previousLabel={<AiFillCaretLeft />}
-              nextLabel={<AiFillCaretRight />}
-              breakLabel={"..."}
-              pageCount={pageCount}
-              marginPagesDisplayed={2}
-              pageRangeDisplayed={3}
-              onPageChange={handlePageClick}
-              containerClassName={"pagination justify-content-center"}
-              pageClassName={"page-item"}
-              pageLinkClassName={"page-link"}
-              previousClassName={"page-item"}
-              previousLinkClassName={"page-link"}
-              nextClassName={"page-item"}
-              nextLinkClassName={"page-link"}
-              breakClassName={"page-item"}
-              breakLinkClassName={"page-link"}
-              activeClassName={"active"}
-            />
-          )}
+
+          <ReactPaginate
+            previousLabel={<AiFillCaretLeft />}
+            nextLabel={<AiFillCaretRight />}
+            breakLabel={"..."}
+            pageCount={pageCount}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={3}
+            onPageChange={handlePageClick}
+            containerClassName={"pagination justify-content-center"}
+            pageClassName={"page-item"}
+            pageLinkClassName={"page-link"}
+            previousClassName={"page-item"}
+            previousLinkClassName={"page-link"}
+            nextClassName={"page-item"}
+            nextLinkClassName={"page-link"}
+            breakClassName={"page-item"}
+            breakLinkClassName={"page-link"}
+            activeClassName={"active"}
+          />
         </div>
       </div>
     </div>

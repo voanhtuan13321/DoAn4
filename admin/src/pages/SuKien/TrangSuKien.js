@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import api from "../../components/urlApi";
-import { useNavigate, Link } from "react-router-dom";
+import {useNavigate, Link} from "react-router-dom";
 import ReactPaginate from "react-paginate";
-import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
+import {AiFillCaretLeft, AiFillCaretRight} from "react-icons/ai";
 
-import { Button, Form, Input } from "antd";
+import {Button, Form, Input} from "antd";
 
 const TrangSuKien = () => {
   const ITEMS_PER_PAGE = 15;
@@ -30,7 +30,7 @@ const TrangSuKien = () => {
   const handleInput = (e) => {
     let nameKey = e.target.name;
     let nameValue = e.target.value;
-    setInput((state) => ({ ...state, [nameKey]: nameValue }));
+    setInput((state) => ({...state, [nameKey]: nameValue}));
   };
 
   const handlerSubmit = (e) => {
@@ -98,7 +98,7 @@ const TrangSuKien = () => {
     navigation("/admin/sua_su_kien");
   }
 
-  const handlePageClick = ({ selected }) => {
+  const handlePageClick = ({selected}) => {
     setCurrentPage(selected);
   };
 
@@ -109,21 +109,14 @@ const TrangSuKien = () => {
     return currentData.map((item, index) => {
       return (
         <tr key={index}>
-          <th scope="row">{index}</th>
+          {/* <th scope="row">{index}</th> */}
           <td>{item.tieuDe}</td>
           <td>{item.noiDung}</td>
           <td>
-            <button
-              className="btn btn-warning mr3"
-              onClick={() => checkId(item)}
-            >
+            <button className="btn btn-warning mr3" onClick={() => checkId(item)}>
               Sửa
             </button>
-            <button
-              className="btn btn-danger "
-              value={item.id}
-              onClick={deleteId}
-            >
+            <button className="btn btn-danger " value={item.id} onClick={deleteId}>
               Xóa
             </button>
           </td>
@@ -182,7 +175,7 @@ const TrangSuKien = () => {
           <table class="table">
             <thead>
               <tr>
-                <th scope="col">#</th>
+                {/* <th scope="col">#</th> */}
                 <th scope="col">Tiêu đề</th>
                 <th scope="col">Nội dung</th>
                 <th scope="col"></th>

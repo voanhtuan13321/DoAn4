@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { BsCartCheckFill } from "react-icons/bs";
-import { AiFillDelete } from "react-icons/ai";
-import { AiFillEdit } from "react-icons/ai";
+import React, {useEffect, useState} from "react";
+import {BsCartCheckFill} from "react-icons/bs";
+import {AiFillDelete} from "react-icons/ai";
+import {AiFillEdit} from "react-icons/ai";
 import axios from "axios";
 import api from "../components/urlApi";
-import { useNavigate, useParams } from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 
 const SanPhamChiTiet = () => {
   const [data, setData] = useState([]);
@@ -104,18 +104,12 @@ const SanPhamChiTiet = () => {
                   <p className="card-text">{thoiGian}</p>
                 </div>
                 <div className="d-flex">
-                  <button
-                    onClick={() => xoaBinhLuan(item.id)}
-                    className="classdelete btn btn-danger"
-                  >
+                  <button onClick={() => xoaBinhLuan(item.id)} className="classdelete btn btn-danger">
                     {" "}
                     <AiFillDelete />
                     Xóa
                   </button>
-                  <button
-                    onClick={() => suaBinhLuan(item.id)}
-                    className="btn btn-warning"
-                  >
+                  <button onClick={() => suaBinhLuan(item.id)} className="btn btn-warning">
                     <AiFillEdit />
                     Sửa
                   </button>
@@ -186,10 +180,7 @@ const SanPhamChiTiet = () => {
       <div className="container-xxl py-4 mh700 mt150px">
         <div className="row rounded border-light border-4 bg-light bg-gradient p-5">
           <div className="col-4 ">
-            <img
-              className="rounded mx-auto d-block img-fluid"
-              src={api.img + sanPham.hinhAnh}
-            />
+            <img className="rounded mx-auto d-block img-fluid" src={api.img + sanPham.hinhAnh} />
           </div>
           <div className="col-8">
             <p className="fs-3">{sanPham.ten}</p>
@@ -212,13 +203,7 @@ const SanPhamChiTiet = () => {
               </div>
               <div className="py-2">
                 <div className="d-flex ">
-                  <b className="text-danger fs-3">
-                    Giá :{" "}
-                    {sanPham.giaSach?.toLocaleString("vi-VN", {
-                      style: "currency",
-                      currency: "VND",
-                    })}
-                  </b>
+                  <b className="text-danger fs-3">Giá : {sanPham.giaSach + " VNĐ"}</b>
                 </div>
                 <div className="d-flex py-2">
                   <span>Số lượng : </span>
@@ -229,10 +214,7 @@ const SanPhamChiTiet = () => {
             <p>{sanPham.moTa}</p>
             <p>Ngày phát hành : {sanPham.ngayXuatBan}</p>
             <div>
-              <button
-                onClick={() => themVaoGioHang(sanPham)}
-                className="button"
-              >
+              <button onClick={() => themVaoGioHang(sanPham)} className="button">
                 <span>
                   <BsCartCheckFill />
                 </span>
@@ -248,12 +230,7 @@ const SanPhamChiTiet = () => {
               <h3>Phần bình luận</h3>
               <form action="#" onSubmit={handleSubmit}>
                 <p>
-                  <textarea
-                    className="comment p-3"
-                    onChange={handleInput}
-                    rows={4}
-                    placeholder="Bình luận ...."
-                  />
+                  <textarea className="comment p-3" onChange={handleInput} rows={4} placeholder="Bình luận ...." />
                 </p>
                 <button className="btn btn-primary">Bình luận</button>
               </form>
@@ -262,9 +239,7 @@ const SanPhamChiTiet = () => {
           <div className="col-3"></div>
         </div>
 
-        <div className="row rounded border-light border-4 bg-light bg-gradient p-3">
-          {binhLuanSanPham()}
-        </div>
+        <div className="row rounded border-light border-4 bg-light bg-gradient p-3">{binhLuanSanPham()}</div>
       </div>
     </>
   );

@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import axios from "axios";
 import api from "../../components/urlApi";
-import { GrView } from "react-icons/gr";
-import { useNavigate } from "react-router-dom";
+import {GrView} from "react-icons/gr";
+import {useNavigate} from "react-router-dom";
 import ReactPaginate from "react-paginate";
-import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
+import {AiFillCaretLeft, AiFillCaretRight} from "react-icons/ai";
 const TrangBinhLuan = () => {
   const ITEMS_PER_PAGE = 15;
   let navigate = useNavigate();
@@ -35,7 +35,7 @@ const TrangBinhLuan = () => {
       });
   }, [a]);
 
-  const handlePageClick = ({ selected }) => {
+  const handlePageClick = ({selected}) => {
     setCurrentPage(selected);
   };
 
@@ -54,7 +54,7 @@ const TrangBinhLuan = () => {
 
       return (
         <tr key={index}>
-          <th scope="row">{index}</th>
+          {/* <th scope="row">{index}</th> */}
           <td>
             <p className="fs14 mb-0">{item.ten}</p>
           </td>
@@ -71,10 +71,7 @@ const TrangBinhLuan = () => {
             <p className="fs14 mb-0">{item.ngayXuatBan}</p>
           </td>
           <td>
-            <button
-              onClick={() => xemBinhLuan(item.idSach)}
-              className="btn btn-outline-success fw-bolder text-white"
-            >
+            <button onClick={() => xemBinhLuan(item.idSach)} className="btn btn-outline-success fw-bolder text-white">
               <p className="fs14 mb-0">
                 <GrView />
               </p>
@@ -95,7 +92,7 @@ const TrangBinhLuan = () => {
       <table class="table">
         <thead className="table-dark">
           <tr>
-            <th scope="col">#</th>
+            {/* <th scope="col">#</th> */}
             <th scope="col">Tên</th>
             <th scope="col">Tác giả</th>
             <th scope="col">Nhà xuất bản</th>
@@ -106,29 +103,26 @@ const TrangBinhLuan = () => {
         </thead>
         <tbody>{sanPham()}</tbody>
       </table>
-      {currentData.length < 15 ? (
-        ""
-      ) : (
-        <ReactPaginate
-          previousLabel={<AiFillCaretLeft />}
-          nextLabel={<AiFillCaretRight />}
-          breakLabel={"..."}
-          pageCount={pageCount}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={3}
-          onPageChange={handlePageClick}
-          containerClassName={"pagination justify-content-center"}
-          pageClassName={"page-item"}
-          pageLinkClassName={"page-link"}
-          previousClassName={"page-item"}
-          previousLinkClassName={"page-link"}
-          nextClassName={"page-item"}
-          nextLinkClassName={"page-link"}
-          breakClassName={"page-item"}
-          breakLinkClassName={"page-link"}
-          activeClassName={"active"}
-        />
-      )}
+
+      <ReactPaginate
+        previousLabel={<AiFillCaretLeft />}
+        nextLabel={<AiFillCaretRight />}
+        breakLabel={"..."}
+        pageCount={pageCount}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={3}
+        onPageChange={handlePageClick}
+        containerClassName={"pagination justify-content-center"}
+        pageClassName={"page-item"}
+        pageLinkClassName={"page-link"}
+        previousClassName={"page-item"}
+        previousLinkClassName={"page-link"}
+        nextClassName={"page-item"}
+        nextLinkClassName={"page-link"}
+        breakClassName={"page-item"}
+        breakLinkClassName={"page-link"}
+        activeClassName={"active"}
+      />
     </div>
   );
 };

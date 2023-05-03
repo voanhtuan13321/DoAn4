@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import api from "../components/urlApi";
-import { useParams, Link } from "react-router-dom";
+import {useParams, Link} from "react-router-dom";
 // import {}
 const SanPhamTheoDanhMuc = () => {
   const params = useParams();
@@ -22,27 +22,12 @@ const SanPhamTheoDanhMuc = () => {
       return danhMucSanPham.map((item, index) => {
         return (
           <div className=" col-3 mb-3" key={index}>
-            <Link
-              to={"/san_pham/" + item.idSach}
-              className="border color  card "
-              title={item.ten}
-            >
+            <Link to={"/san_pham/" + item.idSach} className="border color  card " title={item.ten}>
               <div className="card">
-                <img
-                  src={api.img + item.hinhAnh}
-                  className="card-img-top heightImage"
-                  alt="..."
-                />
+                <img src={api.img + item.hinhAnh} className="card-img-top heightImage" alt="..." />
                 <div className="card-body">
-                  <h5 className="card-title">{item.ten}</h5>
-                  <p className="card-text ">
-                    Giá sách :{" "}
-                    {item.giaSach.toLocaleString("vi-VN", {
-                      style: "currency",
-                      currency: "VND",
-                    })}{" "}
-                    VND
-                  </p>
+                  <h5 className="card-title">{item.ten.length > 50 ? item.ten.slice(0, 50) + "..." : item.ten}</h5>
+                  <p className="card-text ">Giá sách : {item.giaSach + " VNĐ"} VND</p>
                 </div>
               </div>
             </Link>

@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import api from "../../components/urlApi";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import ReactPaginate from "react-paginate";
-import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
+import {AiFillCaretLeft, AiFillCaretRight} from "react-icons/ai";
 const TrangSgSanPham = () => {
   let navigation = useNavigate();
 
@@ -79,7 +79,7 @@ const TrangSgSanPham = () => {
   const handleInput = (e) => {
     let nameKey = e.target.name;
     let nameValue = e.target.value;
-    setSapPham((state) => ({ ...state, [nameKey]: nameValue }));
+    setSapPham((state) => ({...state, [nameKey]: nameValue}));
   };
 
   const handleFile = (e) => {
@@ -125,7 +125,7 @@ const TrangSgSanPham = () => {
     navigation("/admin/sua_san_pham");
   }
 
-  const handlePageClick = ({ selected }) => {
+  const handlePageClick = ({selected}) => {
     setCurrentPage(selected);
   };
 
@@ -136,7 +136,7 @@ const TrangSgSanPham = () => {
     return currentData.map((item, index) => {
       return (
         <tr key={index}>
-          <td scope="col">{index}</td>
+          {/* <td scope="col">{index}</td> */}
           <td scope="col">{item.ten}</td>
           <td scope="col">{item.tacGia}</td>
           <td scope="col">{item.ngayXuatBan}</td>
@@ -149,23 +149,13 @@ const TrangSgSanPham = () => {
           <td scope="col">{item.soLuong}</td>
 
           <td scope="col">
-            <img
-              className="img-thumbnail image-w image-h"
-              src={api.img + item.hinhAnh}
-            />
+            <img className="img-thumbnail image-w image-h" src={api.img + item.hinhAnh} />
           </td>
           <td scope="col">
-            <button
-              className="btn btn-warning mr3"
-              onClick={() => checkId(item)}
-            >
+            <button className="btn btn-warning mr3" onClick={() => checkId(item)}>
               Sửa
             </button>
-            <button
-              className="btn btn-danger"
-              value={item.idSach}
-              onClick={deleteId}
-            >
+            <button className="btn btn-danger" value={item.idSach} onClick={deleteId}>
               Xóa
             </button>
           </td>
@@ -295,13 +285,7 @@ const TrangSgSanPham = () => {
               <div className="p-3">
                 <div className="input_container">
                   <label className="input_label">Tên</label>
-                  <input
-                    placeholder="Tên"
-                    name="ten"
-                    type="text"
-                    className="input_field"
-                    onChange={handleInput}
-                  />
+                  <input placeholder="Tên" name="ten" type="text" className="input_field" onChange={handleInput} />
                 </div>
                 <span className="error">{errTen}</span>
                 <div className="input_container">
@@ -380,13 +364,7 @@ const TrangSgSanPham = () => {
                   <label className="input_label" htmlFor="password_field">
                     Hình ảnh
                   </label>
-                  <input
-                    placeholder="Password"
-                    name="input-name"
-                    type="file"
-                    onChange={handleFile}
-                    id="file"
-                  />
+                  <input placeholder="Password" name="input-name" type="file" onChange={handleFile} id="file" />
                   <span className="error">{errHinhAnh}</span>
                 </div>
                 <div className="input_container pt-5">
@@ -417,7 +395,7 @@ const TrangSgSanPham = () => {
           <table class="table">
             <thead>
               <tr>
-                <th scope="col">#</th>
+                {/* <th scope="col">#</th> */}
                 <th scope="col">Tên</th>
                 <th scope="col">Tác giả</th>
                 <th scope="col">Nhà xuất bản</th>

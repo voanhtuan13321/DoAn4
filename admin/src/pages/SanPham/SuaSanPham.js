@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import api from "../../components/urlApi";
 
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 const SuaSanPham = () => {
   const sach = JSON.parse(localStorage.getItem("sach"));
@@ -56,7 +56,7 @@ const SuaSanPham = () => {
   const handleInput = (e) => {
     let nameKey = e.target.name;
     let nameValue = e.target.value;
-    setInput((state) => ({ ...state, [nameKey]: nameValue }));
+    setInput((state) => ({...state, [nameKey]: nameValue}));
   };
 
   const handleFile = (e) => {
@@ -184,8 +184,11 @@ const SuaSanPham = () => {
     }
   };
 
+  const xemSanPham = () => {};
+
   return (
     <div className="pl5px">
+      <button></button>
       <div className="">
         <div className="d-flex justify-content-center">
           <form className="" onSubmit={handlerSubmit}>
@@ -254,7 +257,7 @@ const SuaSanPham = () => {
                     type="date"
                     className="input_field"
                     onChange={handleInput}
-                    value={new Date(input.ngayXuatBan)}
+                    // value={new Date(input.ngayXuatBan)}
                   />
                   <span className="error">{errNgayXuatBan}</span>
                 </div>
@@ -276,13 +279,7 @@ const SuaSanPham = () => {
                   <label className="input_label" htmlFor="password_field">
                     Hình ảnh
                   </label>
-                  <input
-                    placeholder="Password"
-                    name="input-name"
-                    type="file"
-                    onChange={handleFile}
-                    id="file"
-                  />
+                  <input placeholder="Password" name="input-name" type="file" onChange={handleFile} id="file" />
                   <span className="error">{errHinhAnh}</span>
                 </div>
                 <div className="input_container pt-5">

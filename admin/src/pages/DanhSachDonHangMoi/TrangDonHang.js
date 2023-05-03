@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import api from "../../components/urlApi";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import ReactPaginate from "react-paginate";
-import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
+import {AiFillCaretLeft, AiFillCaretRight} from "react-icons/ai";
 const TrangDonHang = () => {
   const ITEMS_PER_PAGE = 15;
   let navigation = useNavigate();
@@ -76,9 +76,9 @@ const TrangDonHang = () => {
       .map((item, index) => {
         return (
           <tr>
-            <td scope="col">
+            {/* <td scope="col">
               <p className="fs14">{index}</p>
-            </td>
+            </td> */}
             <td scope="col">
               <p className="fs14">{item["khachHang"].ten}</p>
             </td>
@@ -93,25 +93,14 @@ const TrangDonHang = () => {
             </td>
             <td scope="col">
               <p className="fs14">
-                {item.trangThai == "online"
-                  ? "Đả thanh toán"
-                  : (item["sach"].giaSach * item.soLuong).toLocaleString(
-                      "vi-VN",
-                      {
-                        style: "currency",
-                        currency: "VND",
-                      }
-                    )}
+                {item.trangThai == "online" ? "Đã thanh toán" : item["sach"].giaSach * item.soLuong + " VNĐ"}
               </p>
             </td>
             <td scope="col">
               <p className="fs14">{item.trangThai}</p>
             </td>
             <td scope="col">
-              <button
-                onClick={() => checkId(item)}
-                className="btn btn-outline-success fw-bolder"
-              >
+              <button onClick={() => checkId(item)} className="btn btn-outline-success fw-bolder">
                 Xác nhận
               </button>
             </td>
@@ -126,9 +115,9 @@ const TrangDonHang = () => {
       .map((item, index) => {
         return (
           <tr>
-            <td scope="col">
+            {/* <td scope="col">
               <p className="fs14">{index}</p>
-            </td>
+            </td> */}
             <td scope="col">
               <p className="fs14">{item["khachHang"].ten}</p>
             </td>
@@ -144,23 +133,18 @@ const TrangDonHang = () => {
             <td scope="col">
               <p className="fs14">{item.ngayMua}</p>
             </td>
-            <td scope="col">
+            {/* <td scope="col">
               <p className="fs14">{item.trangThai}</p>
-            </td>
+            </td> */}
             <td scope="col">
-              <p className="fs14">
-                {(item.soLuong * item["sach"].giaSach).toLocaleString("vi-VN", {
-                  style: "currency",
-                  currency: "VND",
-                })}
-              </p>
+              <p className="fs14">{item.soLuong * item["sach"].giaSach + " VNĐ"} </p>
             </td>
           </tr>
         );
       });
   };
 
-  const handlePageClick = ({ selected }) => {
+  const handlePageClick = ({selected}) => {
     setCurrentPage(selected);
   };
 
@@ -173,7 +157,7 @@ const TrangDonHang = () => {
         <table className="table">
           <thead className="table-dark">
             <tr>
-              <th scope="col"></th>
+              {/* <th scope="col"></th> */}
               <th scope="col">
                 <p className="fs14 mb-0">Tên khách hàng</p>
               </th>
@@ -203,7 +187,7 @@ const TrangDonHang = () => {
         <table className="table">
           <thead className="table-dark">
             <tr>
-              <th scope="col"></th>
+              {/* <th scope="col"></th> */}
               <th scope="col">
                 <p className="fs14 mb-0">Tên khách hàng</p>
               </th>
@@ -219,9 +203,9 @@ const TrangDonHang = () => {
               <th scope="col">
                 <p className="fs14 mb-0">Thời gian</p>
               </th>
-              <th scope="col">
+              {/* <th scope="col">
                 <p className="fs14 mb-0">Trạng thái</p>
-              </th>
+              </th> */}
               <th scope="col">
                 <p className="fs14 mb-0">Tổng tiền</p>
               </th>
@@ -230,29 +214,26 @@ const TrangDonHang = () => {
           </thead>
           <tbody>{lichSuMuaHang()}</tbody>
         </table>
-        {currentData.length < 15 ? (
-          ""
-        ) : (
-          <ReactPaginate
-            previousLabel={<AiFillCaretLeft />}
-            nextLabel={<AiFillCaretRight />}
-            breakLabel={"..."}
-            pageCount={pageCount}
-            marginPagesDisplayed={2}
-            pageRangeDisplayed={3}
-            onPageChange={handlePageClick}
-            containerClassName={"pagination justify-content-center"}
-            pageClassName={"page-item"}
-            pageLinkClassName={"page-link"}
-            previousClassName={"page-item"}
-            previousLinkClassName={"page-link"}
-            nextClassName={"page-item"}
-            nextLinkClassName={"page-link"}
-            breakClassName={"page-item"}
-            breakLinkClassName={"page-link"}
-            activeClassName={"active"}
-          />
-        )}
+
+        <ReactPaginate
+          previousLabel={<AiFillCaretLeft />}
+          nextLabel={<AiFillCaretRight />}
+          breakLabel={"..."}
+          pageCount={pageCount}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={3}
+          onPageChange={handlePageClick}
+          containerClassName={"pagination justify-content-center"}
+          pageClassName={"page-item"}
+          pageLinkClassName={"page-link"}
+          previousClassName={"page-item"}
+          previousLinkClassName={"page-link"}
+          nextClassName={"page-item"}
+          nextLinkClassName={"page-link"}
+          breakClassName={"page-item"}
+          breakLinkClassName={"page-link"}
+          activeClassName={"active"}
+        />
       </div>
     </div>
   );

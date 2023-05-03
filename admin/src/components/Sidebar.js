@@ -1,16 +1,11 @@
-import React, { useState } from "react";
-import { BsBorderStyle, BsFillCalendarEventFill } from "react-icons/bs";
-import { BiUserCircle } from "react-icons/bi";
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
-import { BsSearch } from "react-icons/bs";
-import { GoFileDirectory } from "react-icons/go";
-import {
-  AiOutlineDashboard,
-  AiOutlineUserAdd,
-  AiFillAppstore,
-  AiOutlineComment,
-} from "react-icons/ai";
-import { FaProductHunt } from "react-icons/fa";
+import React, {useState} from "react";
+import {BsBorderStyle, BsFillCalendarEventFill} from "react-icons/bs";
+import {BiUserCircle} from "react-icons/bi";
+import {NavLink, Outlet, useNavigate} from "react-router-dom";
+import {BsSearch} from "react-icons/bs";
+import {GoFileDirectory} from "react-icons/go";
+import {AiOutlineDashboard, AiOutlineUserAdd, AiFillAppstore, AiOutlineComment} from "react-icons/ai";
+import {FaProductHunt} from "react-icons/fa";
 import api from "./urlApi";
 import axios from "axios";
 const Sidebar = () => {
@@ -79,38 +74,30 @@ const Sidebar = () => {
     if (timKiemSach == "") {
       alert("Bạn chưa nhập");
     } else {
-      axios
-        .get(api.timKiem, { params: { search: timKiemSach } })
-        .then((res) => {
-          localStorage.setItem("timKiemSach", JSON.stringify(res.data.data));
-          window.location.href = `http://${api.ip}:2000/admin/tim_kiem`;
-          // navigate("/admin/tim_kiem");
-        });
+      axios.get(api.timKiem, {params: {search: timKiemSach}}).then((res) => {
+        localStorage.setItem("timKiemSach", JSON.stringify(res.data.data));
+        window.location.href = `http://${api.ip}:2000/admin/tim_kiem`;
+        // navigate("/admin/tim_kiem");
+      });
     }
     // navigate("/admin/tim_kiem");
   };
   return (
-    <div>
+    <div className="h100">
       <div className="header py-2">
         <div className="container">
           <div className="row">
-            <div className="col-2">
-              <img src="" />
-            </div>
+            <div className="col-2">{/* <img src="../../public/logo.jpg" alt="anh loi" style={{width: 50}} /> */}</div>
             <div className="col-5">
               <div className="d-flex">
                 <input
                   className="form-control me-2"
                   type="search"
-                  placeholder="Tìm kiếm"
+                  placeholder="Tìm kiếm sách"
                   onChange={handleSearch}
                   aria-label="Search"
                 />
-                <button
-                  onClick={timKiem}
-                  className="btn btn-outline-success"
-                  type="submit"
-                >
+                <button onClick={timKiem} className="btn btn-outline-success" type="submit">
                   <BsSearch />
                 </button>
               </div>
@@ -122,22 +109,18 @@ const Sidebar = () => {
                   type="button"
                   id="dropdownMenuButton1"
                   data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
+                  aria-expanded="false">
                   <BiUserCircle /> {admin}
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                   <li>
                     <button className="btn w-100 fs-6 text" onClick={dangXuat}>
-                      <span className="text12"> Đăng xuất</span>
+                      <span className="text12">Đăng xuất</span>
                     </button>
                   </li>
                   <li>
-                    <button
-                      className="btn w-100 fs-6 text"
-                      onClick={capNhatTaiKhoan}
-                    >
-                      <span className="text12">Cap nhat tai khoan</span>
+                    <button className="btn w-100 fs-6 text" onClick={capNhatTaiKhoan}>
+                      <span className="text12">Cập nhật thông tin</span>
                     </button>
                   </li>
                 </ul>
@@ -155,17 +138,11 @@ const Sidebar = () => {
             ></div>
           </div> */}
           {menuItem.map((item, index) => (
-            <NavLink
-              to={item.path}
-              key={index}
-              className="link"
-              activeclassName="active"
-            >
+            <NavLink to={item.path} key={index} className="link" activeclassName="active">
               <div className="">{item.icon}</div>
               <div
                 // style={{ display: isOpen ? "block" : "none" }}
-                className="link_text"
-              >
+                className="link_text">
                 {item.name}
               </div>
             </NavLink>

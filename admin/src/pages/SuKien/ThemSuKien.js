@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import api from "../../components/urlApi";
-import { useNavigate, Link } from "react-router-dom";
+import {useNavigate, Link} from "react-router-dom";
 
 const ThemSuKien = () => {
   let navigate = useNavigate();
@@ -22,7 +22,7 @@ const ThemSuKien = () => {
   const handleInput = (e) => {
     let nameKey = e.target.name;
     let nameValue = e.target.value;
-    setInput((state) => ({ ...state, [nameKey]: nameValue }));
+    setInput((state) => ({...state, [nameKey]: nameValue}));
   };
 
   const handlerSubmit = (e) => {
@@ -50,13 +50,16 @@ const ThemSuKien = () => {
         tieuDe: input.tieuDe,
         noiDung: input.noiDung,
       };
+      const load = document.querySelector("#load");
+      load.classList.remove("d-none");
       axios
         .post(api.suKien, data)
         .then((res) => {
           alert("Thêm sự kiện thành công");
           navigate("/admin/xem_su_kien");
         })
-        .catch((errors) => console.log(errors));
+        .catch((errors) => console.log(errors))
+        .finally(() => load.classList.add("d-none"));
     }
   };
 

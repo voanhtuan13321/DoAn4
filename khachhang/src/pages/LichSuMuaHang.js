@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {Link, useParams} from "react-router-dom";
 import axios from "axios";
 import api from "../components/urlApi";
 const LichSuMuaHang = () => {
@@ -38,7 +38,7 @@ const LichSuMuaHang = () => {
             <div>{/* <AiFillDelete className="text-danger " /> */}</div>
           </div>
           <div className="cart-col-4">
-            <h5 className="price">{item["sach"].giaSach * item.soLuong} VNĐ</h5>
+            <h5 className="price">{item["sach"].giaSach * item.soLuong + " VNĐ"}</h5>
           </div>
         </div>
       );

@@ -15,24 +15,28 @@
   --color-1c1c1b: #1c1c1b;
 }
 
-.comment{
+.comment {
   width: 600px;
 }
 
-.textred{color: red;}
-.fontsize{font-size: 20px !important;
-font-weight: 500;}
-.color{
+.textred {
+  color: red;
+}
+.fontsize {
+  font-size: 20px !important;
+  font-weight: 500;
+}
+.color {
   color: #000;
 }
-.color:hover{
+.color:hover {
   color: #000;
 }
-.h600{
+.h600 {
   min-height: 600px;
 }
 
-.cusoclick{
+.cusoclick {
   cursor: pointer;
 }
 .section-heading {
@@ -306,18 +310,10 @@ footer .input-group-text {
   width: 100%;
 }
 
-
-
-
-
 /* ////////////////////////////////////////// */
 .product-card .product-image {
   max-height: 200px;
 }
-
-
-
-
 
 /* /////////////////////////////////////////// */
 /* .product-card .product-image img {
@@ -747,7 +743,7 @@ footer .input-group-text {
 }
 .cart-header h4 {
   font-size: 17px;
-    font-weight: bold;
+  font-weight: bold;
   color: var(--color-777777);
 }
 .cart-col-1 {
@@ -784,8 +780,6 @@ footer .input-group-text {
 }
 /* Shipping page ends here */
 
-
-
 /*  */
 .form {
   background-color: #fff;
@@ -809,7 +803,8 @@ footer .input-group-text {
   margin-bottom: 5px;
 }
 
-.input-container input, .form button {
+.input-container input,
+.form button {
   outline: none;
   border: 1px solid #e5e7eb;
   /* margin: 8px 0; */
@@ -832,7 +827,7 @@ footer .input-group-text {
   padding-bottom: 0.75rem;
   padding-left: 1.25rem;
   padding-right: 1.25rem;
-  background-color: #4F46E5;
+  background-color: #4f46e5;
   color: #ffffff;
   font-size: 0.875rem;
   line-height: 1.25rem;
@@ -843,7 +838,7 @@ footer .input-group-text {
 }
 
 .signup-link {
-  color: #6B7280;
+  color: #6b7280;
   font-size: 0.875rem;
   line-height: 1.25rem;
   text-align: center;
@@ -853,74 +848,69 @@ footer .input-group-text {
   text-decoration: underline;
 }
 
-
-.width-500{
+.width-500 {
   width: 500px;
   text-align: center;
 }
 
-.btn-width{
+.btn-width {
   width: 150px;
 }
 
-
 /*  */
 
-.bg3b4149{
- background-color: #3b4149;
- min-height: 100vh;
+.bg3b4149 {
+  background-color: #3b4149;
+  min-height: 100vh;
 }
 
-.bsd{
+.bsd {
   box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
 }
 
-
-
-.bsdb{
+.bsdb {
   box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
-
 }
-.zi{
+.zi {
   z-index: 1;
 }
-.zindex{
-z-index: 9999;
+.zindex {
+  z-index: 9999;
 }
 
-.colorbutton{
+.colorbutton {
   background-color: var(--color-febd69);
 }
 
-#luaChon{
+#luaChon {
   margin-right: 20px;
 }
 
-.mh700{
+.mh700 {
   min-height: 700px;
 }
 
-.mh400{
+.mh400 {
   min-height: 240px;
 }
 
-.imageHeight{
+.imageHeight {
   width: 100px;
   height: 100px;
   object-fit: cover;
 }
 
-.ml5{
+.ml5 {
   margin-right: 25px;
 }
 
-img.heightImage{
+img.heightImage {
   width: 100% !important;
   height: 200px !important;
   object-fit: cover;
 }
 
-.classdelete{
+.classdelete {
   margin-right: 3px;
 }
 
@@ -928,50 +918,42 @@ img.heightImage{
   height: 255px !important;
 }
 
-.border:hover{
+.border:hover {
   box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
 }
 /* .teright{
   margin-right: 10px;
 } */
 
-
-.error{
+.error {
   font-size: 13px;
   color: red;
 }
 
-.lableinput{
+.lableinput {
   font-size: 13px;
 }
 
-
-.w221{
+.w221 {
   width: 100%;
   margin-bottom: 10px;
 }
 
-
-.anButtun{
+.anButtun {
   cursor: none;
   pointer-events: none;
   opacity: 0.5;
 }
 
-
 /*  */
-.signup-link .cusoclick:hover{
-  color: #4F46E5;
-
+.signup-link .cusoclick:hover {
+  color: #4f46e5;
 }
 /*  */
-
-
 
 a {
   text-decoration: none !important;
 }
-
 
 /* Load ẩn ...... */
 /*  */
@@ -1035,20 +1017,17 @@ html {
   }
 }
 
- /* 
+/* 
   */
 
-  .comment{
-    font-size: 13px;
-  }
+.comment {
+  font-size: 13px;
+}
 
-  .name{
-    min-height: 20px !important;
-    font-size: 16px;
-  }
-
-
-
+.name {
+  min-height: 20px !important;
+  font-size: 16px;
+}
 
 /*  */
 .link {
@@ -1061,7 +1040,7 @@ html {
   transform: scale(1.05);
   transition: all 0.5s;
   color: #da7f7f !important;
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .active {
@@ -1074,7 +1053,6 @@ html {
 
 .card:hover {
   transform: scale(1.05);
-
 }
 /*  */
 .figtop {
@@ -1084,7 +1062,6 @@ html {
   left: 0;
   right: 0;
   z-index: 999;
-
 }
 
 .mt150px {
@@ -1097,4 +1074,8 @@ html {
 
 .h-25 {
   height: 25px;
+}
+
+.card-body {
+  min-height: 120px;
 }

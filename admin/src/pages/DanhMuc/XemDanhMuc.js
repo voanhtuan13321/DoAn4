@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import api from "../../components/urlApi";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import ReactPaginate from "react-paginate";
-import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
+import {AiFillCaretLeft, AiFillCaretRight} from "react-icons/ai";
 
 const XemDanhMuc = () => {
   const ITEMS_PER_PAGE = 15;
@@ -15,13 +15,16 @@ const XemDanhMuc = () => {
   const [a, setA] = useState(true);
 
   useEffect(() => {
+    const load = document.querySelector("#load");
+    load.classList.remove("d-none");
     axios
       .get(api.getDanhMuc)
       .then((res) => {
         setDanhMuc(res.data.data);
         setPageCount(Math.ceil(res.data.data.length / ITEMS_PER_PAGE));
       })
-      .catch((errors) => console.log(errors));
+      .catch((errors) => console.log(errors))
+      .finally(() => load.classList.add("d-none"));
   }, [a]);
 
   function deleteId(e) {
@@ -46,7 +49,7 @@ const XemDanhMuc = () => {
     navigate("/admin/sua_danh_muc");
   }
 
-  const handlePageClick = ({ selected }) => {
+  const handlePageClick = ({selected}) => {
     setCurrentPage(selected);
   };
 
@@ -65,17 +68,10 @@ const XemDanhMuc = () => {
             <p className="fs14 mb-0">{item.moTa}</p>
           </td>
           <td className="d-flex">
-            <button
-              className="btn mr3 btn-outline-warning fw-bolder"
-              onClick={() => checkId(item)}
-            >
+            <button className="btn mr3 btn-outline-warning fw-bolder" onClick={() => checkId(item)}>
               Sửa
             </button>
-            <button
-              className="btn btn-outline-danger fw-bolder"
-              value={item.idDanhMuc}
-              onClick={deleteId}
-            >
+            <button className="btn btn-outline-danger fw-bolder" value={item.idDanhMuc} onClick={deleteId}>
               Xóa
             </button>
           </td>
@@ -110,29 +106,26 @@ const XemDanhMuc = () => {
           </thead>
           <tbody>{renderDanhMuc()}</tbody>
         </table>
-        {currentData.length < 15 ? (
-          ""
-        ) : (
-          <ReactPaginate
-            previousLabel={<AiFillCaretLeft />}
-            nextLabel={<AiFillCaretRight />}
-            breakLabel={"..."}
-            pageCount={pageCount}
-            marginPagesDisplayed={2}
-            pageRangeDisplayed={3}
-            onPageChange={handlePageClick}
-            containerClassName={"pagination justify-content-center"}
-            pageClassName={"page-item"}
-            pageLinkClassName={"page-link"}
-            previousClassName={"page-item"}
-            previousLinkClassName={"page-link"}
-            nextClassName={"page-item"}
-            nextLinkClassName={"page-link"}
-            breakClassName={"page-item"}
-            breakLinkClassName={"page-link"}
-            activeClassName={"active"}
-          />
-        )}
+
+        <ReactPaginate
+          previousLabel={<AiFillCaretLeft />}
+          nextLabel={<AiFillCaretRight />}
+          breakLabel={"..."}
+          pageCount={pageCount}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={3}
+          onPageChange={handlePageClick}
+          containerClassName={"pagination justify-content-center"}
+          pageClassName={"page-item"}
+          pageLinkClassName={"page-link"}
+          previousClassName={"page-item"}
+          previousLinkClassName={"page-link"}
+          nextClassName={"page-item"}
+          nextLinkClassName={"page-link"}
+          breakClassName={"page-item"}
+          breakLinkClassName={"page-link"}
+          activeClassName={"active"}
+        />
       </div>
     </div>
   );

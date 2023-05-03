@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import api from "../../components/urlApi";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 const TrangDanhMuc = () => {
   let navigate = useNavigate();
@@ -18,7 +18,7 @@ const TrangDanhMuc = () => {
   const handleInput = (e) => {
     let nameKey = e.target.name;
     let nameValue = e.target.value;
-    setInput((state) => ({ ...state, [nameKey]: nameValue }));
+    setInput((state) => ({...state, [nameKey]: nameValue}));
   };
 
   const handlerSubmit = (e) => {
@@ -46,6 +46,8 @@ const TrangDanhMuc = () => {
         ten: input.ten,
         moTa: input.moTa,
       };
+      const load = document.querySelector("#load");
+      load.classList.remove("d-none");
       axios
         .post(api.getDanhMuc, data)
         .then((res) => {
@@ -53,7 +55,8 @@ const TrangDanhMuc = () => {
           navigate("/admin/xem_danh_muc");
           setA(!a);
         })
-        .catch((errors) => console.log(errors));
+        .catch((errors) => console.log(errors))
+        .finally(() => load.classList.add("d-none"));
     }
   };
 

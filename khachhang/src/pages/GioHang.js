@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {Link, useParams, useNavigate} from "react-router-dom";
 import axios from "axios";
 import api from "../components/urlApi";
-import { AiFillDelete } from "react-icons/ai";
+import {AiFillDelete} from "react-icons/ai";
 
 const GioHang = () => {
   let idKhachHang = JSON.parse(localStorage.getItem("idKhachHang"));
@@ -42,10 +42,7 @@ const GioHang = () => {
       }
       const promises = [];
       arr.forEach((element) => {
-        const promise1 = axios.put(
-          api.gioHang + "/cap-nhat-trang-thai/" + element.id,
-          data
-        );
+        const promise1 = axios.put(api.gioHang + "/cap-nhat-trang-thai/" + element.id, data);
         promises.push(promise1);
       });
       Promise.all(promises).then(() => {
@@ -166,92 +163,44 @@ const GioHang = () => {
             item.trangThai === "online" || item.trangThai === "truc tiep"
               ? "cart-data py-3 mb-2 d-flex justify-content-between align-items-center anButtun"
               : "cart-data py-3 mb-2 d-flex justify-content-between align-items-center"
-          }
-        >
+          }>
           <div className="cart-col-1 gap-15 d-flex align-items-center">
-            <input
-              value={item.id}
-              onChange={checKed}
-              name="chon"
-              className="form-check-input"
-              type="checkbox"
-            />
+            <input value={item.id} onChange={checKed} name="chon" className="form-check-input" type="checkbox" />
             <div className="w-25 h-25">
-              <img
-                className="img-fluid imageHeight"
-                src={api.img + item["sach"].hinhAnh}
-              />
+              <img className="img-fluid imageHeight" src={api.img + item["sach"].hinhAnh} />
             </div>
-            <div>
-              {item.trangThai === "online" || item.trangThai === "truc tiep"
-                ? "Chờ phê duyêt"
-                : ""}
-            </div>
+            <div>{item.trangThai === "online" || item.trangThai === "truc tiep" ? "Chờ phê duyêt" : ""}</div>
           </div>
           <div className="cart-col-2">
             <h5 className="price">{item["sach"].ten}</h5>
           </div>
           <div className="cart-col-2">
-            <h5 className="price">
-              {item["sach"].giaSach.toLocaleString("vi-VN", {
-                style: "currency",
-                currency: "VND",
-              })}{" "}
-              VNĐ
-            </h5>
+            <h5 className="price">{item["sach"].giaSach + " VNĐ"}</h5>
           </div>
           <div className="cart-col-3 d-flex align-items-center gap-15">
-            <div
-              className={
-                item.trangThai === "thanh_toan" ? "d-flex anButtun" : "d-flex"
-              }
-            >
+            <div className={item.trangThai === "thanh_toan" ? "d-flex anButtun" : "d-flex"}>
               <button
                 onClick={() => {
                   themSoLuongSanPham(item);
                 }}
-                className={
-                  item.soLuong == item["sach"].soLuong
-                    ? "btn d-none anButtun"
-                    : "btn"
-                }
-              >
+                className={item.soLuong == item["sach"].soLuong ? "btn d-none anButtun" : "btn"}>
                 +
               </button>
-              <input
-                type="number"
-                name=""
-                className="text-center"
-                value={item.soLuong}
-                min={1}
-                max={10}
-              />
+              <input type="number" name="" className="text-center" value={item.soLuong} min={1} max={10} />
               <button
                 onClick={() => {
                   giamSoLuongSanPham(item);
                 }}
-                className={item.soLuong == 1 ? "btn d-none" : "btn"}
-              >
+                className={item.soLuong == 1 ? "btn d-none" : "btn"}>
                 -
               </button>
             </div>
             <div>{/* <AiFillDelete className="text-danger " /> */}</div>
           </div>
           <div className="cart-col-4">
-            <h5 className="price">
-              {(
-                Number(item["sach"].giaSach) * Number(item.soLuong)
-              ).toLocaleString("vi-VN", {
-                style: "currency",
-                currency: "VND",
-              })}{" "}
-              VND
-            </h5>
+            <h5 className="price">{Number(item["sach"].giaSach) * Number(item.soLuong) + " VNĐ"}</h5>
           </div>
-          <button
-            className="btn btn-danger"
-            onClick={() => deleteCart(item.id)}
-          >
+          <button className="btn btn-danger" onClick={() => deleteCart(item.id)}>
             <AiFillDelete />
           </button>
         </div>
@@ -296,9 +245,7 @@ const GioHang = () => {
         vnp_ResponseCode: "0",
         vnp_ReturnUrl: `http://${api.ip}:3000/gio_hang`,
       };
-      axios
-        .post(api.thanhToan, datThanhToan)
-        .then((res) => (window.location = res.data.data));
+      axios.post(api.thanhToan, datThanhToan).then((res) => (window.location = res.data.data));
       alert(sum(data));
     } else {
       // thanh toan truc tiep
@@ -337,13 +284,7 @@ const GioHang = () => {
               Lịch sử mua hàng
             </Link>
             <div className="d-flex flex-column align-items-end">
-              <h4>
-                Tổng tiền:{" "}
-                {total.toLocaleString("vi-VN", {
-                  style: "currency",
-                  currency: "VND",
-                })}{" "}
-              </h4>
+              <h4>Tổng tiền: {total + " VNĐ"} </h4>
               <p></p>
               <div className="d-flex">
                 <select id="luaChon" className="rounded">

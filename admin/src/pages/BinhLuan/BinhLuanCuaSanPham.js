@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {useParams} from "react-router-dom";
 import axios from "axios";
 import api from "../../components/urlApi";
 import ReactPaginate from "react-paginate";
-import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
+import {AiFillCaretLeft, AiFillCaretRight} from "react-icons/ai";
 
 const BinhLuanCuaSanPham = () => {
   const ITEMS_PER_PAGE = 15;
@@ -19,7 +19,7 @@ const BinhLuanCuaSanPham = () => {
       setPageCount(Math.ceil(res.data.data.length / ITEMS_PER_PAGE));
     });
   }, []);
-  const handlePageClick = ({ selected }) => {
+  const handlePageClick = ({selected}) => {
     setCurrentPage(selected);
   };
 
@@ -74,29 +74,26 @@ const BinhLuanCuaSanPham = () => {
         </thead>
         <tbody>{binhLuan()}</tbody>
       </table>
-      {currentData.length > 15 ? (
-        ""
-      ) : (
-        <ReactPaginate
-          previousLabel={<AiFillCaretLeft />}
-          nextLabel={<AiFillCaretRight />}
-          breakLabel={"..."}
-          pageCount={pageCount}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={3}
-          onPageChange={handlePageClick}
-          containerClassName={"pagination justify-content-center"}
-          pageClassName={"page-item"}
-          pageLinkClassName={"page-link"}
-          previousClassName={"page-item"}
-          previousLinkClassName={"page-link"}
-          nextClassName={"page-item"}
-          nextLinkClassName={"page-link"}
-          breakClassName={"page-item"}
-          breakLinkClassName={"page-link"}
-          activeClassName={"active"}
-        />
-      )}
+
+      <ReactPaginate
+        previousLabel={<AiFillCaretLeft />}
+        nextLabel={<AiFillCaretRight />}
+        breakLabel={"..."}
+        pageCount={pageCount}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={3}
+        onPageChange={handlePageClick}
+        containerClassName={"pagination justify-content-center"}
+        pageClassName={"page-item"}
+        pageLinkClassName={"page-link"}
+        previousClassName={"page-item"}
+        previousLinkClassName={"page-link"}
+        nextClassName={"page-item"}
+        nextLinkClassName={"page-link"}
+        breakClassName={"page-item"}
+        breakLinkClassName={"page-link"}
+        activeClassName={"active"}
+      />
     </div>
   );
 };

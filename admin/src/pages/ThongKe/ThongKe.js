@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import api from "../../components/urlApi";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import ReactPaginate from "react-paginate";
-import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
+import {AiFillCaretLeft, AiFillCaretRight} from "react-icons/ai";
 import Chart from "chart.js/auto";
 
 // số phần tử trên mỗi trangs
@@ -50,8 +50,8 @@ const ThongKe = () => {
             {
               label: "Sách bán theo tháng",
               data: data,
-              backgroundColor: ["rgba(75, 192, 192, 0.2)"],
-              borderColor: ["rgb(75, 192, 192)"],
+              backgroundColor: ["rgb(54, 162, 235)"],
+              borderColor: ["rgb(54, 162, 235)"],
               borderWidth: 1,
             },
           ],
@@ -90,11 +90,11 @@ const ThongKe = () => {
               label: "sách bán theo tháng",
               data: data,
               backgroundColor: [
-                "rgba(255, 99, 132, 0.2)",
-                "rgba(255, 159, 64, 0.2)",
-                "rgba(255, 205, 86, 0.2)",
-                "rgba(75, 192, 192, 0.2)",
-                "rgba(54, 162, 235, 0.2)",
+                "rgb(255, 99, 132)",
+                "rgba(255, 159, 64)",
+                "rgb(255, 205, 86)",
+                "rgb(75, 192, 192)",
+                "rgb(54, 162, 235)",
               ],
               hoverOffset: 4,
             },
@@ -126,7 +126,7 @@ const ThongKe = () => {
     }, 0);
   };
 
-  const handlePageClick = ({ selected }) => {
+  const handlePageClick = ({selected}) => {
     setCurrentPage(selected);
   };
 
@@ -156,7 +156,7 @@ const ThongKe = () => {
       return currentData.map((item, index) => {
         return (
           <tr>
-            <td scope="col">{index}</td>
+            {/* <td scope="col">{index}</td> */}
             <td scope="col">
               <p className="fs14 mb-0">{item["khachHang"].ten}</p>
             </td>
@@ -176,47 +176,41 @@ const ThongKe = () => {
         );
       });
     } else {
-      return (
-        <h5 className="d-flex align-item-center">
-          Không có đơn hàng trong tháng {thang}
-        </h5>
-      );
+      return <h5 className="d-flex align-item-center">Không có đơn hàng trong tháng {thang}</h5>;
     }
   };
 
   return (
     <>
-      <div class="container-chart">
-        <h1>Sách bán theo tháng</h1>
-        <canvas id="barChart"></canvas>
-        <br />
-        <br />
-        <br />
-        <br />
-        <h1>Sách bán chạy nhất</h1>
-        <canvas id="pieChart"></canvas>
-        <br />
-        <br />
-        <br />
-        <br />
+      <div
+        className="container-chart mb-5 mt-3"
+        style={{
+          display: "flex",
+          justifyContent: "space-around",
+        }}>
+        <div>
+          <h1>Sách bán theo tháng</h1>
+          <canvas id="barChart"></canvas>
+        </div>
+        <div>
+          <h1>Sách bán chạy nhất</h1>
+          <canvas id="pieChart"></canvas>
+        </div>
       </div>
 
       <div className="container-xxl">
         <div className="row">
           <div className="col-2">
-            <select
-              onChange={handleInput}
-              name="status"
-              className="form-select"
-            >
+            <select onChange={handleInput} name="status" className="form-select">
               {renderThang()}
             </select>
           </div>
 
           <div className="col-5">
             <h6 className="mb-0">
-              Danh thu của tháng đạt được :{" "}
+              Danh thu của tháng đạt được:{" "}
               <input
+                readOnly
                 className="inputwidth"
                 value={tongDanhThuCuaThang(thongKe).toLocaleString("vi-VN", {
                   style: "currency",
@@ -228,9 +222,8 @@ const ThongKe = () => {
           </div>
           <div className="col-5">
             <h6 className="mb-0">
-              Tổng số lượng mặt hàng đả bán :
-              <input className="inputwidth" value={tongSoLuong(thongKe)} />
-              sản phẩm
+              Tổng số lượng mặt hàng đả bán: <input readOnly className="inputwidth" value={tongSoLuong(thongKe)} /> sản
+              phẩm
             </h6>
           </div>
         </div>
@@ -239,7 +232,7 @@ const ThongKe = () => {
             <table className="table">
               <thead className="table-dark">
                 <tr>
-                  <th scope="col">#</th>
+                  {/* <th scope="col">#</th> */}
                   <th scope="col">
                     <p className="fs14 mb-0">Tên người </p>
                   </th>
@@ -260,9 +253,7 @@ const ThongKe = () => {
               <tbody>{render()}</tbody>
             </table>
           </div>
-          {currentData.length < 15 ? (
-            ""
-          ) : (
+        
             <ReactPaginate
               previousLabel={<AiFillCaretLeft />}
               nextLabel={<AiFillCaretRight />}
@@ -282,7 +273,7 @@ const ThongKe = () => {
               breakLinkClassName={"page-link"}
               activeClassName={"active"}
             />
-          )}
+          
         </div>
       </div>
     </>

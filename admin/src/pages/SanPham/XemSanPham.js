@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import api from "../../components/urlApi";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import ReactPaginate from "react-paginate";
 
-import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
+import {AiFillCaretLeft, AiFillCaretRight} from "react-icons/ai";
 const TrangSgSanPham = () => {
   let navigate = useNavigate();
-
 
   const ITEMS_PER_PAGE = 15; //Số lượng sản phẩm hiển thị
   const [pageCount, setPageCount] = useState(0);
@@ -28,13 +27,16 @@ const TrangSgSanPham = () => {
 
   // Gọi api lấy tất cả các sách đả được thêm
   useEffect(() => {
+    const load = document.querySelector("#load");
+    load.classList.remove("d-none");
     axios
       .get(api.sach)
       .then((res) => {
         setData(res.data.data);
         setPageCount(Math.ceil(res.data.data.length / ITEMS_PER_PAGE));
       })
-      .catch((errors) => console.log(errors));
+      .catch((errors) => console.log(errors))
+      .finally(() => load.classList.add("d-none"));
   }, [a]);
 
   // xóa sản phẩm theo id
@@ -52,14 +54,13 @@ const TrangSgSanPham = () => {
       });
   }
 
-
   // Lấy phần tủ sách đả được chọn sửa bỏ vào local
   function checkId(item) {
     localStorage.setItem("sach", JSON.stringify(item));
     navigate("/admin/sua_san_pham");
   }
 
-  const handlePageClick = ({ selected }) => {
+  const handlePageClick = ({selected}) => {
     setCurrentPage(selected);
   };
 
@@ -70,9 +71,7 @@ const TrangSgSanPham = () => {
     return currentData.map((item, index) => {
       return (
         <tr key={index}>
-          <td scope="col">
-            <p className="fs14">{index}</p>
-          </td>
+          {/* <td scope="col"><p className="fs14">{index}</p></td> */}
           <td scope="col">
             <p className="fs14">{item.ten}</p>
           </td>
@@ -83,36 +82,20 @@ const TrangSgSanPham = () => {
             <p className="fs14">{item.ngayXuatBan}</p>
           </td>
           <td scope="col">
-            <p className="fs14">
-              {" "}
-              {item.giaSach.toLocaleString("vi-VN", {
-                style: "currency",
-                currency: "VND",
-              })}
-            </p>
+            <p className="fs14"> {item.giaSach + " VNĐ"}</p>
           </td>
           <td scope="col">
             <p className="fs14">{item.soLuong}</p>
           </td>
 
           <td scope="col">
-            <img
-              className="img-thumbnail image-w image-h"
-              src={api.img + item.hinhAnh}
-            />
+            <img className="img-thumbnail image-w image-h" src={api.img + item.hinhAnh} />
           </td>
           <td scope="col">
-            <button
-              className="btn btn-outline-warning fw-bolder mr3"
-              onClick={() => checkId(item)}
-            >
+            <button className="btn btn-outline-warning fw-bolder mr3" onClick={() => checkId(item)}>
               Sửa
             </button>
-            <button
-              className="btn btn-outline-danger fw-bolder"
-              value={item.idSach}
-              onClick={deleteId}
-            >
+            <button className="btn btn-outline-danger fw-bolder" value={item.idSach} onClick={deleteId}>
               Xóa
             </button>
           </td>
@@ -125,6 +108,8 @@ const TrangSgSanPham = () => {
     navigate("/admin/them_san_pham");
   };
 
+  const sanPhamTheoDanhMuc = () => {};
+
   return (
     <div>
       <div className="pl5px">
@@ -132,14 +117,16 @@ const TrangSgSanPham = () => {
           <p className="fs14 mb-0">Thêm sản phẩm</p>
         </button>
 
+        <select></select>
+
         <div className="py-1">
           <table className="table">
             <thead className="table-dark">
               <tr>
-                <th scope="col">#</th>
+                {/* <th scope="col">#</th> */}
                 <th scope="col">Tên</th>
                 <th scope="col">Tác giả</th>
-                <th scope="col">Nhà xuất bản</th>
+                <th scope="col">Ngày xuất bản</th>
                 <th scope="col">Giá sách</th>
                 <th scope="col">Số lượng</th>
                 <th scope="col">Ảnh</th>
@@ -148,29 +135,26 @@ const TrangSgSanPham = () => {
             </thead>
             <tbody>{rederSanPham()}</tbody>
           </table>
-          {currentData.length < 15 ? (
-            ""
-          ) : (
-            <ReactPaginate
-              previousLabel={<AiFillCaretLeft />}
-              nextLabel={<AiFillCaretRight />}
-              breakLabel={"..."}
-              pageCount={pageCount}
-              marginPagesDisplayed={2}
-              pageRangeDisplayed={3}
-              onPageChange={handlePageClick}
-              containerClassName={"pagination justify-content-center"}
-              pageClassName={"page-item"}
-              pageLinkClassName={"page-link"}
-              previousClassName={"page-item"}
-              previousLinkClassName={"page-link"}
-              nextClassName={"page-item"}
-              nextLinkClassName={"page-link"}
-              breakClassName={"page-item"}
-              breakLinkClassName={"page-link"}
-              activeClassName={"active"}
-            />
-          )}
+
+          <ReactPaginate
+            previousLabel={<AiFillCaretLeft />}
+            nextLabel={<AiFillCaretRight />}
+            breakLabel={"..."}
+            pageCount={pageCount}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={3}
+            onPageChange={handlePageClick}
+            containerClassName={"pagination justify-content-center"}
+            pageClassName={"page-item"}
+            pageLinkClassName={"page-link"}
+            previousClassName={"page-item"}
+            previousLinkClassName={"page-link"}
+            nextClassName={"page-item"}
+            nextLinkClassName={"page-link"}
+            breakClassName={"page-item"}
+            breakLinkClassName={"page-link"}
+            activeClassName={"active"}
+          />
         </div>
       </div>
     </div>

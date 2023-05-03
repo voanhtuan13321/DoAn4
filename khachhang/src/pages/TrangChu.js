@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useMemo } from "react";
-import { Link } from "react-router-dom";
+import React, {useState, useEffect, useMemo} from "react";
+import {Link} from "react-router-dom";
 import axios from "axios";
 import api from "../components/urlApi";
 
@@ -15,9 +15,7 @@ const TrangChu = () => {
 
   const productsByCategory = useMemo(() => {
     // Lọc ra các giá trị categoryId duy nhất
-    const sanPhamTheoIdDanhMuc = [
-      ...new Set(data.map((product) => product["danhMuc"].idDanhMuc)),
-    ];
+    const sanPhamTheoIdDanhMuc = [...new Set(data.map((product) => product["danhMuc"].idDanhMuc))];
     // Tạo ra danh sách các sản phẩm theo từng categoryId
     const cacSanPhamTheoId = sanPhamTheoIdDanhMuc.map((categoryId) =>
       data.filter((product) => product["danhMuc"].idDanhMuc === categoryId)
@@ -79,39 +77,21 @@ const TrangChu = () => {
             <div className="mt-5">
               <div className="d-flex align-items-center mb-4">
                 <h4 className="mr5">{categoryProducts[0]["danhMuc"].ten}</h4>
-                <Link
-                  className=""
-                  to={
-                    "/san_theo_danh_muc/" +
-                    categoryProducts[0]["danhMuc"]?.idDanhMuc
-                  }
-                >
+                <Link className="" to={"/san_theo_danh_muc/" + categoryProducts[0]["danhMuc"]?.idDanhMuc}>
                   Xem thêm >>
                 </Link>
               </div>
               <div className="row mb-5" key={index}>
                 {categoryProducts.slice(0, 8).map((item, index) => (
                   <div key={index} className="col-3 mb-3">
-                    <Link
-                      to={"/san_pham/" + item.idSach}
-                      className="border color  card "
-                      title={item.ten}
-                    >
+                    <Link to={"/san_pham/" + item.idSach} className="border color  card " title={item.ten}>
                       <div className="card">
-                        <img
-                          src={api.img + item.hinhAnh}
-                          className="card-img-top heightImage"
-                          alt="..."
-                        />
+                        <img src={api.img + item.hinhAnh} className="card-img-top heightImage" alt="..." />
                         <div className="card-body">
-                          <h5 className="card-title name">{item.ten}</h5>
-                          <p className="card-text ">
-                            Giá sách :{" "}
-                            {item.giaSach.toLocaleString("vi-VN", {
-                              style: "currency",
-                              currency: "VND",
-                            })}{" "}
-                          </p>
+                          <h5 className="card-title name">
+                            {item.ten.length > 60 ? item.ten.slice(0, 60) + "..." : item.ten}
+                          </h5>
+                          <p className="card-text ">Giá sách : {item.giaSach + " VNĐ"} </p>
                         </div>
                       </div>
                     </Link>

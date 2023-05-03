@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import api from "../../components/urlApi";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 const TrangSgSanPham = () => {
   let navigate = useNavigate();
@@ -65,7 +65,7 @@ const TrangSgSanPham = () => {
   const handleInput = (e) => {
     let nameKey = e.target.name;
     let nameValue = e.target.value;
-    setSapPham((state) => ({ ...state, [nameKey]: nameValue }));
+    setSapPham((state) => ({...state, [nameKey]: nameValue}));
   };
 
   const handleFile = (e) => {
@@ -89,6 +89,11 @@ const TrangSgSanPham = () => {
       );
     });
   };
+
+  function getInputDate(value) {
+    let [month, day, year] = value.split("/");
+    return new Date(month - 1, day, year);
+  }
 
   const handlerSubmit = (e) => {
     e.preventDefault();
@@ -136,7 +141,7 @@ const TrangSgSanPham = () => {
       check = 1;
       setErrMoTa("");
     }
-    if (sanPham.ngayXuatBan == "") {
+    if (sanPham.ngayXuatBan == "" || !getInputDate(sanPham.ngayXuatBan)) {
       check = 2;
       setErrNgayXuatBan("Vui lòng nhập vào ngày xuất bản");
       return;
@@ -169,6 +174,12 @@ const TrangSgSanPham = () => {
       setErrHinhAnh("");
     }
 
+    const date = Date.parse(sanPham.ngayXuatBan);
+
+    console.log(date);
+
+    // return;
+
     if (check == 1) {
       // let admin = JSON.parse(localStorage.getItem("admin"));
       // if (admin) {
@@ -184,14 +195,17 @@ const TrangSgSanPham = () => {
         idDanhMuc: valuedanhMuc,
       };
 
+      const load = document.querySelector("#load");
+      load.classList.remove("d-none");
       axios
         .post(api.sach, data)
         .then((res) => {
           alert("Thêm sản phẩm thành công");
           setA(!a);
-          // navigation("/admin/trang_san_pham");
+          navigate("/admin/xem_san_pham");
         })
-        .catch((errors) => console.log(errors));
+        .catch((errors) => console.log(errors))
+        .finally(() => load.classList.add("d-none"));
       // } else {
       //   alert("Bạn chưa đăng nhập");
       //   navigation("/");
@@ -217,13 +231,7 @@ const TrangSgSanPham = () => {
               <div className="p-3">
                 <div className="input_container">
                   <label className="input_label">Tên</label>
-                  <input
-                    placeholder="Tên"
-                    name="ten"
-                    type="text"
-                    className="input_field"
-                    onChange={handleInput}
-                  />
+                  <input placeholder="Tên" name="ten" type="text" className="input_field" onChange={handleInput} />
                 </div>
                 <span className="error">{errTen}</span>
                 <div className="input_container">
@@ -302,22 +310,19 @@ const TrangSgSanPham = () => {
                   <label className="input_label" htmlFor="password_field">
                     Hình ảnh
                   </label>
-                  <input
-                    placeholder="Password"
-                    name="input-name"
-                    type="file"
-                    onChange={handleFile}
-                    id="file"
-                  />
+                  <input placeholder="Password" name="input-name" type="file" onChange={handleFile} id="file" />
                   <span className="error">{errHinhAnh}</span>
                 </div>
-                <div className="input_container pt-5">
+                <div className="input_container pt-2">
+                  <label className="input_label" htmlFor="password_field">
+                    Chọn danh mục
+                  </label>
                   <select onChange={handleDanhMuc}>{rederDanhMuc()}</select>
                   <span className="error">{errDanhMuc}</span>
                 </div>
               </div>
             </div>
-            <div className="input_container mb-5">
+            <div className="input_container mb-2">
               <label className="input_label">Mô tả</label>
               <textarea
                 placeholder="Mô tả"
