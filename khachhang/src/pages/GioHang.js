@@ -175,7 +175,7 @@ const GioHang = () => {
             <h5 className="price">{item["sach"].ten}</h5>
           </div>
           <div className="cart-col-2">
-            <h5 className="price">{item["sach"].giaSach + " VNĐ"}</h5>
+            <h5 className="price">{item["sach"].giaSach.toLocaleString() + " VNĐ"}</h5>
           </div>
           <div className="cart-col-3 d-flex align-items-center gap-15">
             <div className={item.trangThai === "thanh_toan" ? "d-flex anButtun" : "d-flex"}>
@@ -198,7 +198,7 @@ const GioHang = () => {
             <div>{/* <AiFillDelete className="text-danger " /> */}</div>
           </div>
           <div className="cart-col-4">
-            <h5 className="price">{Number(item["sach"].giaSach) * Number(item.soLuong) + " VNĐ"}</h5>
+            <h5 className="price">{(Number(item["sach"].giaSach) * Number(item.soLuong)).toLocaleString() + " VNĐ"}</h5>
           </div>
           <button className="btn btn-danger" onClick={() => deleteCart(item.id)}>
             <AiFillDelete />

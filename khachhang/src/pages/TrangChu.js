@@ -78,7 +78,7 @@ const TrangChu = () => {
               <div className="d-flex align-items-center mb-4">
                 <h4 className="mr5">{categoryProducts[0]["danhMuc"].ten}</h4>
                 <Link className="" to={"/san_theo_danh_muc/" + categoryProducts[0]["danhMuc"]?.idDanhMuc}>
-                  Xem thêm >>
+                  Xem thêm
                 </Link>
               </div>
               <div className="row mb-5" key={index}>
@@ -91,7 +91,7 @@ const TrangChu = () => {
                           <h5 className="card-title name">
                             {item.ten.length > 60 ? item.ten.slice(0, 60) + "..." : item.ten}
                           </h5>
-                          <p className="card-text ">Giá sách : {item.giaSach + " VNĐ"} </p>
+                          <p className="card-text ">Giá sách : {item.giaSach.toLocaleString() + " VNĐ"} </p>
                         </div>
                       </div>
                     </Link>
