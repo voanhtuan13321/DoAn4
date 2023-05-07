@@ -7,7 +7,8 @@ function TimKiem() {
   const [listSachs, setListSachs] = useState([]);
   const [search, setIsSearch] = useState(false);
   const animatinLoad = document.getElementById("load");
-  const timKiemSach = window.localStorage.getItem("tuKhoaTimKiem");
+
+  let timKiemSach = window.localStorage.getItem("tuKhoaTimKiem");
   useEffect(() => {
     animatinLoad.classList.remove("d-none");
     axios
@@ -20,7 +21,6 @@ function TimKiem() {
       })
       .finally(() => animatinLoad.classList.add("d-none"));
   }, [timKiemSach]);
-
   return (
     <div className="container-xxl py-5 mh700 mt150px">
       <div className="row">
