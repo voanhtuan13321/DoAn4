@@ -5,21 +5,30 @@ import api from "../components/urlApi";
 
 const TrangChu = () => {
   let sach = JSON.parse(localStorage.getItem("timKiem"));
-  console.log(sach);
+
   const [data, setData] = useState([]);
+  const animationLoad = document.querySelector("#load");
+
+  // lay du lieu thong tin all sach tu database
   useEffect(() => {
-    axios.get(api.sach).then((res) => {
-      setData(res.data.data);
-    });
+    animationLoad.classList.remove("d-none");
+    axios
+      .get(api.sach)
+      .then((res) => {
+        setData(res.data.data);
+      })
+      .finally(() => animationLoad.classList.add("d-none"));
   }, []);
 
   const productsByCategory = useMemo(() => {
+    animationLoad.classList.remove("d-none");
     // Lọc ra các giá trị categoryId duy nhất
     const sanPhamTheoIdDanhMuc = [...new Set(data.map((product) => product["danhMuc"].idDanhMuc))];
     // Tạo ra danh sách các sản phẩm theo từng categoryId
     const cacSanPhamTheoId = sanPhamTheoIdDanhMuc.map((categoryId) =>
       data.filter((product) => product["danhMuc"].idDanhMuc === categoryId)
     );
+    animationLoad.classList.add("d-none");
     // Trả về mảng kết quả
     return cacSanPhamTheoId;
   }, [data]);

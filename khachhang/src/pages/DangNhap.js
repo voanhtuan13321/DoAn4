@@ -1,46 +1,40 @@
-import React, { useEffect, useState } from "react";
+import React, {useState} from "react";
 import axios from "axios";
 import api from "../components/urlApi";
-import { Link, useNavigate } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 // import { Button, Form, Input } from "antd";
 // import QuenMatKhau from "./QuenMatKhau";
 
 const DangNhap = () => {
   const load = document.querySelector("#load");
-
   const navigate = useNavigate();
-
   const [input, setInput] = useState({
     taiKhoan: "",
     matKhau: "",
   });
-  const [nhoDangNhap, setNhoDangNhap] = useState("");
   let [errTaiKhoan, setTaiKhoan] = useState("");
   let [errMatKhau, setMatKhau] = useState("");
 
   function handleInput(e) {
+    setTaiKhoan("");
+    setMatKhau("");
     let nameKey = e.target.name;
     let nameValue = e.target.value;
-    setInput((state) => ({ ...state, [nameKey]: nameValue }));
+    setInput((state) => ({...state, [nameKey]: nameValue}));
   }
-
-  const ghiNhoDangNhap = () => {
-    setNhoDangNhap(input);
-    console.log(input);
-  };
 
   const handlerSubmit = (e) => {
     e.preventDefault();
 
     let check = 1;
-    if (input.taiKhoan == "") {
+    if (input.taiKhoan === "") {
       check = 2;
       setTaiKhoan("Yêu cầu nhập vào tài khoản");
     } else {
       check = 1;
       setTaiKhoan("");
     }
-    if (input.matKhau == "") {
+    if (input.matKhau === "") {
       check = 2;
       setMatKhau("Yêu cầu nhập vào mật khẩu");
     } else {
@@ -48,7 +42,7 @@ const DangNhap = () => {
       setMatKhau("");
     }
 
-    if (check == 1) {
+    if (check === 1) {
       const data = {
         taiKhoan: input.taiKhoan,
         matKhau: input.matKhau,
@@ -68,14 +62,8 @@ const DangNhap = () => {
             .then((res) => {
               console.log(res);
               if (res.data.status === "ok") {
-                localStorage.setItem(
-                  "idKhachHang",
-                  JSON.stringify(res.data.data.idKhachHang)
-                );
-                localStorage.setItem(
-                  "khachHang",
-                  JSON.stringify(res.data.data)
-                );
+                localStorage.setItem("idKhachHang", JSON.stringify(res.data.data.idKhachHang));
+                localStorage.setItem("khachHang", JSON.stringify(res.data.data));
                 navigate("/");
               }
               // else if{
@@ -96,7 +84,7 @@ const DangNhap = () => {
   };
 
   const sendMail = (href, tk) => {
-    const data1 = { taiKhoan: input.taiKhoan, href: href + "?tk=" + tk };
+    const data1 = {taiKhoan: input.taiKhoan, href: href + "?tk=" + tk};
 
     console.log(data1);
     axios
@@ -119,9 +107,10 @@ const DangNhap = () => {
     load.classList.remove("d-none");
 
     let check = 1;
-    if (input.taiKhoan == "") {
+    if (input.taiKhoan === "") {
       check = 2;
       setTaiKhoan("Vui lòng nhập vào tài khoản để lấy lại mật khẩu");
+      load.classList.add("d-none");
     } else {
       check = 1;
       setTaiKhoan("");
@@ -146,33 +135,24 @@ const DangNhap = () => {
           }
           console.log(res);
         })
-        .catch((errors) => console.log(errors));
+        .catch((errors) => console.log(errors))
+        .finally(() => load.classList.add("d-none"));
     }
   };
 
   return (
     <>
-      <div className="d-flex justify-content-center py-5 mt150px">
+      <div className="d-flex justify-content-center py-5 mt150px mb-5">
         <form className="bsd form p-5" onSubmit={handlerSubmit}>
-          <p className="form-title">Đăng nhập</p>
+          <h2 className="text-center">Đăng nhập</h2>
           <label>Tài khoản</label>
           <div className="input-container">
-            <input
-              type="text"
-              name="taiKhoan"
-              onChange={handleInput}
-              placeholder="Nhập tài khoản"
-            />
+            <input type="text" name="taiKhoan" onChange={handleInput} placeholder="Nhập tài khoản" />
             <p className="error">{errTaiKhoan}</p>
           </div>
           <div className="input-container">
             <label>Mật khẩu</label>
-            <input
-              type="password"
-              name="matKhau"
-              onChange={handleInput}
-              placeholder="Nhập vào mật khẩu"
-            />
+            <input type="password" name="matKhau" onChange={handleInput} placeholder="Nhập vào mật khẩu" />
             <p className="error">{errMatKhau}</p>
           </div>
           <div className="input-container">
@@ -181,9 +161,9 @@ const DangNhap = () => {
             </button>
           </div>
 
-          <p className="signup-link">
+          <p className="signup-link mt-2">
             <Link to="/dang_ki">Đăng kí</Link>
-            <div onClick={() => checkTaiKhoan()}>
+            <div className="mt-3" onClick={() => checkTaiKhoan()}>
               <span className="cusoclick">Quên mật khấu?</span>
             </div>
           </p>

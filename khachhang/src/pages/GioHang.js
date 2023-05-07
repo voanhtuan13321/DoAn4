@@ -1,20 +1,28 @@
 import React, {useEffect, useState} from "react";
-import {Link, useParams, useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import axios from "axios";
+import Swal from "sweetalert2";
 import api from "../components/urlApi";
 import {AiFillDelete} from "react-icons/ai";
 
 const GioHang = () => {
   let idKhachHang = JSON.parse(localStorage.getItem("idKhachHang"));
+  const animationLoad = document.getElementById("load");
   const [data, setData] = useState([]);
   const [getNameImage, setNameImage] = useState([]);
   const [a, setA] = useState("");
+  const navigator = useNavigate();
 
-  let navigator = useNavigate();
-
-  console.log(getNameImage);
+  // kiem tra nguoi dung dang nhap chua, neu chua thì phai dang nhap
+  if (!idKhachHang) {
+    Swal.fire("Bạn chưa đăng nhập?", "Vui lòng đăng nhập để thực hiện chức năng này", "info");
+    window.setTimeout(() => {
+      navigator("/dang_nhap");
+    }, 1000);
+  }
 
   useEffect(() => {
+    animationLoad.classList.remove("d-none");
     axios
       .get(api.gioHang + "/" + idKhachHang)
       .then((res) => {
@@ -23,7 +31,8 @@ const GioHang = () => {
       })
       .catch((error) => {
         console.log(error);
-      });
+      })
+      .finally(() => animationLoad.classList.add("d-none"));
   }, [a]);
 
   // thanh toan
@@ -167,7 +176,7 @@ const GioHang = () => {
           <div className="cart-col-1 gap-15 d-flex align-items-center">
             <input value={item.id} onChange={checKed} name="chon" className="form-check-input" type="checkbox" />
             <div className="w-25 h-25">
-              <img className="img-fluid imageHeight" src={api.img + item["sach"].hinhAnh} />
+              <img className="img-fluid imageHeight" src={api.img + item["sach"].hinhAnh} alt="..." />
             </div>
             <div>{item.trangThai === "online" || item.trangThai === "truc tiep" ? "Chờ phê duyêt" : ""}</div>
           </div>

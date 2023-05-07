@@ -3,31 +3,24 @@ import {BsCartCheckFill} from "react-icons/bs";
 import {AiFillDelete} from "react-icons/ai";
 import {AiFillEdit} from "react-icons/ai";
 import axios from "axios";
+import Swal from "sweetalert2";
 import api from "../components/urlApi";
 import {useNavigate, useParams} from "react-router-dom";
 
 const SanPhamChiTiet = () => {
-  const [data, setData] = useState([]);
   const [binhLuan, setBinhLuan] = useState([]);
   const [sanPham, setSanPham] = useState("");
   const [input, setInput] = useState("");
   const [a, setA] = useState(true);
   const params = useParams();
   const navigate = useNavigate();
-  const idKhachHang = JSON.parse(localStorage.getItem("idKhachHang"));
-  useEffect(() => {
-    axios
-      .get(api.gioHang + "/" + idKhachHang)
-      .then((res) => {
-        console.log(res.data.data);
-        setData(res.data.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [a]);
 
+  const idKhachHang = JSON.parse(localStorage.getItem("idKhachHang"));
+  const animationLoad = document.getElementById("load");
+
+  // render san pham chi tiet
   useEffect(() => {
+    animationLoad.classList.remove("d-none");
     axios
       .get(api.sachId + params.id)
       .then((res) => {
@@ -37,9 +30,11 @@ const SanPhamChiTiet = () => {
       })
       .catch((error) => {
         console.log(error);
-      });
+      })
+      .finally(() => animationLoad.classList.add("d-none"));
   }, []);
 
+  // render binh luan
   useEffect(() => {
     axios
       .get(api.binhLuan + "/" + params.id)
@@ -56,30 +51,29 @@ const SanPhamChiTiet = () => {
     setInput(e.target.value);
   }
 
-  const handleSubmit = (e) => {
+  // xu li khi click binh luan
+  const handleSubmitBinhLuan = (e) => {
     e.preventDefault();
     if (!idKhachHang) {
-      alert("Bạn chưa đăng nhập");
-      navigate("/dang_nhap");
-    } else {
-      if (input) {
-        let data = {
-          idKhachHang: idKhachHang,
-          idSach: sanPham.idSach,
-          noiDung: input,
-        };
+      Swal.fire("Bạn chưa đăng nhập?", "Vui lòng đăng nhập trước khi thực hiện chức năng này", "info");
+      window.setTimeout(() => navigate("/dang_nhap"), 1000);
+    } else if (input) {
+      let data = {
+        idKhachHang: idKhachHang,
+        idSach: sanPham.idSach,
+        noiDung: input,
+      };
 
-        axios
-          .post(api.binhLuan, data)
-          .then((res) => {
-            setA(!a);
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      } else {
-        alert("Vui lòng nhập vào bình luận");
-      }
+      axios
+        .post(api.binhLuan, data)
+        .then((res) => {
+          setA(!a);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      Swal.fire("Bạn chưa nhập bình luận?", "Vui lòng nhập vào bình luận của bạn để sử dụng chức năng này", "info");
     }
   };
 
@@ -92,7 +86,6 @@ const SanPhamChiTiet = () => {
       const thang = date.getMonth() + 1;
       const nam = date.getFullYear();
       const thoiGian = `${gio}:${phut} ${ngay}/${thang}/${nam}`;
-      console.log(date);
       return (
         <div key={index}>
           <div className="card">
@@ -127,24 +120,30 @@ const SanPhamChiTiet = () => {
       setA(!a);
     });
   };
+
   const suaBinhLuan = () => {};
 
-  const themVaoGioHang = (Sach) => {
+  // xu li khi them vao gio hang
+  const handelThemVaoGioHang = (Sach) => {
     let idSach = Sach.idSach;
     if (Sach.soLuong < 1) {
-      alert("Sản phẩm đả hết hàng");
+      Swal.fire("Sản phẩm đả hết hàng", "Vui lòng chọn sản phẩm khác", "info");
       return;
     }
-    let idKhachHang = JSON.parse(localStorage.getItem("idKhachHang"));
+
+    // kiem tra khach hang da dang nhap chua
     if (!idKhachHang) {
-      alert("Bạn chưa đăng nhập");
-      navigate("/dang_nhap");
+      Swal.fire("Bạn chưa đăng nhập?", "Vui lòng đăng nhập để thực hiện chức năng này", "info");
+      window.setTimeout(() => {
+        navigate("/dang_nhap");
+      }, 1000);
     } else {
       const data = {
         idKhachHang,
         idSach,
       };
 
+      // them sach vao gio hang cua khach hang trong database
       axios
         .post(api.gioHang, data)
         .then((res) => {
@@ -155,32 +154,18 @@ const SanPhamChiTiet = () => {
           console.log(error);
         });
     }
-    /////////////////////////////////////////////////////
-    // Tổng cart đả mua
-    // let check = 1;
-    // let cart = JSON.parse(localStorage.getItem("cart"));
-    // if (cart) {
-    //   Object.keys(cart).map((value, key) => {
-    //     console.log(value);
-    //     if (idSach == value) {
-    //       check = 2;
-    //       cart[value] += 1;
-    //     }
-    //   });
-    // }
-    // if (check == 1) {
-    //   cart[idSach] = 1;
-    // }
-
-    // localStorage.setItem("cart", JSON.stringify(cart));
-    /////////////////////////////////////////////////////
   };
+
   return (
     <>
       <div className="container-xxl py-4 mh700 mt150px">
         <div className="row rounded border-light border-4 bg-light bg-gradient p-5">
           <div className="col-4 ">
-            <img className="rounded mx-auto d-block img-fluid" src={api.img + sanPham.hinhAnh} />
+            <img
+              className="rounded mx-auto d-block img-fluid"
+              src={api.img + sanPham.hinhAnh}
+              alt="Hình ảnh của sách"
+            />
           </div>
           <div className="col-8">
             <p className="fs-3">{sanPham.ten}</p>
@@ -214,7 +199,7 @@ const SanPhamChiTiet = () => {
             <p>{sanPham.moTa}</p>
             <p>Ngày phát hành : {sanPham.ngayXuatBan}</p>
             <div>
-              <button onClick={() => themVaoGioHang(sanPham)} className="button">
+              <button onClick={() => handelThemVaoGioHang(sanPham)} className="button">
                 <span>
                   <BsCartCheckFill />
                 </span>
@@ -228,7 +213,7 @@ const SanPhamChiTiet = () => {
           <div className="col-6">
             <div className="p-5">
               <h3>Phần bình luận</h3>
-              <form action="#" onSubmit={handleSubmit}>
+              <form action="#" onSubmit={handleSubmitBinhLuan}>
                 <p>
                   <textarea className="comment p-3" onChange={handleInput} rows={4} placeholder="Bình luận ...." />
                 </p>
@@ -238,7 +223,6 @@ const SanPhamChiTiet = () => {
           </div>
           <div className="col-3"></div>
         </div>
-
         <div className="row rounded border-light border-4 bg-light bg-gradient p-3">{binhLuanSanPham()}</div>
       </div>
     </>
