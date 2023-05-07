@@ -4,8 +4,6 @@ import axios from "axios";
 import api from "../components/urlApi";
 
 const TrangChu = () => {
-  let sach = JSON.parse(localStorage.getItem("timKiem"));
-
   const [data, setData] = useState([]);
   const animationLoad = document.querySelector("#load");
 
@@ -86,7 +84,7 @@ const TrangChu = () => {
             <div className="mt-5">
               <div className="d-flex align-items-center mb-4">
                 <h4 className="mr5">{categoryProducts[0]["danhMuc"].ten}</h4>
-                <Link className="" to={"/san_theo_danh_muc/" + categoryProducts[0]["danhMuc"]?.idDanhMuc}>
+                <Link className="mb-1" to={"/san_theo_danh_muc/" + categoryProducts[0]["danhMuc"]?.idDanhMuc}>
                   Xem thêm
                 </Link>
               </div>

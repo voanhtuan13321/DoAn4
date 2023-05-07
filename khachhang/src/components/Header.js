@@ -3,14 +3,12 @@ import {BsSearch, BsFillCartCheckFill} from "react-icons/bs";
 import {useNavigate, NavLink, Link} from "react-router-dom";
 import api from "../components/urlApi";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const Header = () => {
   let navigate = useNavigate();
   const [timKiemSach, setTimKiem] = useState("");
   const [danhMuc, setDanhMuc] = useState([]);
-  // let idKhachHang = JSON.parse(localStorage.getItem("khachHang"));
-  // console.log(idKhachHang);
-  let tong = JSON.parse(localStorage.getItem("tong"));
 
   // lay thong tin danh muc
   useEffect(() => {
@@ -31,6 +29,7 @@ const Header = () => {
     }
   };
 
+  // luu nhu gi khach hang nhap
   const handleSearch = (event) => {
     setTimKiem(event.target.value);
   };
@@ -54,6 +53,7 @@ const Header = () => {
     localStorage?.removeItem("idKhachHang");
     navigate("dang_nhap");
   };
+
   function renderTaiKhoan() {
     let getLocalStolore = localStorage.getItem("khachHang");
     if (getLocalStolore) {
@@ -89,25 +89,12 @@ const Header = () => {
     }
   }
 
-  // const handle = () => {
-  //   let ten = window.location.pathname;
-  //   if (ten == "/dang_nhap") {
-  //     setTen("Đăng nhập");
-  //   } else if (ten == "/dang_ki") {
-  //     setTen("Đăng kí");
-  //   }
-  // };
-
   const timKiem = () => {
-    if (timKiemSach == "") {
-      alert("Bạn chưa nhập");
+    if (timKiemSach === "") {
+      Swal.fire("Có vẻ bạn chưa nhập gì vào ô tìm kiếm?", "Vui lòng nhập từ khoá để thực hiện chức năng này", "info");
     } else {
-      // navigate("/admin/tim_kiem");
-      axios.get(api.timKiem, {params: {search: timKiemSach}}).then((res) => {
-        // localStorage.setItem("timKiem", JSON.stringify(res.data.data));
-        window.sessionStorage.setItem("timKiem", JSON.stringify(res.data.data));
-        window.location.href = `http://${api.ip}:3000/tim_kiem`;
-      });
+      window.localStorage.setItem("tuKhoaTimKiem", timKiemSach);
+      window.location.href = `http://${api.ip}:3000/tim_kiem`;
     }
   };
 
@@ -133,7 +120,7 @@ const Header = () => {
                   aria-label="Search Product Here..."
                   aria-describedby="basic-addon2"
                 />
-                <span className="input-group-text" id="basic-addon2">
+                <span className="input-group-text p-0" id="basic-addon2">
                   <button className="btn colorbutton" onClick={() => timKiem()}>
                     <BsSearch className="fs-6" />
                   </button>
@@ -143,41 +130,16 @@ const Header = () => {
             <div className="col-5 text-start d-flex justify-content-end">
               <div className="header-upper-links d-flex align-items-center justify-content-between">
                 <div>
-                  {/* <Link
-                        to="/dang_nhap"
-                        className="d-flex align-items-center gap-10 text-white"
-                      >
-                        <BiLogIn/>
-                        <p className="mb-0">
-                          Đăng nhập
-                        </p>
-                      </Link> */}
                   <div className="dropdown">
                     <button
                       className="btn btn-secondary dropdown-toggle"
                       type="button"
                       id="dropdownMenuButton1"
                       data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                      // onClick={handle}
-                    >
+                      aria-expanded="false">
                       {tenKhachHang()}
                     </button>
                     <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                      {/* <li>
-                        <Link to="/dang_ki" className="dropdown-item">
-                          Đăng kí
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          to="/dang_nhap"
-                          className="dropdown-item"
-                          href="#"
-                        >
-                          Đăng nhập
-                        </Link>
-                      </li> */}
                       {renderTaiKhoan()}
                     </ul>
                   </div>
@@ -185,9 +147,6 @@ const Header = () => {
                 <div className="mx-3">
                   <Link to="/gio_hang" className="d-flex align-items-center gap-10 text-white">
                     <BsFillCartCheckFill />
-                    <div className="d-flex flex-column gap-10">
-                      <span className="badge bg-white text-dark">{tong}</span>
-                    </div>
                   </Link>
                 </div>
               </div>
