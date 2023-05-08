@@ -4,6 +4,7 @@ import api from "../../components/urlApi";
 import {useNavigate} from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import {AiFillCaretLeft, AiFillCaretRight} from "react-icons/ai";
+import Swal from "sweetalert2";
 const TrangDonHang = () => {
   const ITEMS_PER_PAGE = 15;
   let navigation = useNavigate();
@@ -62,10 +63,11 @@ const TrangDonHang = () => {
 
       //////////////////////////
       // navigator("/gio_hang");
-
-      alert("Đơn hàng đả được xác nhận");
-
+      Swal.fire("Đơn hàng đả được xác nhận");
+      setTimeout(function () {
       window.location.href = `http://${api.ip}:2000/admin/don_hang`;
+      }, 1000);
+      
     });
   };
 
@@ -101,7 +103,7 @@ const TrangDonHang = () => {
             </td>
             <td scope="col">
               <button onClick={() => checkId(item)} className="btn btn-outline-success fw-bolder">
-                Xác nhận
+              <p className="fs14 mb-0">Xác nhận</p>
               </button>
             </td>
           </tr>

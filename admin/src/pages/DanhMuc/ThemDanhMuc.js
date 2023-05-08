@@ -1,7 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import api from "../../components/urlApi";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const TrangDanhMuc = () => {
   let navigate = useNavigate();
@@ -18,7 +19,7 @@ const TrangDanhMuc = () => {
   const handleInput = (e) => {
     let nameKey = e.target.name;
     let nameValue = e.target.value;
-    setInput((state) => ({...state, [nameKey]: nameValue}));
+    setInput((state) => ({ ...state, [nameKey]: nameValue }));
   };
 
   const handlerSubmit = (e) => {
@@ -51,9 +52,11 @@ const TrangDanhMuc = () => {
       axios
         .post(api.getDanhMuc, data)
         .then((res) => {
-          alert("Thêm danh mục thành công");
-          navigate("/admin/xem_danh_muc");
-          setA(!a);
+          Swal.fire("Thêm danh mục thành công");
+          setTimeout(function () {
+            navigate("/admin/xem_danh_muc");
+            setA(!a);
+          }, 1000);
         })
         .catch((errors) => console.log(errors))
         .finally(() => load.classList.add("d-none"));

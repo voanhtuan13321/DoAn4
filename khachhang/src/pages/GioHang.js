@@ -170,8 +170,8 @@ const GioHang = () => {
 
           className={
             item.trangThai === "online" || item.trangThai === "truc tiep"
-              ? "cart-data py-3 mb-2 d-flex justify-content-between align-items-center anButtun"
-              : "cart-data py-3 mb-2 d-flex justify-content-between align-items-center"
+              ? "cart-data py-3 mb-2 d-flex justify-content-between align-items-center anButtun text-center"
+              : "cart-data py-3 mb-2 d-flex justify-content-between align-items-center text-center"
           }>
           <div className="cart-col-1 gap-15 d-flex align-items-center">
             <input value={item.id} onChange={checKed} name="chon" className="form-check-input" type="checkbox" />
@@ -195,7 +195,7 @@ const GioHang = () => {
                 className={item.soLuong == item["sach"].soLuong ? "btn d-none anButtun" : "btn"}>
                 +
               </button>
-              <input type="number" name="" className="text-center" value={item.soLuong} min={1} max={10} />
+              <input type="text" name="" className="text-center wh50" value={item.soLuong} min={1} max={10} />
               <button
                 onClick={() => {
                   giamSoLuongSanPham(item);
@@ -255,7 +255,7 @@ const GioHang = () => {
         vnp_ReturnUrl: `http://${api.ip}:3000/gio_hang`,
       };
       axios.post(api.thanhToan, datThanhToan).then((res) => (window.location = res.data.data));
-      alert(sum(data));
+      // alert(sum(data));
     } else {
       // thanh toan truc tiep
       let arr = JSON.parse(localStorage.getItem("gioHang"));
@@ -273,13 +273,13 @@ const GioHang = () => {
           <h3>Giỏ hàng</h3>
         </div>
         <div className="col-12">
-          <div className="cart-header py-3 d-flex justify-content-between align-items-center">
+          <div className="cart-header py-3 d-flex justify-content-between align-items-center text-center">
             <h4 className="cart-col-1">Sản phẩm</h4>
-            <h4 className="cart-col-3">Tên sách</h4>
+            <h4 className="cart-col-2">Tên sách</h4>
             <h4 className="cart-col-2">Giá</h4>
             <h4 className="cart-col-3">Số lượng</h4>
             <h4 className="cart-col-4">Tổng tiền</h4>
-            <h4 className=""></h4>
+            <h4 className="cart-col-0"></h4>
           </div>
           {renderGioHang()}
           {/* {ra()} */}

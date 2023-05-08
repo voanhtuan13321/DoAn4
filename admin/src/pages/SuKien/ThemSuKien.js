@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import api from "../../components/urlApi";
 import {useNavigate, Link} from "react-router-dom";
+import Swal from "sweetalert2";
 
 const ThemSuKien = () => {
   let navigate = useNavigate();
@@ -55,8 +56,12 @@ const ThemSuKien = () => {
       axios
         .post(api.suKien, data)
         .then((res) => {
-          alert("Thêm sự kiện thành công");
-          navigate("/admin/xem_su_kien");
+
+          Swal.fire("Thêm sự kiện thành công");
+          setTimeout(function () {
+            navigate("/admin/xem_su_kien");
+            // setA(!a);
+          }, 1000);
         })
         .catch((errors) => console.log(errors))
         .finally(() => load.classList.add("d-none"));

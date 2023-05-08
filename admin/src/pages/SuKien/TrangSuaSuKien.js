@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import api from "../../components/urlApi";
-
+import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 
 const TrangSuaSuKien = () => {
@@ -54,8 +54,11 @@ const TrangSuaSuKien = () => {
       axios
         .post(api.suKien, data)
         .then((res) => {
-          alert("Cập nhật thành công");
-          navigate("/admin/xem_su_kien");
+
+          Swal.fire("Cập nhật thành công");
+          setTimeout(function () {
+            navigate("/admin/xem_su_kien");
+          }, 1000);
         })
         .catch((errors) => console.log(errors));
     }

@@ -23,14 +23,13 @@ const ThongKe = () => {
   const [currentPage, setCurrentPage] = useState(0);
 
   useEffect(() => {
-    const apiLichSuMua = "http://192.168.1.82:8080/api/lich-su-mua";
     const barChart = document.getElementById("barChart");
     const pieChart = document.getElementById("pieChart");
-
     showThongKeTheoThang();
+    
 
     async function showThongKeTheoThang() {
-      const response = await axios.get(`${apiLichSuMua}/thong-ke-theo-thang`);
+      const response = await axios.get(`${api.lichSuMua}/thong-ke-theo-thang`);
       const list = await response.data.data;
       console.log(list);
 
@@ -69,7 +68,7 @@ const ThongKe = () => {
     showTopSachBanChay();
 
     async function showTopSachBanChay() {
-      const response = await axios.get(`${apiLichSuMua}/top-sach-ban-chay`);
+      const response = await axios.get(`${api.lichSuMua}/top-sach-ban-chay`);
       const list = await response.data.data;
       console.log(list);
 

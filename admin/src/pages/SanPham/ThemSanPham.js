@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import api from "../../components/urlApi";
 import {useNavigate} from "react-router-dom";
-
+import Swal from "sweetalert2";
 const TrangSgSanPham = () => {
   let navigate = useNavigate();
 
@@ -200,9 +200,16 @@ const TrangSgSanPham = () => {
       axios
         .post(api.sach, data)
         .then((res) => {
-          alert("Thêm sản phẩm thành công");
+
+          Swal.fire("Thêm sản phẩm thành công");
+          setTimeout(function () {
+            setA(!a);
+            navigate("/admin/xem_san_pham");
+          }, 1000);
+
+          // alert("Thêm sản phẩm thành công");
           setA(!a);
-          navigate("/admin/xem_san_pham");
+          // navigate("/admin/xem_san_pham");
         })
         .catch((errors) => console.log(errors))
         .finally(() => load.classList.add("d-none"));

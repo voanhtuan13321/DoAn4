@@ -4,7 +4,7 @@ import api from "../../components/urlApi";
 import {useNavigate, Link} from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import {AiFillCaretLeft, AiFillCaretRight} from "react-icons/ai";
-
+import Swal from "sweetalert2";
 import {Button, Form, Input} from "antd";
 
 const TrangSuKien = () => {
@@ -38,7 +38,13 @@ const TrangSuKien = () => {
     axios
       .delete(api.suKienId + getId)
       .then((res) => {
+        Swal.fire("Xoá thành công");
+        setTimeout(function () {
+          navigate("/admin/xem_su_kien");
+          setA(!a);
+        }, 1000);
         setA(!a);
+        
       })
       .catch((error) => {
         console.log(error);

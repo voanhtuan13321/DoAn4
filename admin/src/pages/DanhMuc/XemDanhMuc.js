@@ -4,7 +4,7 @@ import api from "../../components/urlApi";
 import {useNavigate} from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import {AiFillCaretLeft, AiFillCaretRight} from "react-icons/ai";
-
+import Swal from "sweetalert2";
 const XemDanhMuc = () => {
   const ITEMS_PER_PAGE = 15;
   let navigate = useNavigate();
@@ -33,9 +33,15 @@ const XemDanhMuc = () => {
       .delete(api.getDanhMucId + getId)
       .then((res) => {
         if (res.data.status == "fail") {
-          alert("Xóa không thành công");
+          Swal.fire("Xóa không thành công");
+          setTimeout(function () {
+            setA(!a);
+          }, 1000);
         } else {
-          alert("Xóa thành công");
+          Swal.fire("Xóa thành công");
+          setTimeout(function () {
+            setA(!a);
+          }, 1000);
         }
         setA(!a);
       })

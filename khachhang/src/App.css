@@ -737,6 +737,8 @@ footer .input-group-text {
 /* Main Product Page */
 
 /* Cart Page */
+
+.wh50{width: 50px;height: 50px;outline: none;}
 .cart-header,
 .cart-data {
   border-bottom: 1px solid #eaeaea;
@@ -746,15 +748,18 @@ footer .input-group-text {
   font-weight: bold;
   color: var(--color-777777);
 }
+.cart-col-0{
+  width: 5%;
+}
 .cart-col-1 {
-  width: 40%;
+  width: 15%;
 }
 .cart-col-1 p {
   color: var(--color-777777);
   font-size: 14px;
 }
 .cart-col-2 {
-  width: 10%;
+  width: 40%;
 }
 .cart-col-3 {
   width: 15%;

@@ -8,6 +8,7 @@ import {AiOutlineDashboard, AiOutlineUserAdd, AiFillAppstore, AiOutlineComment} 
 import {FaProductHunt} from "react-icons/fa";
 import api from "./urlApi";
 import axios from "axios";
+import Swal from "sweetalert2";
 const Sidebar = () => {
   const [timKiemSach, setTimKiem] = useState("");
   let navigate = useNavigate();
@@ -72,7 +73,7 @@ const Sidebar = () => {
 
   const timKiem = () => {
     if (timKiemSach == "") {
-      alert("Bạn chưa nhập");
+      Swal.fire("Có vẻ bạn chưa nhập gì vào ô tìm kiếm?", "Vui lòng nhập từ khoá để thực hiện chức năng này", "info");
     } else {
       axios.get(api.timKiem, {params: {search: timKiemSach}}).then((res) => {
         localStorage.setItem("timKiemSach", JSON.stringify(res.data.data));

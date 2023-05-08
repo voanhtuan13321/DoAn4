@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import api from "../components/urlApi";
 import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 const CapnhatThongTinKhachHang = () => {
   let navigate = useNavigate();
   let taiKhoan = JSON.parse(localStorage.getItem("khachHang"));
@@ -102,7 +103,12 @@ const CapnhatThongTinKhachHang = () => {
       axios
         .put(api.khachHang, data)
         .then((res) => {
-          alert("Cập nhật thành công");
+          Swal.fire(
+            "Cập nhật thành công",
+          );
+          setTimeout(function () {
+            navigate("/");
+          }, 1000);
           localStorage.setItem("khachHang", JSON.stringify(data));
           navigate("/");
         })

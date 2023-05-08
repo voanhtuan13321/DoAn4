@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import api from "../../components/urlApi";
 import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+
 const SuaDanhMuc = () => {
   let navigate = useNavigate();
   const item = JSON.parse(localStorage.getItem("danhmuc"));
@@ -49,9 +51,14 @@ const SuaDanhMuc = () => {
       axios
         .post(api.getDanhMuc, data)
         .then((res) => {
-          alert("Sửa thành công");
-          navigate("/admin/xem_danh_muc");
-          setA(!a);
+          Swal.fire("Sửa thành công");
+          setTimeout(function () {
+            navigate("/admin/xem_danh_muc");
+            setA(!a);
+          }, 1000);
+          // alert("Sửa thành công");
+          // navigate("/admin/xem_danh_muc");
+          // setA(!a);
         })
         .catch((errors) => console.log(errors));
     }

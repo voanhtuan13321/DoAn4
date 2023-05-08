@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import api from "../components/urlApi";
 import { Link, useNavigate } from "react-router-dom";
-
+import Swal from "sweetalert2";
 const DangKi = () => {
   const navigate = useNavigate();
   const [input, setInput] = useState({
@@ -118,8 +118,11 @@ const DangKi = () => {
             setTaiKhoan("Tài khoản đả bị trùng");
             return;
           } else {
-            alert("Dang ki thanh cong");
-            navigate("/dang_nhap");
+            Swal.fire("Đăng kí thành công", "Vui lòng đăng nhập để sử dụng", "info");
+            setTimeout(function(){
+              navigate("/dang_nhap");
+
+            },1000)
           }
         })
         .catch((errors) => console.log(errors));
