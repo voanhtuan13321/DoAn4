@@ -54,7 +54,6 @@ const TrangSuaSuKien = () => {
       axios
         .post(api.suKien, data)
         .then((res) => {
-
           Swal.fire("Cập nhật thành công");
           setTimeout(function () {
             navigate("/admin/xem_su_kien");

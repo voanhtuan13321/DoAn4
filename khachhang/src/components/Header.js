@@ -54,6 +54,11 @@ const Header = () => {
     navigate("dang_nhap");
   };
 
+
+  const donHang = () => {
+    navigate("don_hang");
+  };
+
   function renderTaiKhoan() {
     let getLocalStolore = localStorage.getItem("khachHang");
     if (getLocalStolore) {
@@ -67,6 +72,11 @@ const Header = () => {
           <li>
             <button onClick={() => dangXuat()} className="dropdown-item">
               Đăng xuất
+            </button>
+          </li>
+          <li>
+            <button onClick={() => donHang()} className="dropdown-item">
+              Đơn hàng
             </button>
           </li>
         </>

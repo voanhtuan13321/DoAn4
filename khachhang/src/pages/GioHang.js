@@ -9,6 +9,7 @@ const GioHang = () => {
   let idKhachHang = JSON.parse(localStorage.getItem("idKhachHang"));
   const animationLoad = document.getElementById("load");
   const [data, setData] = useState([]);
+  const [arr, setArr] = useState([])
   const [getNameImage, setNameImage] = useState([]);
   const [a, setA] = useState("");
   const navigator = useNavigate();
@@ -26,7 +27,6 @@ const GioHang = () => {
     axios
       .get(api.gioHang + "/" + idKhachHang)
       .then((res) => {
-        console.log(res.data.data);
         setData(res.data.data);
       })
       .catch((error) => {
@@ -36,30 +36,60 @@ const GioHang = () => {
   }, [a]);
 
   // thanh toan
-  const subThanhToan = (arr) => {
+  const subThanhToan = (getNameImage, selectValue) => {
+    
     // lap va cap nhat trang thai gio hang
-    if (arr) {
-      let selectValue = document.getElementById("luaChon").value;
-      let data = {
-        trangThai: "",
-      };
-      if (selectValue == 1) {
-        data.trangThai = "online";
-      } else {
-        alert("Đặt hàng thành công");
-        data.trangThai = "truc tiep";
-      }
-      const promises = [];
-      arr.forEach((element) => {
-        const promise1 = axios.put(api.gioHang + "/cap-nhat-trang-thai/" + element.id, data);
-        promises.push(promise1);
-      });
-      Promise.all(promises).then(() => {
-        localStorage.removeItem("gioHang");
-        // navigator("/gio_hang");
+    if (getNameImage) {
+      
+      if (selectValue === 1) {
+        const promises = [];
 
-        window.location.href = `http://${api.ip}:3000/gio_hang`;
-      });
+        for (const idGioHang of getNameImage) {
+          console.log(idGioHang);
+          const data2 = {
+            id: Number(idGioHang),
+            phuongThucThanhToan: "online"
+          };
+          
+          const promise1 = axios.post(api.donHang, data2);
+          const promise2 = axios.delete(api.gioHang + "/" + idGioHang);
+          
+          promises.push(promise1, promise2);
+        }
+
+        Promise.all(promises).then(() => {
+          Swal.fire("Bạn chưa đăng nhập?", "Vui lòng đăng nhập để thực hiện chức năng này", "info");
+          window.location.href = `http://${api.ip}:3000/gio_hang`
+
+        }).catch(error => {
+          console.log(error);
+        });
+
+      } else {
+        const promises = [];
+
+        for (const idGioHang of getNameImage) {
+          console.log(idGioHang);
+          const data2 = {
+            id: Number(idGioHang),
+            phuongThucThanhToan: "truc tiep"
+          };
+          
+          const promise1 = axios.post(api.donHang, data2);
+          const promise2 = axios.delete(api.gioHang + "/" + idGioHang);
+          
+          promises.push(promise1, promise2);
+        }
+
+        Promise.all(promises).then(() => {
+          Swal.fire("Bạn chưa đăng nhập?", "Vui lòng đăng nhập để thực hiện chức năng này", "info");
+          window.location.href = `http://${api.ip}:3000/gio_hang`
+
+        }).catch(error => {
+          console.log(error);
+        });
+
+      }
     }
   };
 
@@ -67,13 +97,13 @@ const GioHang = () => {
   useEffect(() => {
     const url = new URL(window.location);
     const param1 = url.searchParams.get("vnp_ResponseCode");
-    let arr = JSON.parse(localStorage.getItem("gioHang"));
+    // let arr = JSON.parse(localStorage.getItem("gioHang"));
 
     if (param1 != null) {
       if (param1 == 0) {
         alert("Thanh toán thành công");
-
-        subThanhToan(arr);
+        setNameImage(JSON.parse(localStorage.getItem("listIdGioHang")))
+        subThanhToan(getNameImage, 1);
       } else {
         alert("Thanh toán không thành công");
       }
@@ -95,9 +125,8 @@ const GioHang = () => {
 
   const themSoLuongSanPham = (item) => {
     // console.log(item);
-    if (item.soLuong > item["sach"].soLuong) {
-      alert("Sách đả hết");
-      return;
+    if (item.soLuong == item["sach"].soLuong) {
+      Swal.fire("Sách đả hết");
     }
 
     let idKhachHang = item["khachHang"].idKhachHang;
@@ -135,14 +164,14 @@ const GioHang = () => {
   };
 
   function checKed(e) {
-    let name = e.target.value;
+    let idGioHang = e.target.value;
     let check = e.target.checked;
     // console.log(check);
     if (check) {
-      setNameImage((state) => [...state, name]);
+      setNameImage((state) => [...state, idGioHang]);
     } else {
       let c = getNameImage.filter((item, i) => {
-        return item != name;
+        return item != idGioHang;
       });
       setNameImage(c);
     }
@@ -218,36 +247,17 @@ const GioHang = () => {
   };
 
   const thanhToan = () => {
+    if (getNameImage.length === 0) {
+      Swal.fire("Bạn chưa chọn mặt hàng cần thành toán?", "Vui lòng chọn mặt hàng để thực hiện chức năng này", "info");
+      return
+    }
     // tinh thanh tien cac san pham da chon
     let khachHang = JSON.parse(localStorage.getItem("ten"));
-    getNameImage.map((element) => {
-      axios.get(api.gioHang + "/find-by/" + element).then((res) => {
-        let arr = JSON.parse(localStorage.getItem("gioHang"));
-        if (arr == null) {
-          arr = [];
-        }
-        const check = !isTonTai(arr, res.data.data.id);
-        console.log(check);
-        if (check) {
-          arr.push(res.data.data);
-        }
-        localStorage.setItem("gioHang", JSON.stringify(arr));
-      });
-    });
-
-    function isTonTai(arr, id) {
-      for (const a of arr) {
-        if (a.id == id) {
-          return true;
-        }
-      }
-      return false;
-    }
-
     // check lua chon phuong thuc thanh toan
     let selectValue = document.getElementById("luaChon").value;
     if (selectValue == 1) {
       // thanh toan online
+      window.localStorage.setItem("listIdGioHang", JSON.stringify(getNameImage))
       let datThanhToan = {
         amount: sum(data),
         vnp_OrderInfo: `${khachHang} mua hàng`,
@@ -255,14 +265,8 @@ const GioHang = () => {
         vnp_ReturnUrl: `http://${api.ip}:3000/gio_hang`,
       };
       axios.post(api.thanhToan, datThanhToan).then((res) => (window.location = res.data.data));
-      // alert(sum(data));
     } else {
-      // thanh toan truc tiep
-      let arr = JSON.parse(localStorage.getItem("gioHang"));
-      if (arr == null) {
-        arr = [];
-      }
-      subThanhToan(arr);
+      subThanhToan(getNameImage, selectValue);
     }
   };
 
