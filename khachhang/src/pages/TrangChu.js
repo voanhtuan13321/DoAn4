@@ -81,14 +81,14 @@ const TrangChu = () => {
       <div className="container-xxl">
         <>
           {productsByCategory.map((categoryProducts, index) => (
-            <div className="mt-5">
+            <div className="mt-5" key={index}>
               <div className="d-flex align-items-center mb-4">
                 <h4 className="mr5">{categoryProducts[0]["danhMuc"].ten}</h4>
                 <Link className="mb-1" to={"/san_theo_danh_muc/" + categoryProducts[0]["danhMuc"]?.idDanhMuc}>
                   Xem thêm
                 </Link>
               </div>
-              <div className="row mb-5" key={index}>
+              <div className="row mb-5">
                 {categoryProducts.slice(0, 8).map((item, index) => (
                   <div key={index} className="col-3 mb-3">
                     <Link to={"/san_pham/" + item.idSach} className="border color  card " title={item.ten}>

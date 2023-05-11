@@ -738,7 +738,11 @@ footer .input-group-text {
 
 /* Cart Page */
 
-.wh50{width: 50px;height: 50px;outline: none;}
+.wh50 {
+  width: 50px;
+  height: 50px;
+  outline: none;
+}
 .cart-header,
 .cart-data {
   border-bottom: 1px solid #eaeaea;
@@ -748,7 +752,7 @@ footer .input-group-text {
   font-weight: bold;
   color: var(--color-777777);
 }
-.cart-col-0{
+.cart-col-0 {
   width: 5%;
 }
 .cart-col-1 {
@@ -895,8 +899,8 @@ footer .input-group-text {
   min-height: 700px;
 }
 
-.mh400 {
-  min-height: 240px;
+.mh500 {
+  min-height: 500px;
 }
 
 .imageHeight {

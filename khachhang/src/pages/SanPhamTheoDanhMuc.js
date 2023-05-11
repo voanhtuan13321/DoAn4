@@ -2,10 +2,9 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import api from "../components/urlApi";
 import {useParams, Link} from "react-router-dom";
-// import {}
+
 const SanPhamTheoDanhMuc = () => {
   const params = useParams();
-  console.log(params.id);
   const [danhMucSanPham, setDanhMucSanPham] = useState([]);
 
   useEffect(() => {

@@ -1,20 +1,20 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import api from "../../components/urlApi";
-import {useNavigate, Link} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import {AiFillCaretLeft, AiFillCaretRight} from "react-icons/ai";
-
-import {Button, Form, Input} from "antd";
+import Swal from "sweetalert2";
 
 const TrangSuKien = () => {
   const ITEMS_PER_PAGE = 15;
   let navigation = useNavigate();
-  // let admin = JSON.parse(localStorage.getItem("admin"));
-  // if (!admin) {
-  //   alert("Bạn phải đăng nhập");
-  //   navigation("/");
-  // }
+
+  // check dang nhap
+  let admin = JSON.parse(localStorage.getItem("taiKhoanAdmin"));
+  if (!admin) {
+    Swal.fire("Bạn phải đăng nhập").then(() => navigation("/"));
+  }
 
   const [input, setInput] = useState({
     tieuDe: "",
@@ -36,7 +36,7 @@ const TrangSuKien = () => {
   const handlerSubmit = (e) => {
     e.preventDefault();
     let check = 1;
-    if (input.tieuDe == "") {
+    if (input.tieuDe === "") {
       check = 2;
       setErrTieuDe("Yêu cầu nhập vào tiêu đề");
       return;
@@ -44,7 +44,7 @@ const TrangSuKien = () => {
       check = 1;
       setErrTieuDe("");
     }
-    if (input.noiDung == "") {
+    if (input.noiDung === "") {
       check = 2;
       setErrNoiDung("Yêu cầu nhập vào nội dung");
       return;
@@ -53,7 +53,7 @@ const TrangSuKien = () => {
       setErrNoiDung("");
     }
 
-    if (check == 1) {
+    if (check === 1) {
       const data = {
         tieuDe: input.tieuDe,
         noiDung: input.noiDung,
@@ -61,9 +61,9 @@ const TrangSuKien = () => {
       axios
         .post(api.suKien, data)
         .then((res) => {
-          alert("Thêm sự kiện thành công");
-          console.log(res);
-          setA(!a);
+          Swal.fire("Thêm sự kiện thành công").then(() => {
+            setA(!a);
+          });
         })
         .catch((errors) => console.log(errors));
     }
@@ -109,7 +109,6 @@ const TrangSuKien = () => {
     return currentData.map((item, index) => {
       return (
         <tr key={index}>
-          {/* <th scope="row">{index}</th> */}
           <td>{item.tieuDe}</td>
           <td>{item.noiDung}</td>
           <td>
@@ -175,7 +174,6 @@ const TrangSuKien = () => {
           <table class="table">
             <thead>
               <tr>
-                {/* <th scope="col">#</th> */}
                 <th scope="col">Tiêu đề</th>
                 <th scope="col">Nội dung</th>
                 <th scope="col"></th>

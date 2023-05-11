@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import api from "../../components/urlApi";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import Swal from "sweetalert2";
-import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
+import {AiFillCaretLeft, AiFillCaretRight} from "react-icons/ai";
+
 const TrangSgSanPham = () => {
   let navigate = useNavigate();
 
@@ -12,17 +13,14 @@ const TrangSgSanPham = () => {
   const [pageCount, setPageCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
 
-  // Kiểm tra đăng nhập
-  // let admin = JSON.parse(localStorage.getItem("admin"));
-  // if (!admin) {
-  //   alert("Bạn phải đăng nhập");
-  //   navigation("/");
-  // }
+  // check dang nhap
+  let admin = JSON.parse(localStorage.getItem("taiKhoanAdmin"));
+  if (!admin) {
+    Swal.fire("Bạn phải đăng nhập").then(() => navigate("/"));
+  }
 
   // tạo để nhận các giá trị
-
   const [a, setA] = useState(true);
-
   const [data, setData] = useState([]);
 
   // Gọi api lấy tất cả các sách đả được thêm
@@ -46,12 +44,7 @@ const TrangSgSanPham = () => {
     axios
       .delete(api.sachId + getId)
       .then((res) => {
-        Swal.fire("Xoá sản phẩm thành công");
-        setTimeout(function () {
-          setA(!a);
-        }, 1000);
-
-        setA(!a);
+        Swal.fire("Xoá sản phẩm thành công").then(() => setA(!a));
       })
       .catch((error) => {
         console.log(error);
@@ -64,7 +57,7 @@ const TrangSgSanPham = () => {
     navigate("/admin/sua_san_pham");
   }
 
-  const handlePageClick = ({ selected }) => {
+  const handlePageClick = ({selected}) => {
     setCurrentPage(selected);
   };
 
@@ -75,41 +68,29 @@ const TrangSgSanPham = () => {
     return currentData.map((item, index) => {
       return (
         <tr key={index}>
-          {/* <td scope="col"><p className="fs14">{index}</p></td> */}
-          <td scope="col">
+          <td>
             <p className="fs14">{item.ten}</p>
           </td>
-          <td scope="col">
+          <td>
             <p className="fs14">{item.tacGia}</p>
           </td>
-          <td scope="col">
+          <td>
             <p className="fs14">{item.ngayXuatBan}</p>
           </td>
-          <td scope="col">
+          <td>
             <p className="fs14"> {item.giaSach + " VNĐ"}</p>
           </td>
-          <td scope="col">
+          <td>
             <p className="fs14">{item.soLuong}</p>
           </td>
-
-          <td scope="col">
-            <img
-              className="img-thumbnail image-w image-h"
-              src={api.img + item.hinhAnh}
-            />
+          <td>
+            <img className="img-thumbnail image-w image-h" src={api.img + item.hinhAnh} />
           </td>
-          <td scope="col">
-            <button
-              className="btn btn-outline-warning fw-bolder mr3"
-              onClick={() => checkId(item)}
-            >
+          <td>
+            <button className="btn btn-outline-warning fw-bolder mr3" onClick={() => checkId(item)}>
               Sửa
             </button>
-            <button
-              className="btn btn-outline-danger fw-bolder"
-              value={item.idSach}
-              onClick={deleteId}
-            >
+            <button className="btn btn-outline-danger fw-bolder" value={item.idSach} onClick={deleteId}>
               Xóa
             </button>
           </td>
@@ -121,8 +102,6 @@ const TrangSgSanPham = () => {
   const themSanPham = () => {
     navigate("/admin/them_san_pham");
   };
-
-  const sanPhamTheoDanhMuc = () => {};
 
   return (
     <div>
@@ -137,7 +116,6 @@ const TrangSgSanPham = () => {
           <table className="table">
             <thead className="table-dark">
               <tr>
-                {/* <th scope="col">#</th> */}
                 <th scope="col">Tên</th>
                 <th scope="col">Tác giả</th>
                 <th scope="col">Ngày xuất bản</th>

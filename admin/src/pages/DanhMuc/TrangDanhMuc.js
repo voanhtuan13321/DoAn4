@@ -1,14 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import api from "../../components/urlApi";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import ReactPaginate from "react-paginate";
-import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
-// import { Button, Form, Input } from "antd";
+import {AiFillCaretLeft, AiFillCaretRight} from "react-icons/ai";
+import Swal from "sweetalert2";
 
 const TrangDanhMuc = () => {
   const ITEMS_PER_PAGE = 15;
   let navigation = useNavigate();
+
+  // check dang nhap
+  let admin = JSON.parse(localStorage.getItem("taiKhoanAdmin"));
+  if (!admin) {
+    Swal.fire("Bạn phải đăng nhập").then(() => navigation("/"));
+  }
 
   const [input, setInput] = useState({
     ten: "",
@@ -24,13 +30,13 @@ const TrangDanhMuc = () => {
   const handleInput = (e) => {
     let nameKey = e.target.name;
     let nameValue = e.target.value;
-    setInput((state) => ({ ...state, [nameKey]: nameValue }));
+    setInput((state) => ({...state, [nameKey]: nameValue}));
   };
 
   const handlerSubmit = (e) => {
     e.preventDefault();
     let check = 1;
-    if (input.ten == "") {
+    if (input.ten === "") {
       check = 2;
       setErrTen("Yêu cầu nhập vào tên");
       return;
@@ -38,7 +44,7 @@ const TrangDanhMuc = () => {
       check = 1;
       setErrTen("");
     }
-    if (input.moTa == "") {
+    if (input.moTa === "") {
       check = 2;
       setErrMoTa("Yêu cầu nhập vào mô tả");
       return;
@@ -47,7 +53,7 @@ const TrangDanhMuc = () => {
       setErrMoTa("");
     }
 
-    if (check == 1) {
+    if (check === 1) {
       const data = {
         ten: input.ten,
         moTa: input.moTa,
@@ -55,9 +61,9 @@ const TrangDanhMuc = () => {
       axios
         .post(api.getDanhMuc, data)
         .then((res) => {
-          alert("Thêm danh mục thành công");
-
-          setA(!a);
+          Swal.fire("Thêm danh mục thành công").then(() => {
+            setA(!a);
+          });
         })
         .catch((errors) => console.log(errors));
     }
@@ -78,10 +84,10 @@ const TrangDanhMuc = () => {
     axios
       .delete(api.getDanhMucId + getId)
       .then((res) => {
-        if (res.data.status == "fail") {
-          alert("Xóa không thành công");
+        if (res.data.status === "fail") {
+          Swal.fire("Xoá không thanh công");
         } else {
-          alert("Xóa thành công");
+          Swal.fire("Xoá thành công");
         }
         setA(!a);
       })
@@ -95,7 +101,7 @@ const TrangDanhMuc = () => {
     navigation("/admin/sua_danh_muc");
   }
 
-  const handlePageClick = ({ selected }) => {
+  const handlePageClick = ({selected}) => {
     setCurrentPage(selected);
   };
 
@@ -114,17 +120,10 @@ const TrangDanhMuc = () => {
             <p className="fs14 mb-0">{item.moTa}</p>
           </td>
           <td className="d-flex">
-            <button
-              className="btn btn-danger mr3"
-              onClick={() => checkId(item)}
-            >
+            <button className="btn btn-danger mr3" onClick={() => checkId(item)}>
               <p className="fs14 mb-0">Sửa</p>
             </button>
-            <button
-              className="btn btn-warning"
-              value={item.idDanhMuc}
-              onClick={deleteId}
-            >
+            <button className="btn btn-warning" value={item.idDanhMuc} onClick={deleteId}>
               <p className="fs14 mb-0">Xóa</p>
             </button>
           </td>

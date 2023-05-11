@@ -54,7 +54,6 @@ const Header = () => {
     navigate("dang_nhap");
   };
 
-
   const donHang = () => {
     navigate("don_hang");
   };
@@ -185,13 +184,13 @@ const Header = () => {
                 </div>
                 <div className="menu-links">
                   <div className="d-flex align-items-center gap-15">
-                    <NavLink to="/" className="link" activeclassName="active">
+                    <NavLink to="/" className="link">
                       Trang chủ
                     </NavLink>
-                    <NavLink to="/su_kien" className="link" activeclassName="active">
+                    <NavLink to="/su_kien" className="link">
                       Thông tin sự kiện
                     </NavLink>
-                    <NavLink to="/thong_tin_cua_hang" className="link" activeclassName="active">
+                    <NavLink to="/thong_tin_cua_hang" className="link">
                       Thông tin cửa hàng
                     </NavLink>
                   </div>

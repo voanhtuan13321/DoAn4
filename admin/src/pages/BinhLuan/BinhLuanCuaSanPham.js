@@ -4,6 +4,8 @@ import axios from "axios";
 import api from "../../components/urlApi";
 import ReactPaginate from "react-paginate";
 import {AiFillCaretLeft, AiFillCaretRight} from "react-icons/ai";
+import Swal from "sweetalert2";
+import {useNavigate} from "react-router-dom";
 
 const BinhLuanCuaSanPham = () => {
   const ITEMS_PER_PAGE = 15;
@@ -11,6 +13,13 @@ const BinhLuanCuaSanPham = () => {
   const [binhLuanIdSach, setBinhLuanIdSach] = useState([]);
   const [pageCount, setPageCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
+  let navigation = useNavigate();
+
+  // check dang nhap
+  let admin = JSON.parse(localStorage.getItem("taiKhoanAdmin"));
+  if (!admin) {
+    Swal.fire("Bạn phải đăng nhập").then(() => navigation("/"));
+  }
 
   // Gọi api của sản phẩm đó để xem các bình luận của sản phẩm
   useEffect(() => {
@@ -19,12 +28,11 @@ const BinhLuanCuaSanPham = () => {
       setPageCount(Math.ceil(res.data.data.length / ITEMS_PER_PAGE));
     });
   }, []);
+
   const handlePageClick = ({selected}) => {
     setCurrentPage(selected);
   };
 
-  const offset = currentPage * ITEMS_PER_PAGE;
-  const currentData = binhLuanIdSach.slice(offset, offset + ITEMS_PER_PAGE);
   const binhLuan = () => {
     return binhLuanIdSach.map((item, index) => {
       const date = new Date(Date.parse(item.dateTime));
@@ -56,7 +64,7 @@ const BinhLuanCuaSanPham = () => {
 
   return (
     <div className="pl5px">
-      <table class="table">
+      <table className="table">
         <thead className="table-dark">
           <tr>
             <th scope="col">#</th>

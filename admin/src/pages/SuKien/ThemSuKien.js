@@ -1,16 +1,17 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import axios from "axios";
 import api from "../../components/urlApi";
-import {useNavigate, Link} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import Swal from "sweetalert2";
 
 const ThemSuKien = () => {
   let navigate = useNavigate();
-  // let admin = JSON.parse(localStorage.getItem("admin"));
-  // if (!admin) {
-  //   alert("Bạn phải đăng nhập");
-  //   navigation("/");
-  // }
+
+  // check dang nhap
+  let admin = JSON.parse(localStorage.getItem("taiKhoanAdmin"));
+  if (!admin) {
+    Swal.fire("Bạn phải đăng nhập").then(() => navigate("/"));
+  }
 
   const [input, setInput] = useState({
     tieuDe: "",
@@ -29,7 +30,7 @@ const ThemSuKien = () => {
   const handlerSubmit = (e) => {
     e.preventDefault();
     let check = 1;
-    if (input.tieuDe == "") {
+    if (input.tieuDe === "") {
       check = 2;
       setErrTieuDe("Yêu cầu nhập vào tiêu đề");
       return;
@@ -37,7 +38,7 @@ const ThemSuKien = () => {
       check = 1;
       setErrTieuDe("");
     }
-    if (input.noiDung == "") {
+    if (input.noiDung === "") {
       check = 2;
       setErrNoiDung("Yêu cầu nhập vào nội dung");
       return;
@@ -46,7 +47,7 @@ const ThemSuKien = () => {
       setErrNoiDung("");
     }
 
-    if (check == 1) {
+    if (check === 1) {
       const data = {
         tieuDe: input.tieuDe,
         noiDung: input.noiDung,
@@ -56,12 +57,7 @@ const ThemSuKien = () => {
       axios
         .post(api.suKien, data)
         .then((res) => {
-
-          Swal.fire("Thêm sự kiện thành công");
-          setTimeout(function () {
-            navigate("/admin/xem_su_kien");
-            // setA(!a);
-          }, 1000);
+          Swal.fire("Thêm sự kiện thành công").then(() => navigate("/admin/xem_su_kien"));
         })
         .catch((errors) => console.log(errors))
         .finally(() => load.classList.add("d-none"));

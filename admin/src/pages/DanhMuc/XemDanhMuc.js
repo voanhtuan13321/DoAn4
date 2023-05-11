@@ -5,9 +5,16 @@ import {useNavigate} from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import {AiFillCaretLeft, AiFillCaretRight} from "react-icons/ai";
 import Swal from "sweetalert2";
+
 const XemDanhMuc = () => {
   const ITEMS_PER_PAGE = 15;
   let navigate = useNavigate();
+
+  // check dang nhap
+  let admin = JSON.parse(localStorage.getItem("taiKhoanAdmin"));
+  if (!admin) {
+    Swal.fire("Bạn phải đăng nhập").then(() => navigate("/"));
+  }
 
   const [danhMuc, setDanhMuc] = useState([]);
   const [pageCount, setPageCount] = useState(0);
@@ -34,14 +41,8 @@ const XemDanhMuc = () => {
       .then((res) => {
         if (res.data.status == "fail") {
           Swal.fire("Xóa không thành công");
-          setTimeout(function () {
-            setA(!a);
-          }, 1000);
         } else {
           Swal.fire("Xóa thành công");
-          setTimeout(function () {
-            setA(!a);
-          }, 1000);
         }
         setA(!a);
       })

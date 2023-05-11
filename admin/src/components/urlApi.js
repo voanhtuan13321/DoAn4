@@ -1,4 +1,4 @@
-const ip = "192.168.1.74";
+const ip = "192.168.1.142";
 
 const api = {
   getDanhMuc: `http://${ip}:8080/api/danh-muc`,
@@ -34,9 +34,7 @@ const api = {
 
   capNhat: `http://${ip}:8080/api/quan-ly`,
 
-  
-
-  ip: "192.168.1.35",
+  ip: "192.168.1.142",
 };
 
 export default api;

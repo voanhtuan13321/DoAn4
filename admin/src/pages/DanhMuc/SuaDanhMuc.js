@@ -1,12 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, {useState} from "react";
 import axios from "axios";
 import api from "../../components/urlApi";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import Swal from "sweetalert2";
 
 const SuaDanhMuc = () => {
   let navigate = useNavigate();
   const item = JSON.parse(localStorage.getItem("danhmuc"));
+
+  // check dang nhap
+  let admin = JSON.parse(localStorage.getItem("taiKhoanAdmin"));
+  if (!admin) {
+    Swal.fire("Bạn phải đăng nhập").then(() => navigate("/"));
+  }
+
   const [input, setInput] = useState({
     idDanhMuc: item.idDanhMuc,
     ten: item.ten,
@@ -18,7 +25,7 @@ const SuaDanhMuc = () => {
   const handleInput = (e) => {
     let nameKey = e.target.name;
     let nameValue = e.target.value;
-    setInput((state) => ({ ...state, [nameKey]: nameValue }));
+    setInput((state) => ({...state, [nameKey]: nameValue}));
   };
 
   const handlerSubmit = (e) => {
@@ -41,7 +48,7 @@ const SuaDanhMuc = () => {
       setErrMoTa("");
     }
 
-    if (check == 1) {
+    if (check === 1) {
       const data = {
         idDanhMuc: input.idDanhMuc,
         ten: input.ten,
@@ -51,14 +58,10 @@ const SuaDanhMuc = () => {
       axios
         .post(api.getDanhMuc, data)
         .then((res) => {
-          Swal.fire("Sửa thành công");
-          setTimeout(function () {
-            navigate("/admin/xem_danh_muc");
+          Swal.fire("Sửa thành công").then(() => {
             setA(!a);
-          }, 1000);
-          // alert("Sửa thành công");
-          // navigate("/admin/xem_danh_muc");
-          // setA(!a);
+            navigate("/admin/xem_danh_muc");
+          });
         })
         .catch((errors) => console.log(errors));
     }

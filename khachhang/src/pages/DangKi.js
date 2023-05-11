@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, {useState} from "react";
 import axios from "axios";
 import api from "../components/urlApi";
-import { Link, useNavigate } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import Swal from "sweetalert2";
+
 const DangKi = () => {
   const navigate = useNavigate();
   const [input, setInput] = useState({
@@ -24,7 +25,7 @@ const DangKi = () => {
   const handleInput = (e) => {
     let nameKey = e.target.name;
     let nameValue = e.target.value;
-    setInput((state) => ({ ...state, [nameKey]: nameValue }));
+    setInput((state) => ({...state, [nameKey]: nameValue}));
   };
 
   // Hàm kiểu tra só điện thoại nhập vào
@@ -42,14 +43,14 @@ const DangKi = () => {
   const handlerSubmit = (e) => {
     e.preventDefault();
     let check = 1;
-    if (input.ten == "") {
+    if (input.ten === "") {
       check = 2;
       setTen("Yêu cầu nhập vào tên");
     } else {
       check = 1;
       setTen("");
     }
-    if (input.soDienThoai == "") {
+    if (input.soDienThoai === "") {
       check = 2;
       setSoDienThoai("Yêu cầu nhập vào số điện thoại");
     } else {
@@ -61,14 +62,14 @@ const DangKi = () => {
         setSoDienThoai("");
       }
     }
-    if (input.diaChi == "") {
+    if (input.diaChi === "") {
       check = 2;
       setDiaChi("Yêu cầu nhập địa chỉ");
     } else {
       check = 1;
       setDiaChi("");
     }
-    if (input.email == "") {
+    if (input.email === "") {
       check = 2;
       setEmail("Yêu cầu nhập vào địa chỉ");
     } else {
@@ -81,14 +82,14 @@ const DangKi = () => {
         setEmail("");
       }
     }
-    if (input.taiKhoan == "") {
+    if (input.taiKhoan === "") {
       check = 2;
       setTaiKhoan("Yêu cầu nhập vào tài khoản");
     } else {
       check = 1;
       setTaiKhoan("");
     }
-    if (input.matKhau == "") {
+    if (input.matKhau === "") {
       check = 2;
       setMatKhau("Yêu cầu nhập vào mật khẩu");
     } else {
@@ -109,20 +110,11 @@ const DangKi = () => {
       axios
         .post(api.khachHang, data)
         .then((res) => {
-          console.log(res);
-
-          // if (res.data.status == "successful") {
-          //   console.log(res);
-
-          if (res.data.status == "unsuccessful") {
+          if (res.data.status === "unsuccessful") {
             setTaiKhoan("Tài khoản đả bị trùng");
             return;
           } else {
-            Swal.fire("Đăng kí thành công", "Vui lòng đăng nhập để sử dụng", "info");
-            setTimeout(function(){
-              navigate("/dang_nhap");
-
-            },1000)
+            Swal.fire("Đăng kí thành công", "Vui lòng đăng nhập để sử dụng", "info").then(() => navigate("/dang_nhap"));
           }
         })
         .catch((errors) => console.log(errors));
@@ -135,66 +127,36 @@ const DangKi = () => {
         <p className="form-title">Đăng kí</p>
         <div className="input-container">
           <label className="lableinput">Nhập tên</label>
-          <input
-            type="text"
-            name="ten"
-            onChange={handleInput}
-            placeholder="Tên"
-          />
+          <input type="text" name="ten" onChange={handleInput} placeholder="Tên" />
           <p className="error">{errTen}</p>
         </div>
         <div className="input-container">
           <label className="lableinput">Nhập email</label>
-          <input
-            type="text"
-            name="email"
-            onChange={handleInput}
-            placeholder="Nhập vào email"
-          />
+          <input type="text" name="email" onChange={handleInput} placeholder="Nhập vào email" />
           <p className="error">{errEmail}</p>
         </div>
 
         <div className="input-container">
           <label className="lableinput">Nhập số điện thoại</label>
-          <input
-            type="text"
-            name="soDienThoai"
-            onChange={handleInput}
-            placeholder="Số điện thoại"
-          />
+          <input type="text" name="soDienThoai" onChange={handleInput} placeholder="Số điện thoại" />
           <p className="error">{errSoDienThoai}</p>
         </div>
 
         <div className="input-container">
           <label className="lableinput">Nhập địa chỉ</label>
-          <input
-            type="text"
-            name="diaChi"
-            onChange={handleInput}
-            placeholder="Địa chỉ"
-          />
+          <input type="text" name="diaChi" onChange={handleInput} placeholder="Địa chỉ" />
           <p className="error">{errDiaChi}</p>
         </div>
 
         <div className="input-container">
           <label className="lableinput">Nhập tài khoản</label>
-          <input
-            type="text"
-            name="taiKhoan"
-            onChange={handleInput}
-            placeholder="Tài khoản"
-          />
+          <input type="text" name="taiKhoan" onChange={handleInput} placeholder="Tài khoản" />
           <p className="error">{errTaiKhoan}</p>
         </div>
 
         <div className="input-container">
           <label className="lableinput">Nhập mật khẩu</label>
-          <input
-            type="text"
-            name="matKhau"
-            onChange={handleInput}
-            placeholder="Mật khẩu"
-          />
+          <input type="text" name="matKhau" onChange={handleInput} placeholder="Mật khẩu" />
           <p className="error">{errMatKhau}</p>
         </div>
         <div className="input-container">
@@ -202,7 +164,6 @@ const DangKi = () => {
             Đăng kí
           </button>
         </div>
-
         <p className="signup-link">
           <Link to="/dang_nhap">Đăng nhập</Link>
         </p>

@@ -4,6 +4,8 @@ import api from "../../components/urlApi";
 import {useNavigate} from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import {AiFillCaretLeft, AiFillCaretRight} from "react-icons/ai";
+import Swal from "sweetalert2";
+
 const TrangSgSanPham = () => {
   let navigation = useNavigate();
 
@@ -11,12 +13,11 @@ const TrangSgSanPham = () => {
   const [pageCount, setPageCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
 
-  // Kiểm tra đăng nhập
-  // let admin = JSON.parse(localStorage.getItem("admin"));
-  // if (!admin) {
-  //   alert("Bạn phải đăng nhập");
-  //   navigation("/");
-  // }
+  // check dang nhap
+  let admin = JSON.parse(localStorage.getItem("taiKhoanAdmin"));
+  if (!admin) {
+    Swal.fire("Bạn phải đăng nhập").then(() => navigation("/"));
+  }
 
   // tạo để nhận các giá trị
   const [sanPham, setSapPham] = useState({
@@ -26,13 +27,11 @@ const TrangSgSanPham = () => {
     giaSach: "",
     moTa: "",
     ngayXuatBan: "",
-    // soLuong: parseInt(""),
     soLuong: "",
   });
 
   const [a, setA] = useState(true);
   const [danhMuc, setDanhMuc] = useState([]);
-  const [file, setFile] = useState("");
   const [avatar, setAvatar] = useState("");
   const [valuedanhMuc, setValueDanhMuc] = useState(1);
   const [data, setData] = useState([]);
@@ -69,7 +68,6 @@ const TrangSgSanPham = () => {
     axios
       .get(api.getDanhMuc)
       .then((res) => {
-        console.log(res.data.data);
         setDanhMuc(res.data.data);
       })
       .catch((errors) => console.log(errors));
@@ -87,8 +85,6 @@ const TrangSgSanPham = () => {
     let reader = new FileReader();
     reader.onload = (e) => {
       setAvatar(e.target.result); //Cái này để gởi qua api
-      setFile(files[0]);
-      // sanPham.hinhAnh == "fnwnw";
     };
     reader.readAsDataURL(files[0]);
   };
@@ -111,7 +107,6 @@ const TrangSgSanPham = () => {
     axios
       .delete(api.sachId + getId)
       .then((res) => {
-        console.log(res.data);
         setA(!a);
       })
       .catch((error) => {
@@ -136,22 +131,21 @@ const TrangSgSanPham = () => {
     return currentData.map((item, index) => {
       return (
         <tr key={index}>
-          {/* <td scope="col">{index}</td> */}
-          <td scope="col">{item.ten}</td>
-          <td scope="col">{item.tacGia}</td>
-          <td scope="col">{item.ngayXuatBan}</td>
-          <td scope="col">
+          <td>{item.ten}</td>
+          <td>{item.tacGia}</td>
+          <td>{item.ngayXuatBan}</td>
+          <td>
             {item.giaSach.toLocaleString("vi-VN", {
               style: "currency",
               currency: "VND",
             })}
           </td>
-          <td scope="col">{item.soLuong}</td>
+          <td>{item.soLuong}</td>
 
-          <td scope="col">
-            <img className="img-thumbnail image-w image-h" src={api.img + item.hinhAnh} />
+          <td>
+            <img className="img-thumbnail image-w image-h" src={api.img + item.hinhAnh} alt="" />
           </td>
-          <td scope="col">
+          <td>
             <button className="btn btn-warning mr3" onClick={() => checkId(item)}>
               Sửa
             </button>
@@ -166,11 +160,10 @@ const TrangSgSanPham = () => {
 
   const handlerSubmit = (e) => {
     e.preventDefault();
-    // console.log(sanPham.hinhAnh);
 
     let check = 1;
 
-    if (sanPham.ten == "") {
+    if (sanPham.ten === "") {
       check = 2;
       setErrTen("Vui lòng nhập vào tên");
       return;
@@ -178,7 +171,7 @@ const TrangSgSanPham = () => {
       check = 1;
       setErrTen("");
     }
-    if (sanPham.tacGia == "") {
+    if (sanPham.tacGia === "") {
       check = 2;
       setErrTacGia("Vui lòng nhập vào tác giả");
       return;
@@ -186,7 +179,7 @@ const TrangSgSanPham = () => {
       check = 1;
       setErrTacGia("");
     }
-    if (sanPham.nhaXuatBan == "") {
+    if (sanPham.nhaXuatBan === "") {
       check = 2;
       setErrNhaXuatBan("Vui lòng nhập vào nhà xuất bản");
       return;
@@ -194,7 +187,7 @@ const TrangSgSanPham = () => {
       check = 1;
       setErrNhaXuatBan("");
     }
-    if (sanPham.giaSach == "") {
+    if (sanPham.giaSach === "") {
       check = 2;
       setErrGiaSach("Vui lòng nhập vào giá sách");
       return;
@@ -202,7 +195,7 @@ const TrangSgSanPham = () => {
       check = 1;
       setErrGiaSach("");
     }
-    if (sanPham.moTa == "") {
+    if (sanPham.moTa === "") {
       check = 2;
       setErrMoTa("Vui lòng nhập vào mô tả");
       return;
@@ -210,7 +203,7 @@ const TrangSgSanPham = () => {
       check = 1;
       setErrMoTa("");
     }
-    if (sanPham.ngayXuatBan == "") {
+    if (sanPham.ngayXuatBan === "") {
       check = 2;
       setErrNgayXuatBan("Vui lòng nhập vào ngày xuất bản");
       return;
@@ -218,7 +211,7 @@ const TrangSgSanPham = () => {
       check = 1;
       setErrNgayXuatBan("");
     }
-    if (sanPham.soLuong == "") {
+    if (sanPham.soLuong === "") {
       check = 2;
       setErrSoLuong("Vui lòng nhập vào số lượng");
       return;
@@ -226,7 +219,7 @@ const TrangSgSanPham = () => {
       check = 1;
       setErrSoLuong("");
     }
-    if (valuedanhMuc == "") {
+    if (valuedanhMuc === "") {
       check = 2;
       setErrDanhMuc("Vui lòng chọn danh mục");
       return;
@@ -234,7 +227,7 @@ const TrangSgSanPham = () => {
       check = 1;
       setErrDanhMuc("");
     }
-    if (avatar == "") {
+    if (avatar === "") {
       check = 2;
       setErrHinhAnh("Vui lòng chọn hình ảnh");
       return;
@@ -243,9 +236,7 @@ const TrangSgSanPham = () => {
       setErrHinhAnh("");
     }
 
-    if (check == 1) {
-      // let admin = JSON.parse(localStorage.getItem("admin"));
-      // if (admin) {
+    if (check === 1) {
       const data = {
         ten: sanPham.ten,
         tacGia: sanPham.tacGia,
@@ -261,16 +252,12 @@ const TrangSgSanPham = () => {
       axios
         .post(api.sach, data)
         .then((res) => {
-          alert("Thêm sản phẩm thành công");
-          setA(!a);
-          // navigation("/admin/trang_san_pham");
+          Swal.fire("Thêm sản phẩm thành công").then(() => {
+            setA(!a);
+          });
         })
         .catch((errors) => console.log(errors));
-      // } else {
-      //   alert("Bạn chưa đăng nhập");
-      //   navigation("/");
     }
-    // }
   };
 
   return (
@@ -323,17 +310,6 @@ const TrangSgSanPham = () => {
                   />
                   <span className="error">{errGiaSach}</span>
                 </div>
-                {/* <div className="input_container">
-                  <label className="input_label">Mô tả</label>
-                  <textarea
-                    placeholder="Mô tả"
-                    name="moTa"
-                    type="text"
-                    className="input_field"
-                    onChange={handleInput}
-                  />
-                  <span className="error">{errMoTa}</span>
-                </div> */}
               </div>
               <div className="p-3">
                 <div className="input_container">
@@ -375,14 +351,7 @@ const TrangSgSanPham = () => {
             </div>
             <div className="input_container mb-5">
               <label className="input_label">Mô tả</label>
-              <textarea
-                placeholder="Mô tả"
-                name="moTa"
-                type="text"
-                rows={5}
-                // className="input_field"
-                onChange={handleInput}
-              />
+              <textarea placeholder="Mô tả" name="moTa" type="text" rows={5} onChange={handleInput} />
               <span className="error">{errMoTa}</span>
             </div>
             <button title="Sign In" type="submit" className="sign-in_btn">
@@ -395,7 +364,6 @@ const TrangSgSanPham = () => {
           <table class="table">
             <thead>
               <tr>
-                {/* <th scope="col">#</th> */}
                 <th scope="col">Tên</th>
                 <th scope="col">Tác giả</th>
                 <th scope="col">Nhà xuất bản</th>

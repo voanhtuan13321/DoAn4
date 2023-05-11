@@ -1,20 +1,21 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import api from "../../components/urlApi";
-import {useNavigate, Link} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import {AiFillCaretLeft, AiFillCaretRight} from "react-icons/ai";
 import Swal from "sweetalert2";
-import {Button, Form, Input} from "antd";
 
 const TrangSuKien = () => {
   const ITEMS_PER_PAGE = 15;
   let navigate = useNavigate();
-  // let admin = JSON.parse(localStorage.getItem("admin"));
-  // if (!admin) {
-  //   alert("Bạn phải đăng nhập");
-  //   navigation("/");
-  // }
+
+  // check dang nhap
+  let admin = JSON.parse(localStorage.getItem("taiKhoanAdmin"));
+  if (!admin) {
+    Swal.fire("Bạn phải đăng nhập").then(() => navigate("/"));
+  }
+
   const [pageCount, setPageCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
   let [a, setA] = useState(true);
@@ -38,13 +39,10 @@ const TrangSuKien = () => {
     axios
       .delete(api.suKienId + getId)
       .then((res) => {
-        Swal.fire("Xoá thành công");
-        setTimeout(function () {
-          navigate("/admin/xem_su_kien");
+        Swal.fire("Xoá thành công").then(() => {
           setA(!a);
-        }, 1000);
-        setA(!a);
-        
+          navigate("/admin/xem_su_kien");
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -67,7 +65,6 @@ const TrangSuKien = () => {
     return currentData.map((item, index) => {
       return (
         <tr key={index}>
-          {/* <th scope="row">{index}</th> */}
           <td>
             {" "}
             <p className="fs14 mb-0">{item.tieuDe}</p>
@@ -103,7 +100,6 @@ const TrangSuKien = () => {
           <table className="table">
             <thead className="table-dark">
               <tr>
-                {/* <th scope="col">#</th> */}
                 <th scope="col">Tiêu đề</th>
                 <th scope="col">Nội dung</th>
                 <th scope="col"></th>

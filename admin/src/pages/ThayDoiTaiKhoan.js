@@ -1,12 +1,11 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import axios from "axios";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import api from "../components/urlApi";
+import Swal from "sweetalert2";
+
 const ThayDoiTaiKhoan = () => {
   const capNhat = JSON.parse(localStorage.getItem("taiKhoanAdmin"));
-  console.log(capNhat);
-
-  console.log(capNhat.taiKhoan);
   const navigate = useNavigate();
   const [input, setInput] = useState({
     ten: capNhat.ten,
@@ -16,7 +15,11 @@ const ThayDoiTaiKhoan = () => {
     matKhau: capNhat.matKhau,
   });
 
-  console.log(input.ten);
+  // check dang nhap
+  let admin = JSON.parse(localStorage.getItem("taiKhoanAdmin"));
+  if (!admin) {
+    Swal.fire("Bạn phải đăng nhập").then(() => navigate("/"));
+  }
 
   let [errTen, setTen] = useState("");
   let [errSoDienThoai, setSoDienThoai] = useState("");
@@ -45,7 +48,7 @@ const ThayDoiTaiKhoan = () => {
   const handlerSubmit = (e) => {
     e.preventDefault();
     let check = 1;
-    if (input.ten == "") {
+    if (input.ten === "") {
       check = 2;
       setTen("Yêu cầu nhập vào tên");
       return;
@@ -53,7 +56,7 @@ const ThayDoiTaiKhoan = () => {
       check = 1;
       setTen("");
     }
-    if (input.soDienThoai == "") {
+    if (input.soDienThoai === "") {
       check = 2;
       setSoDienThoai("Yêu cầu nhập vào số điện thoại");
       return;
@@ -67,7 +70,7 @@ const ThayDoiTaiKhoan = () => {
         setSoDienThoai("");
       }
     }
-    if (input.email == "") {
+    if (input.email === "") {
       check = 2;
       setEmail("Yêu cầu nhập vào địa chỉ");
       return;
@@ -81,7 +84,7 @@ const ThayDoiTaiKhoan = () => {
         setEmail("");
       }
     }
-    if (input.taiKhoan == "") {
+    if (input.taiKhoan === "") {
       check = 2;
       setTaiKhoan("Yêu cầu nhập tài khoản");
       return;
@@ -89,7 +92,7 @@ const ThayDoiTaiKhoan = () => {
       check = 1;
       setTaiKhoan("");
     }
-    if (input.matKhau == "") {
+    if (input.matKhau === "") {
       check = 2;
       setMatKhau("Yêu cầu nhập mật khẩu");
       return;
@@ -98,7 +101,7 @@ const ThayDoiTaiKhoan = () => {
       setMatKhau("");
     }
 
-    if (check == 1) {
+    if (check === 1) {
       const data = {
         idQuanLy: 1,
         ten: input.ten,
@@ -108,13 +111,10 @@ const ThayDoiTaiKhoan = () => {
         matKhau: input.matKhau,
       };
 
-      console.log(data);
-
       axios
         .put(api.capNhat, data)
         .then((res) => {
-          alert("Cập nhật thành công");
-          console.log(res);
+          Swal.fire("Cập nhật thành công");
         })
         .catch((errors) => console.log(errors));
     }

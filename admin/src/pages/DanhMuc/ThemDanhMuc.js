@@ -1,11 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, {useState} from "react";
 import axios from "axios";
 import api from "../../components/urlApi";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import Swal from "sweetalert2";
 
 const TrangDanhMuc = () => {
   let navigate = useNavigate();
+
+  // check dang nhap
+  let admin = JSON.parse(localStorage.getItem("taiKhoanAdmin"));
+  if (!admin) {
+    Swal.fire("Bạn phải đăng nhập").then(() => navigate("/"));
+  }
 
   const [input, setInput] = useState({
     ten: "",
@@ -19,13 +25,13 @@ const TrangDanhMuc = () => {
   const handleInput = (e) => {
     let nameKey = e.target.name;
     let nameValue = e.target.value;
-    setInput((state) => ({ ...state, [nameKey]: nameValue }));
+    setInput((state) => ({...state, [nameKey]: nameValue}));
   };
 
   const handlerSubmit = (e) => {
     e.preventDefault();
     let check = 1;
-    if (input.ten == "") {
+    if (input.ten === "") {
       check = 2;
       setErrTen("Yêu cầu nhập vào tên");
       return;
@@ -33,7 +39,7 @@ const TrangDanhMuc = () => {
       check = 1;
       setErrTen("");
     }
-    if (input.moTa == "") {
+    if (input.moTa === "") {
       check = 2;
       setErrMoTa("Yêu cầu nhập vào mô tả");
       return;
@@ -42,7 +48,7 @@ const TrangDanhMuc = () => {
       setErrMoTa("");
     }
 
-    if (check == 1) {
+    if (check === 1) {
       const data = {
         ten: input.ten,
         moTa: input.moTa,
@@ -52,11 +58,10 @@ const TrangDanhMuc = () => {
       axios
         .post(api.getDanhMuc, data)
         .then((res) => {
-          Swal.fire("Thêm danh mục thành công");
-          setTimeout(function () {
-            navigate("/admin/xem_danh_muc");
+          Swal.fire("Thêm danh mục thành công").then(() => {
             setA(!a);
-          }, 1000);
+            navigate("/admin/xem_danh_muc");
+          });
         })
         .catch((errors) => console.log(errors))
         .finally(() => load.classList.add("d-none"));

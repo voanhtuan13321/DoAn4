@@ -5,22 +5,23 @@ import {useNavigate} from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import {AiFillCaretLeft, AiFillCaretRight} from "react-icons/ai";
 import Swal from "sweetalert2";
+
 const TrangDonHang = () => {
   const ITEMS_PER_PAGE = 15;
   let navigation = useNavigate();
-
-  // let admin = JSON.parse(localStorage.getItem("admin"));
-  // if (!admin) {
-  //   alert("Bạn phải đăng nhập");
-  //   navigation("/");
-  // }
   const [data, setData] = useState([]);
+
+  // check dang nhap
+  let admin = JSON.parse(localStorage.getItem("taiKhoanAdmin"));
+  if (!admin) {
+    Swal.fire("Bạn phải đăng nhập").then(() => navigation("/"));
+  }
+
   // Gọi các đơn hàng trong giỏ hàng
   useEffect(() => {
     axios
       .get(api.gioHang + "/don-hang")
       .then((res) => {
-        console.log(res.data.data);
         setData(res.data.data);
       })
       .catch((errors) => console.log(errors));
@@ -30,13 +31,10 @@ const TrangDonHang = () => {
   const [pageCount, setPageCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
 
-  console.log(lichSu);
-
   useEffect(() => {
     axios
       .get(api.lichSuMua)
       .then((res) => {
-        console.log(res.data.data);
         setLichSu(res.data.data);
         setPageCount(Math.ceil(res.data.data.length / ITEMS_PER_PAGE));
       })
@@ -45,7 +43,6 @@ const TrangDonHang = () => {
 
   // Lấy toàn bộ các thành phần đc chọn
   const checkId = (item) => {
-    // console.log(id);
     const promises = [];
     let data = {
       idKhachHang: item["khachHang"].idKhachHang,
@@ -53,21 +50,15 @@ const TrangDonHang = () => {
       soLuong: item.soLuong,
     };
 
-    console.log(data);
     const promise1 = axios.post(api.lichSuMua, data);
     const promise2 = axios.delete(api.gioHang + "/" + item.id);
 
     promises.push(promise1, promise2);
     Promise.all(promises).then(() => {
       localStorage.removeItem("gioHang");
-
-      //////////////////////////
-      // navigator("/gio_hang");
-      Swal.fire("Đơn hàng đả được xác nhận");
-      setTimeout(function () {
-      window.location.href = `http://${api.ip}:2000/admin/don_hang`;
-      }, 1000);
-      
+      Swal.fire("Đơn hàng đả được xác nhận").then(
+        () => (window.location.href = `http://${api.ip}:2000/admin/don_hang`)
+      );
     });
   };
 
@@ -77,33 +68,30 @@ const TrangDonHang = () => {
       .filter((item) => item.trangThai !== "none")
       .map((item, index) => {
         return (
-          <tr>
-            {/* <td scope="col">
-              <p className="fs14">{index}</p>
-            </td> */}
-            <td scope="col">
+          <tr key={index}>
+            <td>
               <p className="fs14">{item["khachHang"].ten}</p>
             </td>
-            <td scope="col">
+            <td>
               <p className="fs14">{item["khachHang"].soDienThoai}</p>
             </td>
-            <td scope="col">
+            <td>
               <p className="fs14">{item["sach"].ten}</p>
             </td>
-            <td scope="col">
+            <td>
               <p className="fs14">{item.soLuong}</p>
             </td>
-            <td scope="col">
+            <td>
               <p className="fs14">
-                {item.trangThai == "online" ? "Đã thanh toán" : item["sach"].giaSach * item.soLuong + " VNĐ"}
+                {item.trangThai === "online" ? "Đã thanh toán" : item["sach"].giaSach * item.soLuong + " VNĐ"}
               </p>
             </td>
-            <td scope="col">
+            <td>
               <p className="fs14">{item.trangThai}</p>
             </td>
-            <td scope="col">
+            <td>
               <button onClick={() => checkId(item)} className="btn btn-outline-success fw-bolder">
-              <p className="fs14 mb-0">Xác nhận</p>
+                <p className="fs14 mb-0">Xác nhận</p>
               </button>
             </td>
           </tr>
@@ -116,29 +104,23 @@ const TrangDonHang = () => {
       .filter((item) => item.trangThai !== "none")
       .map((item, index) => {
         return (
-          <tr>
-            {/* <td scope="col">
-              <p className="fs14">{index}</p>
-            </td> */}
-            <td scope="col">
+          <tr key={index}>
+            <td>
               <p className="fs14">{item["khachHang"].ten}</p>
             </td>
-            <td scope="col">
+            <td>
               <p className="fs14">{item["khachHang"].soDienThoai}</p>
             </td>
-            <td scope="col">
+            <td>
               <p className="fs14">{item["sach"].ten}</p>
             </td>
-            <td scope="col">
+            <td>
               <p className="fs14">{item.soLuong}</p>
             </td>
-            <td scope="col">
+            <td>
               <p className="fs14">{item.ngayMua}</p>
             </td>
-            {/* <td scope="col">
-              <p className="fs14">{item.trangThai}</p>
-            </td> */}
-            <td scope="col">
+            <td>
               <p className="fs14">{item.soLuong * item["sach"].giaSach + " VNĐ"} </p>
             </td>
           </tr>
@@ -159,7 +141,6 @@ const TrangDonHang = () => {
         <table className="table">
           <thead className="table-dark">
             <tr>
-              {/* <th scope="col"></th> */}
               <th scope="col">
                 <p className="fs14 mb-0">Tên khách hàng</p>
               </th>
@@ -189,7 +170,6 @@ const TrangDonHang = () => {
         <table className="table">
           <thead className="table-dark">
             <tr>
-              {/* <th scope="col"></th> */}
               <th scope="col">
                 <p className="fs14 mb-0">Tên khách hàng</p>
               </th>
@@ -205,9 +185,6 @@ const TrangDonHang = () => {
               <th scope="col">
                 <p className="fs14 mb-0">Thời gian</p>
               </th>
-              {/* <th scope="col">
-                <p className="fs14 mb-0">Trạng thái</p>
-              </th> */}
               <th scope="col">
                 <p className="fs14 mb-0">Tổng tiền</p>
               </th>

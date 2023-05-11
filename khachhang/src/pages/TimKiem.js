@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import api from "../components/urlApi";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import axios from "axios";
 
 function TimKiem() {
@@ -8,6 +8,7 @@ function TimKiem() {
   const [search, setIsSearch] = useState(false);
   const animatinLoad = document.getElementById("load");
   const [sanPhamDanhMuc, setSanPhamDanhMuc] = useState([]);
+
   useEffect(() => {
     const min = 1;
     const max = 10;
@@ -25,26 +26,12 @@ function TimKiem() {
       return sanPhamDanhMuc.map((item, index) => {
         return (
           <div className=" col-3 mb-3" key={index}>
-            <Link
-              to={"/san_pham/" + item.idSach}
-              className="border color  card "
-              title={item.ten}
-            >
+            <Link to={"/san_pham/" + item.idSach} className="border color  card " title={item.ten}>
               <div className="card">
-                <img
-                  src={api.img + item.hinhAnh}
-                  className="card-img-top heightImage"
-                  alt="..."
-                />
+                <img src={api.img + item.hinhAnh} className="card-img-top heightImage" alt="..." />
                 <div className="card-body">
-                  <h5 className="card-title">
-                    {item.ten.length > 40
-                      ? item.ten.slice(0, 40) + "..."
-                      : item.ten}
-                  </h5>
-                  <p className="card-text ">
-                    Giá sách : {item.giaSach.toLocaleString() + " VNĐ"}
-                  </p>
+                  <h5 className="card-title">{item.ten.length > 40 ? item.ten.slice(0, 40) + "..." : item.ten}</h5>
+                  <p className="card-text ">Giá sách : {item.giaSach.toLocaleString() + " VNĐ"}</p>
                 </div>
               </div>
             </Link>
@@ -58,7 +45,7 @@ function TimKiem() {
   useEffect(() => {
     animatinLoad.classList.remove("d-none");
     axios
-      .get(api.timKiem, { params: { search: timKiemSach } })
+      .get(api.timKiem, {params: {search: timKiemSach}})
       .then((res) => {
         if (res.data?.data) {
           setListSachs(res.data?.data);
@@ -73,22 +60,12 @@ function TimKiem() {
         {listSachs.length
           ? listSachs?.map((item, index) => (
               <div key={index} className="col-3 mb-3">
-                <Link
-                  to={"/san_pham/" + item.idSach}
-                  className="border color  card "
-                  title={item.ten}
-                >
+                <Link to={"/san_pham/" + item.idSach} className="border color  card " title={item.ten}>
                   <div className="card">
-                    <img
-                      src={api.img + item.hinhAnh}
-                      className="card-img-top heightImage"
-                      alt="..."
-                    />
+                    <img src={api.img + item.hinhAnh} className="card-img-top heightImage" alt="..." />
                     <div className="card-body">
                       <h5 className="card-title">{item.ten}</h5>
-                      <p className="card-text ">
-                        Giá sách : {item.giaSach + " VNĐ"}{" "}
-                      </p>
+                      <p className="card-text ">Giá sách : {item.giaSach + " VNĐ"} </p>
                     </div>
                   </div>
                 </Link>
@@ -98,7 +75,7 @@ function TimKiem() {
               <div className="">
                 <h3 className="text-center py-4">Không tìm thấy sản phẩm!</h3>
                 <div>
-                  <h6>Cách sản phẩm liên quan</h6>
+                  <h4 className="mb-5 mt-5">Cách sản phẩm có thể bạn thích</h4>
                   <div className="row">{sanPhamTheoDanhMuc()}</div>
                 </div>
               </div>

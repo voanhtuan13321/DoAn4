@@ -5,19 +5,20 @@ import {GrView} from "react-icons/gr";
 import {useNavigate} from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import {AiFillCaretLeft, AiFillCaretRight} from "react-icons/ai";
+import Swal from "sweetalert2";
+
 const TrangBinhLuan = () => {
   const ITEMS_PER_PAGE = 15;
   let navigate = useNavigate();
 
-  // Kiểm tra đăng nhập hay chưa
-  // let dangNhap = JSON.parse(localStorage.getItem("dangNhapAdmin"));
-  // if (!dangNhap) {
-  //   alert("Vui lòng đăng nhập");
-  //   navigate("/");
-  // }
+  // check dang nhap
+  let admin = JSON.parse(localStorage.getItem("taiKhoanAdmin"));
+  if (!admin) {
+    Swal.fire("Bạn phải đăng nhập").then(() => navigate("/"));
+  }
+
   //////////////////////////////////
   const [binhLuan, setBinhLuan] = useState([]);
-  const [a, setA] = useState(true);
   const [pageCount, setPageCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
 
@@ -26,35 +27,22 @@ const TrangBinhLuan = () => {
     axios
       .get(api.binhLuan)
       .then((res) => {
-        console.log(res);
         setBinhLuan(res.data.data);
         setPageCount(Math.ceil(res.data.data.length / ITEMS_PER_PAGE));
       })
       .catch((error) => {
         console.log(error);
       });
-  }, [a]);
+  }, [1]);
 
   const handlePageClick = ({selected}) => {
     setCurrentPage(selected);
   };
 
-  const offset = currentPage * ITEMS_PER_PAGE;
-  const currentData = binhLuan.slice(offset, offset + ITEMS_PER_PAGE);
-
   const sanPham = () => {
     return binhLuan.map((item, index) => {
-      const date = new Date(Date.parse(item.dateTime));
-      const gio = date.getHours();
-      const phut = date.getMinutes();
-      const ngay = date.getDate();
-      const thang = date.getMonth() + 1;
-      const nam = date.getFullYear();
-      const thoiGian = `${gio}:${phut} ${ngay}/${thang}/${nam}`;
-
       return (
         <tr key={index}>
-          {/* <th scope="row">{index}</th> */}
           <td>
             <p className="fs14 mb-0">{item.ten}</p>
           </td>
@@ -89,10 +77,9 @@ const TrangBinhLuan = () => {
 
   return (
     <div className="pl5px">
-      <table class="table">
+      <table className="table">
         <thead className="table-dark">
           <tr>
-            {/* <th scope="col">#</th> */}
             <th scope="col">Tên</th>
             <th scope="col">Tác giả</th>
             <th scope="col">Nhà xuất bản</th>

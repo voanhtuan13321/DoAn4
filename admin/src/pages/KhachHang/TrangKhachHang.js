@@ -1,20 +1,22 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import api from "../../components/urlApi";
-import {useNavigate, Link} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import {AiFillCaretLeft, AiFillCaretRight} from "react-icons/ai";
+import Swal from "sweetalert2";
 
 const TrangKhachHang = () => {
   let navigation = useNavigate();
   const ITEMS_PER_PAGE = 15;
   const [pageCount, setPageCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
-  // let admin = JSON.parse(localStorage.getItem("admin"));
-  // if (!admin) {
-  //   alert("Bạn phải đăng nhập");
-  //   navigation("/");
-  // }
+
+  // check dang nhap
+  let admin = JSON.parse(localStorage.getItem("taiKhoanAdmin"));
+  if (!admin) {
+    Swal.fire("Bạn phải đăng nhập").then(() => navigation("/"));
+  }
 
   const [khachHang, setKhachHang] = useState([]);
   const [a, setA] = useState(true);
@@ -32,22 +34,17 @@ const TrangKhachHang = () => {
 
   // Khi click vào nút này sẻ lấy đc id của khách hàng đó vào xóa theo id của khách hàng
   function checkId(e) {
-    // let getLocalStolore = JSON.parse(localStorage.getItem("admin"));
-    // if (getLocalStolore) {
     let getId = e.target.value;
     axios
       .delete(api.khachHangId + getId)
       .then((res) => {
-        alert("Xóa thành công");
-        setA(!a);
+        Swal.fire("Xoá thành công").then(() => {
+          setA(!a);
+        });
       })
       .catch((error) => {
         console.log(error);
       });
-    // } else {
-    //   alert("Bạn chưa đăng nhập");
-    //   navigation("/");
-    // }
   }
 
   // lấy ra từng thông tin của khách hàng
@@ -55,7 +52,6 @@ const TrangKhachHang = () => {
     return currentData.map((item, index) => {
       return (
         <tr key={index}>
-          {/* <th scope="row">{index}</th> */}
           <td>
             <p className="fs14 mb-0">{item.ten}</p>
           </td>
@@ -95,10 +91,9 @@ const TrangKhachHang = () => {
       <h5>Thông tin khách hàng</h5>
       <div className="">
         <div className="">
-          <table class="table">
+          <table className="table">
             <thead className="table-dark">
               <tr>
-                {/* <th scope="col">#</th> */}
                 <th scope="col">
                   <p className="fs14 mb-0">Tên</p>
                 </th>

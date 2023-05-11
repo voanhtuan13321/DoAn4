@@ -1,28 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import api from "../components/urlApi";
+
 const ThongTinCuaHang = () => {
   const [data, setData] = useState([]);
+
   useEffect(() => {
     axios.get(api.getCuaHang).then((res) => {
       setData(res.data.data);
-      console.log(res.data.data);
     });
   }, []);
 
   const renderData = () => {
-    return data.map((item, index) => {
-      return (
-        <div className="text-start">
-          <p>{item.tenCuaHang}</p>
-          <p>{item.moTa}</p>
-          <p>{item.soDienThoai}</p>
-          <p>{item.diaChi}</p>
-          <p>{item.website}</p>
-          <p>{item.email}</p>
-        </div>
-      );
-    });
+    return data.map((item, index) => (
+      <div className="text-start" key={index}>
+        <p>{item.tenCuaHang}</p>
+        <p>{item.moTa}</p>
+        <p>{item.soDienThoai}</p>
+        <p>{item.diaChi}</p>
+        <p>{item.website}</p>
+        <p>{item.email}</p>
+      </div>
+    ));
   };
 
   return (
@@ -38,7 +37,7 @@ const ThongTinCuaHang = () => {
                 <p>Số điện thoại :</p>
                 <p>Địa chỉ :</p>
                 <p>Website :</p>
-                <ps>Email cửa hàng :</ps>
+                <p>Email cửa hàng :</p>
               </div>
               {renderData()}
             </div>

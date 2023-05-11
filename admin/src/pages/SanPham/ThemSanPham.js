@@ -6,12 +6,11 @@ import Swal from "sweetalert2";
 const TrangSgSanPham = () => {
   let navigate = useNavigate();
 
-  // Kiểm tra đăng nhập
-  // let admin = JSON.parse(localStorage.getItem("admin"));
-  // if (!admin) {
-  //   alert("Bạn phải đăng nhập");
-  //   navigation("/");
-  // }
+  // check dang nhap
+  let admin = JSON.parse(localStorage.getItem("taiKhoanAdmin"));
+  if (!admin) {
+    Swal.fire("Bạn phải đăng nhập").then(() => navigate("/"));
+  }
 
   // tạo để nhận các giá trị
   const [sanPham, setSapPham] = useState({
@@ -21,16 +20,13 @@ const TrangSgSanPham = () => {
     giaSach: "",
     moTa: "",
     ngayXuatBan: "",
-    // soLuong: parseInt(""),
     soLuong: "",
   });
 
   const [a, setA] = useState(true);
   const [danhMuc, setDanhMuc] = useState([]);
-  const [file, setFile] = useState("");
   const [avatar, setAvatar] = useState("");
   const [valuedanhMuc, setValueDanhMuc] = useState(1);
-  const [data, setData] = useState([]);
 
   let [errTen, setErrTen] = useState("");
   let [errTacGia, setErrTacGia] = useState("");
@@ -55,7 +51,6 @@ const TrangSgSanPham = () => {
     axios
       .get(api.getDanhMuc)
       .then((res) => {
-        console.log(res.data.data);
         setDanhMuc(res.data.data);
       })
       .catch((errors) => console.log(errors));
@@ -73,8 +68,6 @@ const TrangSgSanPham = () => {
     let reader = new FileReader();
     reader.onload = (e) => {
       setAvatar(e.target.result); //Cái này để gởi qua api
-      setFile(files[0]);
-      // sanPham.hinhAnh == "fnwnw";
     };
     reader.readAsDataURL(files[0]);
   };
@@ -97,11 +90,10 @@ const TrangSgSanPham = () => {
 
   const handlerSubmit = (e) => {
     e.preventDefault();
-    // console.log(sanPham.hinhAnh);
 
     let check = 1;
 
-    if (sanPham.ten == "") {
+    if (sanPham.ten === "") {
       check = 2;
       setErrTen("Vui lòng nhập vào tên");
       return;
@@ -109,7 +101,7 @@ const TrangSgSanPham = () => {
       check = 1;
       setErrTen("");
     }
-    if (sanPham.tacGia == "") {
+    if (sanPham.tacGia === "") {
       check = 2;
       setErrTacGia("Vui lòng nhập vào tác giả");
       return;
@@ -117,7 +109,7 @@ const TrangSgSanPham = () => {
       check = 1;
       setErrTacGia("");
     }
-    if (sanPham.nhaXuatBan == "") {
+    if (sanPham.nhaXuatBan === "") {
       check = 2;
       setErrNhaXuatBan("Vui lòng nhập vào nhà xuất bản");
       return;
@@ -125,7 +117,7 @@ const TrangSgSanPham = () => {
       check = 1;
       setErrNhaXuatBan("");
     }
-    if (sanPham.giaSach == "") {
+    if (sanPham.giaSach === "") {
       check = 2;
       setErrGiaSach("Vui lòng nhập vào giá sách");
       return;
@@ -133,7 +125,7 @@ const TrangSgSanPham = () => {
       check = 1;
       setErrGiaSach("");
     }
-    if (sanPham.moTa == "") {
+    if (sanPham.moTa === "") {
       check = 2;
       setErrMoTa("Vui lòng nhập vào mô tả");
       return;
@@ -141,7 +133,7 @@ const TrangSgSanPham = () => {
       check = 1;
       setErrMoTa("");
     }
-    if (sanPham.ngayXuatBan == "" || !getInputDate(sanPham.ngayXuatBan)) {
+    if (sanPham.ngayXuatBan === "" || !getInputDate(sanPham.ngayXuatBan)) {
       check = 2;
       setErrNgayXuatBan("Vui lòng nhập vào ngày xuất bản");
       return;
@@ -149,7 +141,7 @@ const TrangSgSanPham = () => {
       check = 1;
       setErrNgayXuatBan("");
     }
-    if (sanPham.soLuong == "") {
+    if (sanPham.soLuong === "") {
       check = 2;
       setErrSoLuong("Vui lòng nhập vào số lượng");
       return;
@@ -157,7 +149,7 @@ const TrangSgSanPham = () => {
       check = 1;
       setErrSoLuong("");
     }
-    if (valuedanhMuc == "") {
+    if (valuedanhMuc === "") {
       check = 2;
       setErrDanhMuc("Vui lòng chọn danh mục");
       return;
@@ -165,7 +157,7 @@ const TrangSgSanPham = () => {
       check = 1;
       setErrDanhMuc("");
     }
-    if (avatar == "") {
+    if (avatar === "") {
       check = 2;
       setErrHinhAnh("Vui lòng chọn hình ảnh");
       return;
@@ -174,15 +166,9 @@ const TrangSgSanPham = () => {
       setErrHinhAnh("");
     }
 
-    const date = Date.parse(sanPham.ngayXuatBan);
-
-    console.log(date);
-
     // return;
 
-    if (check == 1) {
-      // let admin = JSON.parse(localStorage.getItem("admin"));
-      // if (admin) {
+    if (check === 1) {
       const data = {
         ten: sanPham.ten,
         tacGia: sanPham.tacGia,
@@ -200,24 +186,14 @@ const TrangSgSanPham = () => {
       axios
         .post(api.sach, data)
         .then((res) => {
-
-          Swal.fire("Thêm sản phẩm thành công");
-          setTimeout(function () {
+          Swal.fire("Thêm sản phẩm thành công").then(() => {
             setA(!a);
             navigate("/admin/xem_san_pham");
-          }, 1000);
-
-          // alert("Thêm sản phẩm thành công");
-          setA(!a);
-          // navigate("/admin/xem_san_pham");
+          });
         })
         .catch((errors) => console.log(errors))
         .finally(() => load.classList.add("d-none"));
-      // } else {
-      //   alert("Bạn chưa đăng nhập");
-      //   navigation("/");
     }
-    // }
   };
 
   const xemSanPham = () => {
@@ -276,17 +252,6 @@ const TrangSgSanPham = () => {
                   />
                   <span className="error">{errGiaSach}</span>
                 </div>
-                {/* <div className="input_container">
-                  <label className="input_label">Mô tả</label>
-                  <textarea
-                    placeholder="Mô tả"
-                    name="moTa"
-                    type="text"
-                    className="input_field"
-                    onChange={handleInput}
-                  />
-                  <span className="error">{errMoTa}</span>
-                </div> */}
               </div>
               <div className="p-3">
                 <div className="input_container">
@@ -331,14 +296,7 @@ const TrangSgSanPham = () => {
             </div>
             <div className="input_container mb-2">
               <label className="input_label">Mô tả</label>
-              <textarea
-                placeholder="Mô tả"
-                name="moTa"
-                type="text"
-                rows={5}
-                // className="input_field"
-                onChange={handleInput}
-              />
+              <textarea placeholder="Mô tả" name="moTa" type="text" rows={5} onChange={handleInput} />
               <span className="error">{errMoTa}</span>
             </div>
             <button title="Sign In" type="submit" className="sign-in_btn">

@@ -1,6 +1,6 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { BsLinkedin, BsGithub, BsYoutube, BsInstagram } from "react-icons/bs";
+import {Link} from "react-router-dom";
+import {BsLinkedin, BsGithub, BsYoutube, BsInstagram} from "react-icons/bs";
 const Footer = () => {
   return (
     <>
@@ -14,31 +14,25 @@ const Footer = () => {
                   Hno : 277 Near Vill chopal, <br /> Sonipat, Haryana <br />
                   PinCode: 131103
                 </address>
-                <a
-                  href="tel:+91 8264954234"
-                  className="mt-3 d-block mb-1 text-white"
-                >
+                <a href="tel:+91 8264954234" className="mt-3 d-block mb-1 text-white">
                   +91 8264954234
                 </a>
-                <a
-                  href="mailto:navdeepdahiya753@gmail.com"
-                  className="mt-2 d-block mb-0 text-white"
-                >
+                <a href="mailto:navdeepdahiya753@gmail.com" className="mt-2 d-block mb-0 text-white">
                   navdeepdahiya753@gmail.com
                 </a>
                 <div className="social_icons d-flex align-items-center gap-30 mt-4">
-                  <a className="text-white" href="#">
+                  <p className="text-white">
                     <BsLinkedin className="fs-4" />
-                  </a>
-                  <a className="text-white" href="#">
+                  </p>
+                  <p className="text-white">
                     <BsInstagram className="fs-4" />
-                  </a>
-                  <a className="text-white" href="#">
+                  </p>
+                  <p className="text-white">
                     <BsGithub className="fs-4" />
-                  </a>
-                  <a className="text-white" href="#">
+                  </p>
+                  <p className="text-white">
                     <BsYoutube className="fs-4" />
-                  </a>
+                  </p>
                 </div>
               </div>
             </div>
@@ -66,15 +60,6 @@ const Footer = () => {
                 <Link className="text-white py-2 mb-1">Sự tiếp xúc</Link>
               </div>
             </div>
-            {/* <div className="col-2">
-              <h4 className="text-white mb-4">Liên kết nhanh</h4>
-              <div className="footer-link d-flex flex-column">
-                <Link className="text-white py-2 mb-1">Laptops</Link>
-                <Link className="text-white py-2 mb-1">Headphones</Link>
-                <Link className="text-white py-2 mb-1">Tablets</Link>
-                <Link className="text-white py-2 mb-1">Watch</Link>
-              </div>
-            </div> */}
           </div>
         </div>
       </footer>

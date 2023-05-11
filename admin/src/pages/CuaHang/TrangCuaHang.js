@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import api from "../../components/urlApi";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
+import Swal from "sweetalert2";
 
 const TrangCuaHang = () => {
   let navigation = useNavigate();
 
-  // Kiểm tra đăng nhập hay chưa
-  // let dangNhap = JSON.parse(localStorage.getItem("dangNhapAdmin"));
-  // if (!dangNhap) {
-  //   alert("Vui lòng đăng nhập");
-  //   navigation("/");
-  // }
+  // check dang nhap
+  let admin = JSON.parse(localStorage.getItem("taiKhoanAdmin"));
+  if (!admin) {
+    Swal.fire("Bạn phải đăng nhập").then(() => navigation("/"));
+  }
+
   //////////////////////////////////
   const [cuaHang, setCuaHang] = useState([]);
-  const [a, setA] = useState(false);
 
   useEffect(() => {
     axios
@@ -23,7 +23,7 @@ const TrangCuaHang = () => {
         setCuaHang(res.data.data);
       })
       .catch((errors) => console.log(errors));
-  }, [a]);
+  }, [1]);
 
   function checkId(item) {
     localStorage.setItem("cuahang", JSON.stringify(item));
@@ -54,10 +54,7 @@ const TrangCuaHang = () => {
             <p className="fs14 mb-0">{item.email}</p>
           </td>
           <td>
-            <button
-              className="btn btn-outline-warning fw-bolder"
-              onClick={() => checkId(item)}
-            >
+            <button className="btn btn-outline-warning fw-bolder" onClick={() => checkId(item)}>
               <p className="fs14 mb-0">Sửa</p>
             </button>
           </td>

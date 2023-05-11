@@ -1,47 +1,35 @@
-import React, { useState } from "react";
+import React from "react";
+import {AiOutlineDashboard, AiOutlineLogout, AiOutlineUserAdd, AiFillAppstore, AiOutlineComment} from "react-icons/ai";
+import {BsBorderStyle, BsFillCalendarEventFill} from "react-icons/bs";
+import {Outlet, useNavigate} from "react-router-dom";
+import {FaProductHunt} from "react-icons/fa";
+import {GoFileDirectory} from "react-icons/go";
+import {Layout, Menu, theme} from "antd";
+import Swal from "sweetalert2";
 
-import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
-import {
-  AiOutlineDashboard,
-  AiOutlineShoppingCart,
-  AiOutlineLogout,
-  AiOutlineUserAdd,
-  AiFillAppstore,
-  AiOutlineComment,
-} from "react-icons/ai";
-import { BsBorderStyle, BsFillCalendarEventFill } from "react-icons/bs";
-
-import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
-
-import { FaProductHunt } from "react-icons/fa";
-import { GoFileDirectory } from "react-icons/go";
-import { Layout, Menu, theme } from "antd";
-const { Header, Sider, Content } = Layout;
+const {Sider, Content} = Layout;
 
 const MainLayout = () => {
-  const [collapsed, setCollapsed] = useState(false);
   const {
-    token: { colorBgContainer },
+    token: {colorBgContainer},
   } = theme.useToken();
   const navigate = useNavigate();
 
-  // Kiểm tra đăng nhập hay chưa
-  // let dangNhap = JSON.parse(localStorage.getItem("dangNhapAdmin"));
-  // if (!dangNhap) {
-  //   alert("Vui lòng đăng nhập");
-  //   navigate("/");
-  // }
+  // check dang nhap
+  let admin = JSON.parse(localStorage.getItem("taiKhoanAdmin"));
+  if (!admin) {
+    Swal.fire("Bạn phải đăng nhập").then(() => navigate("/"));
+  }
   //////////////////////////////////
   return (
-    <Layout /* onContextMenu={(e) => e.preventDefault()} */>
-      <Sider trigger={null} collapsible collapsed={collapsed}>
-        {/* <div className="logo"></div> */}
+    <Layout>
+      <Sider trigger={null} collapsible collapsed={false}>
         <Menu
           theme="dark"
           mode="inline"
           defaultSelectedKeys={[""]}
-          onClick={({ key }) => {
-            if (key == "signout") {
+          onClick={({key}) => {
+            if (key === "signout") {
             } else {
               navigate(key);
             }
@@ -97,29 +85,12 @@ const MainLayout = () => {
         />
       </Sider>
       <Layout className="site-layout">
-        {/* <Header
-          className="d-flex justify-content-between ps-1 pe-2"
-          style={{
-            padding: 0,
-            background: colorBgContainer,
-          }}
-        >
-          {React.createElement(
-            collapsed ? MenuUnfoldOutlined : MenuFoldOutlined,
-            {
-              className: "trigger",
-              onClick: () => setCollapsed(!collapsed),
-            }
-          )}
-        </Header> */}
         <Content
           style={{
-            // margin: "24px 16px",
             padding: 24,
             minHeight: 280,
             background: colorBgContainer,
-          }}
-        >
+          }}>
           <Outlet />
         </Content>
       </Layout>

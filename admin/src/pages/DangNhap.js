@@ -1,15 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, {useState} from "react";
 import axios from "axios";
 import api from "../components/urlApi";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 const DangNhap = () => {
   const navigate = useNavigate();
-  // let admin = JSON.parse(localStorage.getItem("admin"));
-  // if (!admin) {
-  //   alert("Bạn phải đăng nhập");
-  //   navigate("/");
-  // }
+
   const [input, setInput] = useState({
     taiKhoan: "",
     matKhau: "",
@@ -21,21 +17,21 @@ const DangNhap = () => {
   function handleInput(e) {
     let nameKey = e.target.name;
     let nameValue = e.target.value;
-    setInput((state) => ({ ...state, [nameKey]: nameValue }));
+    setInput((state) => ({...state, [nameKey]: nameValue}));
   }
 
   const handlerSubmit = (e) => {
     e.preventDefault();
 
     let check = 1;
-    if (input.taiKhoan == "") {
+    if (input.taiKhoan === "") {
       check = 2;
       setErrTaiKhoan("Yêu cầu nhập tài khoản");
     } else {
       check = 1;
       setErrTaiKhoan("");
     }
-    if (input.matKhau == "") {
+    if (input.matKhau === "") {
       check = 2;
       setErrmatKhau("Yêu cầu nhập mật khẩu");
     } else {
@@ -43,12 +39,14 @@ const DangNhap = () => {
       setErrmatKhau("");
     }
 
-    if (check == 1) {
+    if (check === 1) {
       const data = {
         taiKhoan: input.taiKhoan,
         matKhau: input.matKhau,
       };
 
+      const animationLoad = document.querySelector("#load");
+      animationLoad.classList.remove("d-none");
 
       axios
         .post(api.login, data)
@@ -68,9 +66,9 @@ const DangNhap = () => {
             setErrmatKhau("Tài khoản hoặc mật khẩu không hợp lệ");
             navigate("");
           }
-          console.log(res);
         })
-        .catch((errors) => console.log(errors));
+        .catch((errors) => console.log(errors))
+        .finally(() => animationLoad.classList.add("d-none"));
     }
   };
 
@@ -79,29 +77,16 @@ const DangNhap = () => {
       <form className="form" onSubmit={handlerSubmit}>
         <p className="form-title">Đăng nhập</p>
         <div className="input-container">
-          <input
-            type="text"
-            name="taiKhoan"
-            onChange={handleInput}
-            placeholder="Nhập tài khoản"
-          />
+          <input type="text" name="taiKhoan" onChange={handleInput} placeholder="Nhập tài khoản" />
           <p className="error">{errTaiKhoan}</p>
         </div>
         <div className="input-container">
-          <input
-            type="password"
-            name="matKhau"
-            onChange={handleInput}
-            placeholder="Nhập vào mật khẩu"
-          />
+          <input type="password" name="matKhau" onChange={handleInput} placeholder="Nhập vào mật khẩu" />
           <p className="error">{errMatKhau}</p>
         </div>
         <button type="submit" className="submit">
           Đăng nhập
         </button>
-        {/* <p className="signup-link">
-          <button onClick={checkTaiKhoan}>Quên mật khấu?</button>
-        </p> */}
       </form>
     </div>
   );

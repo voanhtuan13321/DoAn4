@@ -1,10 +1,19 @@
 import React from "react";
 import api from "../../components/urlApi";
+import Swal from "sweetalert2";
+import {useNavigate} from "react-router-dom";
 
 const TimKiem = () => {
   let sach = JSON.parse(localStorage.getItem("timKiemSach"));
-  console.log(sach);
-  if (sach == "") {
+  const navigation = useNavigate();
+
+  // check dang nhap
+  let admin = JSON.parse(localStorage.getItem("taiKhoanAdmin"));
+  if (!admin) {
+    Swal.fire("Bạn phải đăng nhập").then(() => navigation("/"));
+  }
+
+  if (sach === "") {
     return (
       <div className="container-xxl py-5 mh400 text-center">
         <h3>Không tìm thấy sản phẩm</h3>
@@ -16,19 +25,19 @@ const TimKiem = () => {
     return sach?.map((item, index) => {
       return (
         <tr key={index}>
-          <td scope="col">
+          <td>
             <p className="fs14">{index}</p>
           </td>
-          <td scope="col">
+          <td>
             <p className="fs14">{item.ten}</p>
           </td>
-          <td scope="col">
+          <td>
             <p className="fs14">{item.tacGia}</p>
           </td>
-          <td scope="col">
+          <td>
             <p className="fs14">{item.ngayXuatBan}</p>
           </td>
-          <td scope="col">
+          <td>
             <p className="fs14">
               {" "}
               {item.giaSach.toLocaleString("vi-VN", {
@@ -37,15 +46,12 @@ const TimKiem = () => {
               })}
             </p>
           </td>
-          <td scope="col">
+          <td>
             <p className="fs14">{item.soLuong}</p>
           </td>
 
-          <td scope="col">
-            <img
-              className="img-thumbnail image-w image-h"
-              src={api.img + item.hinhAnh}
-            />
+          <td>
+            <img className="img-thumbnail image-w image-h" src={api.img + item.hinhAnh} alt="" />
           </td>
         </tr>
       );

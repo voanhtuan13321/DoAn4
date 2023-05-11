@@ -9,12 +9,11 @@ import {FaProductHunt} from "react-icons/fa";
 import api from "./urlApi";
 import axios from "axios";
 import Swal from "sweetalert2";
+
 const Sidebar = () => {
   const [timKiemSach, setTimKiem] = useState("");
   let navigate = useNavigate();
   let admin = JSON.parse(localStorage.getItem("admin"));
-  const [isOpen, setIsOpen] = useState(false);
-  const toggle = () => setIsOpen(!isOpen);
   const menuItem = [
     {
       path: "/admin/don_hang",
@@ -72,23 +71,21 @@ const Sidebar = () => {
   };
 
   const timKiem = () => {
-    if (timKiemSach == "") {
+    if (timKiemSach === "") {
       Swal.fire("Có vẻ bạn chưa nhập gì vào ô tìm kiếm?", "Vui lòng nhập từ khoá để thực hiện chức năng này", "info");
     } else {
       axios.get(api.timKiem, {params: {search: timKiemSach}}).then((res) => {
         localStorage.setItem("timKiemSach", JSON.stringify(res.data.data));
         window.location.href = `http://${api.ip}:2000/admin/tim_kiem`;
-        // navigate("/admin/tim_kiem");
       });
     }
-    // navigate("/admin/tim_kiem");
   };
   return (
     <div className="h100">
       <div className="header py-2">
         <div className="container">
           <div className="row">
-            <div className="col-2">{/* <img src="../../public/logo.jpg" alt="anh loi" style={{width: 50}} /> */}</div>
+            <div className="col-2"></div>
             <div className="col-5">
               <div className="d-flex">
                 <input
@@ -104,16 +101,16 @@ const Sidebar = () => {
               </div>
             </div>
             <div className="col-5 d-flex align-items-center justify-content-end  ">
-              <div class="dropdown">
+              <div className="dropdown">
                 <button
-                  class="btn btn-secondary dropdown-toggle"
+                  className="btn btn-secondary dropdown-toggle"
                   type="button"
                   id="dropdownMenuButton1"
                   data-bs-toggle="dropdown"
                   aria-expanded="false">
                   <BiUserCircle /> {admin}
                 </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                   <li>
                     <button className="btn w-100 fs-6 text" onClick={dangXuat}>
                       <span className="text12">Đăng xuất</span>
@@ -132,20 +129,10 @@ const Sidebar = () => {
       </div>
       <div className="d-flex vh-100 mt55px">
         <div className="sidebar">
-          {/* <div className="top_section">
-            <div
-              style={{ marginLeft: isOpen ? "50px" : "0px" }}
-              className="bars"
-            ></div>
-          </div> */}
           {menuItem.map((item, index) => (
-            <NavLink to={item.path} key={index} className="link" activeclassName="active">
-              <div className="">{item.icon}</div>
-              <div
-                // style={{ display: isOpen ? "block" : "none" }}
-                className="link_text">
-                {item.name}
-              </div>
+            <NavLink to={item.path} key={index} className="link">
+              <div key={index}>{item.icon}</div>
+              <div className="link_text">{item.name}</div>
             </NavLink>
           ))}
         </div>

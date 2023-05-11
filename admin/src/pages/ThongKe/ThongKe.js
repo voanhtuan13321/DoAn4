@@ -5,17 +5,18 @@ import {useNavigate} from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import {AiFillCaretLeft, AiFillCaretRight} from "react-icons/ai";
 import Chart from "chart.js/auto";
-
-// số phần tử trên mỗi trangs
+import Swal from "sweetalert2";
 
 const ThongKe = () => {
   const ITEMS_PER_PAGE = 15;
   let navigation = useNavigate();
-  // let admin = JSON.parse(localStorage.getItem("admin"));
-  // if (!admin) {
-  //   alert("Bạn phải đăng nhập");
-  //   navigation("/");
-  // }
+
+  // check dang nhap
+  let admin = JSON.parse(localStorage.getItem("taiKhoanAdmin"));
+  if (!admin) {
+    Swal.fire("Bạn phải đăng nhập").then(() => navigation("/"));
+  }
+
   // Mặc định lấy tháng 1 ra đầu tiên
   const [thang, setThang] = useState("1");
   const [thongKe, setThongKe] = useState([]);
@@ -25,13 +26,10 @@ const ThongKe = () => {
   useEffect(() => {
     const barChart = document.getElementById("barChart");
     const pieChart = document.getElementById("pieChart");
-    showThongKeTheoThang();
-    
 
-    async function showThongKeTheoThang() {
+    (async function showThongKeTheoThang() {
       const response = await axios.get(`${api.lichSuMua}/thong-ke-theo-thang`);
       const list = await response.data.data;
-      console.log(list);
 
       let labels = [];
       let data = [];
@@ -63,14 +61,11 @@ const ThongKe = () => {
           },
         },
       });
-    }
+    })();
 
-    showTopSachBanChay();
-
-    async function showTopSachBanChay() {
+    (async function showTopSachBanChay() {
       const response = await axios.get(`${api.lichSuMua}/top-sach-ban-chay`);
       const list = await response.data.data;
-      console.log(list);
 
       let labels = [];
       let data = [];
@@ -100,12 +95,11 @@ const ThongKe = () => {
           ],
         },
       });
-    }
+    })();
 
     axios
       .get(api.thongKeTheoThang + thang)
       .then((res) => {
-        console.log(res);
         setThongKe(res.data.data);
         setPageCount(Math.ceil(res.data.data.length / ITEMS_PER_PAGE));
       })
@@ -155,27 +149,32 @@ const ThongKe = () => {
       return currentData.map((item, index) => {
         return (
           <tr>
-            {/* <td scope="col">{index}</td> */}
-            <td scope="col">
+            <td>
               <p className="fs14 mb-0">{item["khachHang"].ten}</p>
             </td>
-            <td scope="col">
+            <td>
               <p className="fs14 mb-0">{item["khachHang"].diaChi}</p>
             </td>
-            <td scope="col">
+            <td>
               <p className="fs14 mb-0">{item["khachHang"].soDienThoai}</p>
             </td>
-            <td scope="col">
+            <td>
               <p className="fs14 mb-0">{item["sach"].ten}</p>
             </td>
-            <td scope="col">
+            <td>
               <p className="fs14 mb-0">{item.soLuong}</p>
             </td>
           </tr>
         );
       });
     } else {
-      return <h5 className="d-flex align-item-center">Không có đơn hàng trong tháng {thang}</h5>;
+      return (
+        <tr>
+          <td>
+            <h5 className="d-flex align-item-center">Không có đơn hàng trong tháng {thang}</h5>
+          </td>
+        </tr>
+      );
     }
   };
 
@@ -231,7 +230,6 @@ const ThongKe = () => {
             <table className="table">
               <thead className="table-dark">
                 <tr>
-                  {/* <th scope="col">#</th> */}
                   <th scope="col">
                     <p className="fs14 mb-0">Tên người </p>
                   </th>
@@ -252,27 +250,26 @@ const ThongKe = () => {
               <tbody>{render()}</tbody>
             </table>
           </div>
-        
-            <ReactPaginate
-              previousLabel={<AiFillCaretLeft />}
-              nextLabel={<AiFillCaretRight />}
-              breakLabel={"..."}
-              pageCount={pageCount}
-              marginPagesDisplayed={2}
-              pageRangeDisplayed={3}
-              onPageChange={handlePageClick}
-              containerClassName={"pagination justify-content-center"}
-              pageClassName={"page-item"}
-              pageLinkClassName={"page-link"}
-              previousClassName={"page-item"}
-              previousLinkClassName={"page-link"}
-              nextClassName={"page-item"}
-              nextLinkClassName={"page-link"}
-              breakClassName={"page-item"}
-              breakLinkClassName={"page-link"}
-              activeClassName={"active"}
-            />
-          
+
+          <ReactPaginate
+            previousLabel={<AiFillCaretLeft />}
+            nextLabel={<AiFillCaretRight />}
+            breakLabel={"..."}
+            pageCount={pageCount}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={3}
+            onPageChange={handlePageClick}
+            containerClassName={"pagination justify-content-center"}
+            pageClassName={"page-item"}
+            pageLinkClassName={"page-link"}
+            previousClassName={"page-item"}
+            previousLinkClassName={"page-link"}
+            nextClassName={"page-item"}
+            nextLinkClassName={"page-link"}
+            breakClassName={"page-item"}
+            breakLinkClassName={"page-link"}
+            activeClassName={"active"}
+          />
         </div>
       </div>
     </>

@@ -1,10 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, {useState} from "react";
 import axios from "axios";
 import api from "../../components/urlApi";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
+import Swal from "sweetalert2";
+
 const SuaThongTinCuaHang = () => {
   let navigation = useNavigate();
   const item = JSON.parse(localStorage.getItem("cuahang"));
+
+  // check dang nhap
+  let admin = JSON.parse(localStorage.getItem("taiKhoanAdmin"));
+  if (!admin) {
+    Swal.fire("Bạn phải đăng nhập").then(() => navigation("/"));
+  }
 
   const [input, setInput] = useState({
     id: item.id,
@@ -41,26 +49,26 @@ const SuaThongTinCuaHang = () => {
   const handleInput = (e) => {
     let nameKey = e.target.name;
     let nameValue = e.target.value;
-    setInput((state) => ({ ...state, [nameKey]: nameValue }));
+    setInput((state) => ({...state, [nameKey]: nameValue}));
   };
 
   const handlerSubmit = (e) => {
     e.preventDefault();
     let check = 1;
 
-    if (input.tenCuaHang == "") {
+    if (input.tenCuaHang === "") {
       setErrTen("Vui lòng nhập vào tên cửa hàng");
     }
-    if (input.diaChi == "") {
+    if (input.diaChi === "") {
       setErrDiaChi("Vui lòng nhập vào địa chỉ cửa hàng");
     }
-    if (input.moTa == "") {
+    if (input.moTa === "") {
       setErrMoTa("Vui lòng nhập vào mô tả cửa hàng");
     }
-    if (input.website == "") {
+    if (input.website === "") {
       setErrWebsite("Vui lòng nhập vào website cửa hàng");
     }
-    if (input.soDienThoai == "") {
+    if (input.soDienThoai === "") {
       check = 2;
       setErrSoDienThoai("Yêu cầu nhập vào số điện thoại");
       return;
@@ -74,7 +82,7 @@ const SuaThongTinCuaHang = () => {
         setErrSoDienThoai("");
       }
     }
-    if (input.email == "") {
+    if (input.email === "") {
       check = 2;
       setErrEmail("Yêu cầu nhập vào email cửa hàng");
       return;
@@ -102,10 +110,8 @@ const SuaThongTinCuaHang = () => {
     axios
       .post(api.cuaHang, data)
       .then((res) => {
-        console.log(res);
-        alert("Cập nhật thành công");
-        navigation("/admin/trang_cua_hang");
         setA(!a);
+        Swal.fire("Cập nhật thành công").then(() => navigation("/admin/trang_cua_hang"));
       })
       .catch((errors) => console.log(errors));
   };
@@ -129,13 +135,7 @@ const SuaThongTinCuaHang = () => {
               </div>
               <div className="input-container">
                 <label className="input_label">NHập mô tả</label>
-                <input
-                  type="text"
-                  name="moTa"
-                  value={input.moTa}
-                  onChange={handleInput}
-                  placeholder="Nhập mô tả"
-                />
+                <input type="text" name="moTa" value={input.moTa} onChange={handleInput} placeholder="Nhập mô tả" />
                 <p className="error">{errMoTa}</p>
               </div>
               <label className="input_label">Nhập số điện thoại</label>
@@ -164,33 +164,18 @@ const SuaThongTinCuaHang = () => {
               </div>
               <div className="input-container">
                 <label className="input_label">NHập website</label>
-                <input
-                  type="text"
-                  name="website"
-                  value={input.website}
-                  onChange={handleInput}
-                  placeholder="Website"
-                />
+                <input type="text" name="website" value={input.website} onChange={handleInput} placeholder="Website" />
                 <p className="error">{errWebsite}</p>
               </div>
               <div className="input-container pb-3">
                 <label className="input_label">Nhập email cửa hàng</label>
-                <input
-                  type="text"
-                  name="email"
-                  value={input.email}
-                  onChange={handleInput}
-                  placeholder="Email"
-                />
+                <input type="text" name="email" value={input.email} onChange={handleInput} placeholder="Email" />
                 <p className="error">{errEmail}</p>
               </div>
             </div>
           </div>
 
-          <button
-            type="submit"
-            className="rounded-pill btn bg-secondary btn-width"
-          >
+          <button type="submit" className="rounded-pill btn bg-secondary btn-width">
             Cập nhật
           </button>
         </form>
