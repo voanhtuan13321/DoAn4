@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from "react";
-import {BsCartCheckFill} from "react-icons/bs";
-import {AiFillDelete} from "react-icons/ai";
-import {AiFillEdit} from "react-icons/ai";
+import React, { useEffect, useState } from "react";
+import { BsCartCheckFill } from "react-icons/bs";
+import { AiFillDelete } from "react-icons/ai";
+import { AiFillEdit } from "react-icons/ai";
 import axios from "axios";
 import Swal from "sweetalert2";
 import api from "../components/urlApi";
-import {useNavigate, useParams} from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const SanPhamChiTiet = () => {
   const [binhLuan, setBinhLuan] = useState([]);
@@ -24,9 +24,7 @@ const SanPhamChiTiet = () => {
     axios
       .get(api.sachId + params.id)
       .then((res) => {
-        console.log(res.data.data);
         setSanPham(res.data.data);
-        console.log(res);
       })
       .catch((error) => {
         console.log(error);
@@ -47,7 +45,6 @@ const SanPhamChiTiet = () => {
   }, [a]);
 
   function handleInput(e) {
-    console.log(e.target.value);
     setInput(e.target.value);
   }
 
@@ -55,7 +52,11 @@ const SanPhamChiTiet = () => {
   const handleSubmitBinhLuan = (e) => {
     e.preventDefault();
     if (!idKhachHang) {
-      Swal.fire("Bạn chưa đăng nhập?", "Vui lòng đăng nhập trước khi thực hiện chức năng này", "info");
+      Swal.fire(
+        "Bạn chưa đăng nhập?",
+        "Vui lòng đăng nhập trước khi thực hiện chức năng này",
+        "info"
+      );
       window.setTimeout(() => navigate("/dang_nhap"), 1000);
     } else if (input) {
       let data = {
@@ -73,7 +74,11 @@ const SanPhamChiTiet = () => {
           console.log(error);
         });
     } else {
-      Swal.fire("Bạn chưa nhập bình luận?", "Vui lòng nhập vào bình luận của bạn để sử dụng chức năng này", "info");
+      Swal.fire(
+        "Bạn chưa nhập bình luận?",
+        "Vui lòng nhập vào bình luận của bạn để sử dụng chức năng này",
+        "info"
+      );
     }
   };
 
@@ -86,23 +91,30 @@ const SanPhamChiTiet = () => {
       const thang = date.getMonth() + 1;
       const nam = date.getFullYear();
       const thoiGian = `${gio}:${phut} ${ngay}/${thang}/${nam}`;
+      let isId = idKhachHang === item.khachHang.idKhachHang;
+      console.log(isId);
       return (
         <div key={index}>
           <div className="card">
             <div className="card-body">
-              <p className="card-title">{item["khachHang"].ten}</p>
+              <h5 className="card-title">{item["khachHang"].ten}</h5>
               <div className="d-flex justify-content-between">
                 <div className="comment">
                   <p className="card-text">{item.noiDung}</p>
                   <p className="card-text">{thoiGian}</p>
                 </div>
-                <div className="d-flex">
-                  <button onClick={() => xoaBinhLuan(item.id)} className="classdelete btn btn-danger">
-                    {" "}
+                <div className={(isId) ? ("d-flex") : ("d-none")}>
+                  <button
+                    onClick={() => xoaBinhLuan(item.id)}
+                    className="classdelete btn btn-danger"
+                  >
                     <AiFillDelete />
                     Xóa
                   </button>
-                  <button onClick={() => suaBinhLuan(item.id)} className="btn btn-warning">
+                  <button
+                    onClick={() => suaBinhLuan(item.id)}
+                    className="btn btn-warning"
+                  >
                     <AiFillEdit />
                     Sửa
                   </button>
@@ -133,7 +145,11 @@ const SanPhamChiTiet = () => {
 
     // kiem tra khach hang da dang nhap chua
     if (!idKhachHang) {
-      Swal.fire("Bạn chưa đăng nhập?", "Vui lòng đăng nhập để thực hiện chức năng này", "info");
+      Swal.fire(
+        "Bạn chưa đăng nhập?",
+        "Vui lòng đăng nhập để thực hiện chức năng này",
+        "info"
+      );
       window.setTimeout(() => {
         navigate("/dang_nhap");
       }, 1000);
@@ -188,7 +204,9 @@ const SanPhamChiTiet = () => {
               </div>
               <div className="py-2">
                 <div className="d-flex ">
-                  <b className="text-danger fs-3">Giá : {sanPham.giaSach + " VNĐ"}</b>
+                  <b className="text-danger fs-3">
+                    Giá : {sanPham.giaSach + " VNĐ"}
+                  </b>
                 </div>
                 <div className="d-flex py-2">
                   <span>Số lượng : </span>
@@ -199,7 +217,10 @@ const SanPhamChiTiet = () => {
             <p>{sanPham.moTa}</p>
             <p>Ngày phát hành : {sanPham.ngayXuatBan}</p>
             <div>
-              <button onClick={() => handelThemVaoGioHang(sanPham)} className="button">
+              <button
+                onClick={() => handelThemVaoGioHang(sanPham)}
+                className="button"
+              >
                 <span>
                   <BsCartCheckFill />
                 </span>
@@ -215,7 +236,12 @@ const SanPhamChiTiet = () => {
               <h3>Phần bình luận</h3>
               <form action="#" onSubmit={handleSubmitBinhLuan}>
                 <p>
-                  <textarea className="comment p-3" onChange={handleInput} rows={4} placeholder="Bình luận ...." />
+                  <textarea
+                    className="comment p-3"
+                    onChange={handleInput}
+                    rows={4}
+                    placeholder="Bình luận ...."
+                  />
                 </p>
                 <button className="btn btn-primary">Bình luận</button>
               </form>
@@ -223,7 +249,9 @@ const SanPhamChiTiet = () => {
           </div>
           <div className="col-3"></div>
         </div>
-        <div className="row rounded border-light border-4 bg-light bg-gradient p-3">{binhLuanSanPham()}</div>
+        <div className="row rounded border-light border-4 bg-light bg-gradient p-3">
+          {binhLuanSanPham()}
+        </div>
       </div>
     </>
   );

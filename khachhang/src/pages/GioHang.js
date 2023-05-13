@@ -64,7 +64,7 @@ const GioHang = () => {
         .then(() => {
           Swal.fire(
             "Đặt hàng thành công",
-            "Bạn có thể huỷ đơn hàng trong vòng 24 giờ, sau khoản thời gian này thì bạn không được phép huỷ",
+            "Bạn có thể huỷ đơn hàng trong ngày hôm nay, sau 23h59 thì bạn không được phép huỷ",
             "info"
           ).then((data) => (window.location.href = `http://${api.ip}:3000/gio_hang`));
         })
