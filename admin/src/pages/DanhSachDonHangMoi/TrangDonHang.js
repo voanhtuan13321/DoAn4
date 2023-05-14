@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import api from "../../components/urlApi";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ReactPaginate from "react-paginate";
-import {AiFillCaretLeft, AiFillCaretRight} from "react-icons/ai";
+import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 import Swal from "sweetalert2";
 
 const TrangDonHang = () => {
@@ -20,8 +20,9 @@ const TrangDonHang = () => {
   // Gọi các đơn hàng trong giỏ hàng
   useEffect(() => {
     axios
-      .get(api.gioHang + "/don-hang")
+      .get(api.donHang)
       .then((res) => {
+        console.log(res.data.data);
         setData(res.data.data);
       })
       .catch((errors) => console.log(errors));
@@ -36,6 +37,7 @@ const TrangDonHang = () => {
       .get(api.lichSuMua)
       .then((res) => {
         setLichSu(res.data.data);
+        console.log(res.data.data);
         setPageCount(Math.ceil(res.data.data.length / ITEMS_PER_PAGE));
       })
       .catch((errors) => console.log(errors));
@@ -64,35 +66,53 @@ const TrangDonHang = () => {
 
   // Lấy tất cả các đơn đặt hàng đang chờ
   const donDatHang = () => {
+    const today = new Date();
     return data
       .filter((item) => item.trangThai !== "none")
       .map((item, index) => {
+        const ngayMua = new Date(item.ngayMua);
+        const isCungNgayHienTai =
+          today.getDate() === ngayMua.getDate() &&
+          today.getMonth() === today.getMonth() &&
+          today.getFullYear() === ngayMua.getFullYear();
         return (
           <tr key={index}>
             <td>
-              <p className="fs14">{item["khachHang"].ten}</p>
+              <p className="fs14 mb-0">{item.maDonHang}</p>
             </td>
             <td>
-              <p className="fs14">{item["khachHang"].soDienThoai}</p>
+              <p className="fs14 mb-0">{item["khachHang"].ten}</p>
             </td>
             <td>
-              <p className="fs14">{item["sach"].ten}</p>
+              <p className="fs14 mb-0">{item["khachHang"].soDienThoai}</p>
             </td>
             <td>
-              <p className="fs14">{item.soLuong}</p>
+              <p className="fs14 mb-0">{item["sach"].ten}</p>
             </td>
             <td>
-              <p className="fs14">
-                {item.trangThai === "online" ? "Đã thanh toán" : item["sach"].giaSach * item.soLuong + " VNĐ"}
+              <p className="fs14 mb-0">{item.soLuong}</p>
+            </td>
+            <td>
+              <p className="fs14 mb-0">
+                {item.trangThai === "online"
+                  ? "Đã thanh toán"
+                  : item["sach"].giaSach * item.soLuong + " VNĐ"}
               </p>
             </td>
             <td>
               <p className="fs14">{item.trangThai}</p>
             </td>
             <td>
-              <button onClick={() => checkId(item)} className="btn btn-outline-success fw-bolder">
-                <p className="fs14 mb-0">Xác nhận</p>
-              </button>
+              {isCungNgayHienTai ? (
+                ""
+              ) : (
+                <button
+                  onClick={() => checkId(item)}
+                  className="btn btn-outline-success fw-bolder"
+                >
+                  <p className="fs14 mb-0">Xác nhận</p>
+                </button>
+              )}
             </td>
           </tr>
         );
@@ -106,29 +126,31 @@ const TrangDonHang = () => {
         return (
           <tr key={index}>
             <td>
-              <p className="fs14">{item["khachHang"].ten}</p>
+              <p className="fs14 mb-0">{item["khachHang"].ten}</p>
             </td>
             <td>
-              <p className="fs14">{item["khachHang"].soDienThoai}</p>
+              <p className="fs14 mb-0">{item["khachHang"].soDienThoai}</p>
             </td>
             <td>
-              <p className="fs14">{item["sach"].ten}</p>
+              <p className="fs14 mb-0">{item["sach"].ten}</p>
             </td>
             <td>
-              <p className="fs14">{item.soLuong}</p>
+              <p className="fs14 mb-0">{item.soLuong}</p>
             </td>
             <td>
-              <p className="fs14">{item.ngayMua}</p>
+              <p className="fs14 mb-0">{item.ngayMua}</p>
             </td>
             <td>
-              <p className="fs14">{item.soLuong * item["sach"].giaSach + " VNĐ"} </p>
+              <p className="fs14 mb-0">
+                {item.soLuong * item["sach"].giaSach + " VNĐ"}{" "}
+              </p>
             </td>
           </tr>
         );
       });
   };
 
-  const handlePageClick = ({selected}) => {
+  const handlePageClick = ({ selected }) => {
     setCurrentPage(selected);
   };
 
@@ -142,7 +164,10 @@ const TrangDonHang = () => {
           <thead className="table-dark">
             <tr>
               <th scope="col">
-                <p className="fs14 mb-0">Tên khách hàng</p>
+                <p className="fs14 mb-0">Mã đơn hàng</p>
+              </th>
+              <th scope="col">
+                <p className="fs14 mb-0 w103">Tên khách hàng</p>
               </th>
               <th scope="col">
                 <p className="fs14 mb-0">Số điện thoại</p>
@@ -157,7 +182,7 @@ const TrangDonHang = () => {
                 <p className="fs14 mb-0">Giá tiền</p>
               </th>
               <th scope="col">
-                <p className="fs14 mb-0">Thanh toán</p>
+                <p className="fs14 mb-0">Trạng thái</p>
               </th>
               <th scope="col"></th>
             </tr>
