@@ -5,13 +5,13 @@ import {useNavigate} from "react-router-dom";
 import Swal from "sweetalert2";
 
 const SuaThongTinCuaHang = () => {
-  let navigation = useNavigate();
+  let navigate = useNavigate();
   const item = JSON.parse(localStorage.getItem("cuahang"));
 
   // check dang nhap
   let admin = JSON.parse(localStorage.getItem("taiKhoanAdmin"));
   if (!admin) {
-    Swal.fire("Bạn phải đăng nhập").then(() => navigation("/"));
+    Swal.fire("Bạn phải đăng nhập").then(() => navigate("/"));
   }
 
   const [input, setInput] = useState({
@@ -100,7 +100,7 @@ const SuaThongTinCuaHang = () => {
     const data = {
       id: input.id,
       tenCuaHang: input.tenCuaHang,
-      moTa: item.moTa,
+      moTa: input.moTa,
       soDienThoai: input.soDienThoai,
       diaChi: input.diaChi,
       website: input.website,
@@ -111,12 +111,18 @@ const SuaThongTinCuaHang = () => {
       .post(api.cuaHang, data)
       .then((res) => {
         setA(!a);
-        Swal.fire("Cập nhật thành công").then(() => navigation("/admin/trang_cua_hang"));
+        Swal.fire("Cập nhật thành công").then(() => navigate("/admin/trang_cua_hang"));
       })
       .catch((errors) => console.log(errors));
   };
+  const troLai = () => {
+    navigate("/admin/trang_cua_hang");
+  };
   return (
     <div className="pl5px">
+      <button className="btn btn-outline-success" onClick={troLai}>
+        <p className="fs14 mb-0">Trở lại</p>
+      </button>
       <div className="d-flex align-items-center justify-content-center">
         <form onSubmit={handlerSubmit} className="width-500">
           <p className="form-title py-4">Cập nhật thông tin của hàng</p>

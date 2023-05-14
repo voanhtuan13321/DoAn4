@@ -25,11 +25,11 @@ const Sidebar = () => {
       name: "Danh mục",
       icon: <GoFileDirectory />,
     },
-    {
-      path: "/admin/xem_su_kien",
-      name: "Sự kiện",
-      icon: <BsFillCalendarEventFill />,
-    },
+    // {
+    //   path: "/admin/xem_su_kien",
+    //   name: "Sự kiện",
+    //   icon: <BsFillCalendarEventFill />,
+    // },
     {
       path: "/admin/trang_khach_hang",
       name: "Khách hàng",
@@ -85,7 +85,9 @@ const Sidebar = () => {
       <div className="header py-2">
         <div className="container">
           <div className="row">
-            <div className="col-2"></div>
+            <div className="col-2">
+              <h2 className="text-white mb-0">QLBS</h2>
+            </div>
             <div className="col-5">
               <div className="d-flex">
                 <input

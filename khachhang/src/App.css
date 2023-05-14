@@ -1089,7 +1089,46 @@ html {
   min-height: 120px;
 }
 
+.wh {
+  width: 50px;
+  height: 50px;
+}
 
-.wh{width: 50px;height: 50px;}
+.fs10 {
+  font-size: 10px;
+}
 
-.fs10{font-size: 10px;}
+/* custumBinhLuan */
+
+.custumBinhLuan {
+  user-select: none;
+  outline: none;
+  border: none;
+  pointer-events: none;
+}
+
+/*  */
+.w61 {
+  width: 61px !important;
+}
+
+.w103 {
+  width: 103px !important;
+}
+
+.mr30 {
+  margin-right: 30px !important;
+}
+
+.w100 {
+  margin-top: 0 !important;
+  width: 200px !important;
+}
+
+.w500 {
+  width: 600px;
+}
+
+.mh100 {
+  min-height: 60px;
+}

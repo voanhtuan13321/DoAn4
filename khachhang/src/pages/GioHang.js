@@ -6,7 +6,7 @@ import api from "../components/urlApi";
 import {AiFillDelete} from "react-icons/ai";
 
 const GioHang = () => {
-  let idKhachHang = JSON.parse(localStorage.getItem("idKhachHang"));
+  let idKhachHang = JSON.parse(sessionStorage.getItem("idKhachHang"));
   const [data, setData] = useState([]);
   const [getNameImage, setNameImage] = useState([]);
   const [a, setA] = useState("");
@@ -270,7 +270,7 @@ const GioHang = () => {
               Lịch sử mua hàng
             </Link>
             <div className="d-flex flex-column align-items-end">
-              <h4>Tổng tiền: {total + " VNĐ"} </h4>
+              <h4>Tổng tiền: {total.toLocaleString() + " VNĐ"} </h4>
               <p></p>
               <div className="d-flex">
                 <select id="luaChon" className="rounded">

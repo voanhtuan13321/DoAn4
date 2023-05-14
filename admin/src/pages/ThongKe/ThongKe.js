@@ -148,7 +148,7 @@ const ThongKe = () => {
     if (currentData.length > 0) {
       return currentData.map((item, index) => {
         return (
-          <tr>
+          <tr key={index}>
             <td>
               <p className="fs14 mb-0">{item["khachHang"].ten}</p>
             </td>

@@ -13,12 +13,12 @@ const BinhLuanCuaSanPham = () => {
   const [binhLuanIdSach, setBinhLuanIdSach] = useState([]);
   const [pageCount, setPageCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
-  let navigation = useNavigate();
+  let navigate = useNavigate();
 
   // check dang nhap
   let admin = JSON.parse(localStorage.getItem("taiKhoanAdmin"));
   if (!admin) {
-    Swal.fire("Bạn phải đăng nhập").then(() => navigation("/"));
+    Swal.fire("Bạn phải đăng nhập").then(() => navigate("/"));
   }
 
   // Gọi api của sản phẩm đó để xem các bình luận của sản phẩm
@@ -62,8 +62,15 @@ const BinhLuanCuaSanPham = () => {
     });
   };
 
+  const troLai = () => {
+    navigate("/admin/binh_luan");
+  };
+
   return (
     <div className="pl5px">
+      <button className="btn btn-outline-success" onClick={troLai}>
+        <p className="fs14 mb-0">Trở lại</p>
+      </button>
       <table className="table">
         <thead className="table-dark">
           <tr>

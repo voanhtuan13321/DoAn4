@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import axios from "axios";
 import api from "../components/urlApi";
-import { Link, useNavigate } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 // import { Button, Form, Input } from "antd";
 // import QuenMatKhau from "./QuenMatKhau";
 import Swal from "sweetalert2";
@@ -21,7 +21,7 @@ const DangNhap = () => {
     setMatKhau("");
     let nameKey = e.target.name;
     let nameValue = e.target.value;
-    setInput((state) => ({ ...state, [nameKey]: nameValue }));
+    setInput((state) => ({...state, [nameKey]: nameValue}));
   }
 
   const handlerSubmit = (e) => {
@@ -63,18 +63,10 @@ const DangNhap = () => {
             .then((res) => {
               console.log(res);
               if (res.data.status === "ok") {
-                localStorage.setItem(
-                  "idKhachHang",
-                  JSON.stringify(res.data.data.idKhachHang)
-                );
-                localStorage.setItem(
-                  "khachHang",
-                  JSON.stringify(res.data.data)
-                );
+                sessionStorage.setItem("idKhachHang", JSON.stringify(res.data.data.idKhachHang));
+                sessionStorage.setItem("khachHang", JSON.stringify(res.data.data));
 
-                Swal.fire(
-                  "Đăng nhập thành công",
-                );
+                Swal.fire("Đăng nhập thành công");
                 setTimeout(function () {
                   navigate("/");
                 }, 1000);
@@ -97,16 +89,14 @@ const DangNhap = () => {
   };
 
   const sendMail = (href, tk) => {
-    const data1 = { taiKhoan: input.taiKhoan, href: href + "?tk=" + tk };
+    const data1 = {taiKhoan: input.taiKhoan, href: href + "?tk=" + tk};
 
     console.log(data1);
     axios
       .post(api.khachHangMail, data1)
       .then((res) => {
         if (res.data.status === "ok") {
-          Swal.fire(
-            "Gửi mail thành công",
-          );
+          Swal.fire("Gửi mail thành công");
           // setTimeout(function () {
           //   navigate("/");
           // }, 1000);
@@ -165,22 +155,12 @@ const DangNhap = () => {
           <h2 className="text-center">Đăng nhập</h2>
           <label>Tài khoản</label>
           <div className="input-container">
-            <input
-              type="text"
-              name="taiKhoan"
-              onChange={handleInput}
-              placeholder="Nhập tài khoản"
-            />
+            <input type="text" name="taiKhoan" onChange={handleInput} placeholder="Nhập tài khoản" />
             <p className="error">{errTaiKhoan}</p>
           </div>
           <div className="input-container">
             <label>Mật khẩu</label>
-            <input
-              type="password"
-              name="matKhau"
-              onChange={handleInput}
-              placeholder="Nhập vào mật khẩu"
-            />
+            <input type="password" name="matKhau" onChange={handleInput} placeholder="Nhập vào mật khẩu" />
             <p className="error">{errMatKhau}</p>
           </div>
           <div className="input-container">

@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import api from "../components/urlApi";
-import { Link, useNavigate } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import Swal from "sweetalert2";
 const CapnhatThongTinKhachHang = () => {
   let navigate = useNavigate();
-  let taiKhoan = JSON.parse(localStorage.getItem("khachHang"));
+  let taiKhoan = JSON.parse(sessionStorage.getItem("khachHang"));
   // let idKhachHang = JSON.parse(localStorage.getItem("khachHang"));
 
   // console.log(taiKhoan);
@@ -29,7 +29,7 @@ const CapnhatThongTinKhachHang = () => {
   const handleInput = (e) => {
     let nameKey = e.target.name;
     let nameValue = e.target.value;
-    setInput((state) => ({ ...state, [nameKey]: nameValue }));
+    setInput((state) => ({...state, [nameKey]: nameValue}));
   };
 
   // Hàm kiểu tra só điện thoại nhập vào
@@ -103,9 +103,7 @@ const CapnhatThongTinKhachHang = () => {
       axios
         .put(api.khachHang, data)
         .then((res) => {
-          Swal.fire(
-            "Cập nhật thành công",
-          );
+          Swal.fire("Cập nhật thành công");
           setTimeout(function () {
             navigate("/");
           }, 1000);
@@ -124,24 +122,12 @@ const CapnhatThongTinKhachHang = () => {
           <p className="mb-0">
             <label>Tên</label>
           </p>
-          <input
-            type="text"
-            name="ten"
-            value={input.ten}
-            onChange={handleInput}
-            placeholder="Tên"
-          />
+          <input type="text" name="ten" value={input.ten} onChange={handleInput} placeholder="Tên" />
           <p className="error mb-0">{errTen}</p>
         </div>
         <div className="input-container">
           <label>Email</label>
-          <input
-            type="text"
-            name="email"
-            value={input.email}
-            onChange={handleInput}
-            placeholder="Email"
-          />
+          <input type="text" name="email" value={input.email} onChange={handleInput} placeholder="Email" />
           <p className="error mb-0">{errEmail}</p>
         </div>
         <div className="input-container">
@@ -157,22 +143,14 @@ const CapnhatThongTinKhachHang = () => {
         </div>
         <div className="input-container mb-4">
           <label>Địa chỉ</label>
-          <input
-            type="text"
-            name="diaChi"
-            value={input.diaChi}
-            onChange={handleInput}
-            placeholder="Địa chỉ"
-          />
+          <input type="text" name="diaChi" value={input.diaChi} onChange={handleInput} placeholder="Địa chỉ" />
           <p className="error mb-0">{errDiaChi}</p>
         </div>
         <button type="submit" className="submit btn w221">
           Cập nhật tài khoản{" "}
         </button>
         <p className="signup-link">
-          <Link to={"/quen_mat_khau?tk=" + taiKhoan.taiKhoan}>
-            Đổi mật khẩu
-          </Link>
+          <Link to={"/quen_mat_khau?tk=" + taiKhoan.taiKhoan}>Đổi mật khẩu</Link>
         </p>
       </form>
     </div>

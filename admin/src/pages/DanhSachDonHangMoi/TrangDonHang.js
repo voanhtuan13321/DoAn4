@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import api from "../../components/urlApi";
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import ReactPaginate from "react-paginate";
-import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
+import {AiFillCaretLeft, AiFillCaretRight} from "react-icons/ai";
 import Swal from "sweetalert2";
 
 const TrangDonHang = () => {
@@ -22,7 +22,6 @@ const TrangDonHang = () => {
     axios
       .get(api.donHang)
       .then((res) => {
-        console.log(res.data.data);
         setData(res.data.data);
       })
       .catch((errors) => console.log(errors));
@@ -37,7 +36,6 @@ const TrangDonHang = () => {
       .get(api.lichSuMua)
       .then((res) => {
         setLichSu(res.data.data);
-        console.log(res.data.data);
         setPageCount(Math.ceil(res.data.data.length / ITEMS_PER_PAGE));
       })
       .catch((errors) => console.log(errors));
@@ -49,16 +47,18 @@ const TrangDonHang = () => {
     let data = {
       idKhachHang: item["khachHang"].idKhachHang,
       idSach: item["sach"].idSach,
+      maDonHang: item.maDonHang,
       soLuong: item.soLuong,
+      ngayMua: item.ngayMua,
     };
 
     const promise1 = axios.post(api.lichSuMua, data);
-    const promise2 = axios.delete(api.gioHang + "/" + item.id);
+    const promise2 = axios.delete(api.donHang + "/cancel/" + item.id);
 
     promises.push(promise1, promise2);
     Promise.all(promises).then(() => {
       localStorage.removeItem("gioHang");
-      Swal.fire("Đơn hàng đả được xác nhận").then(
+      Swal.fire("Đơn hàng đã được xác nhận").then(
         () => (window.location.href = `http://${api.ip}:2000/admin/don_hang`)
       );
     });
@@ -96,8 +96,11 @@ const TrangDonHang = () => {
               <p className="fs14 mb-0">
                 {item.trangThai === "online"
                   ? "Đã thanh toán"
-                  : item["sach"].giaSach * item.soLuong + " VNĐ"}
+                  : (item["sach"].giaSach * item.soLuong).toLocaleString() + " VNĐ"}
               </p>
+            </td>
+            <td>
+              <p className="fs14">{item.ngayMua}</p>
             </td>
             <td>
               <p className="fs14">{item.trangThai}</p>
@@ -106,11 +109,8 @@ const TrangDonHang = () => {
               {isCungNgayHienTai ? (
                 ""
               ) : (
-                <button
-                  onClick={() => checkId(item)}
-                  className="btn btn-outline-success fw-bolder"
-                >
-                  <p className="fs14 mb-0">Xác nhận</p>
+                <button onClick={() => checkId(item)} className="btn btn-outline-success fw-bolder ">
+                  <p className="fs14 mb-0 w61">Xác nhận</p>
                 </button>
               )}
             </td>
@@ -125,6 +125,9 @@ const TrangDonHang = () => {
       .map((item, index) => {
         return (
           <tr key={index}>
+            <td>
+              <p className="fs14 mb-0">{item.maDonHang}</p>
+            </td>
             <td>
               <p className="fs14 mb-0">{item["khachHang"].ten}</p>
             </td>
@@ -141,16 +144,14 @@ const TrangDonHang = () => {
               <p className="fs14 mb-0">{item.ngayMua}</p>
             </td>
             <td>
-              <p className="fs14 mb-0">
-                {item.soLuong * item["sach"].giaSach + " VNĐ"}{" "}
-              </p>
+              <p className="fs14 mb-0">{(item.soLuong * item["sach"].giaSach).toLocaleString() + " VNĐ"} </p>
             </td>
           </tr>
         );
       });
   };
 
-  const handlePageClick = ({ selected }) => {
+  const handlePageClick = ({selected}) => {
     setCurrentPage(selected);
   };
 
@@ -170,16 +171,19 @@ const TrangDonHang = () => {
                 <p className="fs14 mb-0 w103">Tên khách hàng</p>
               </th>
               <th scope="col">
-                <p className="fs14 mb-0">Số điện thoại</p>
+                <p className="fs14 mb-0 w103">Số điện thoại</p>
               </th>
               <th scope="col">
                 <p className="fs14 mb-0">Tên sách</p>
               </th>
               <th scope="col">
-                <p className="fs14 mb-0">Số lượng</p>
+                <p className="fs14 mb-0 w61">Số lượng</p>
               </th>
               <th scope="col">
                 <p className="fs14 mb-0">Giá tiền</p>
+              </th>
+              <th scope="col">
+                <p className="fs14 mb-0">Ngày đặt</p>
               </th>
               <th scope="col">
                 <p className="fs14 mb-0">Trạng thái</p>
@@ -195,6 +199,9 @@ const TrangDonHang = () => {
         <table className="table">
           <thead className="table-dark">
             <tr>
+              <th scope="col">
+                <p className="fs14 mb-0">Mã đơn hàng</p>
+              </th>
               <th scope="col">
                 <p className="fs14 mb-0">Tên khách hàng</p>
               </th>

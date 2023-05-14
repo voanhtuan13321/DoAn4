@@ -511,3 +511,33 @@ html {
 .h100vh {
   height: 100vh !important;
 }
+
+.w61 {
+  width: 61px !important;
+}
+
+.w103 {
+  width: 103px !important;
+}
+
+.mr30 {
+  margin-right: 30px !important;
+}
+
+.w100 {
+  margin-top: 0 !important;
+  width: 200px !important;
+}
+
+.w500 {
+  width: 600px;
+}
+
+.mh100 {
+  min-height: 60px;
+}
+
+.wh20 {
+  width: 25px;
+  height: 25px;
+}

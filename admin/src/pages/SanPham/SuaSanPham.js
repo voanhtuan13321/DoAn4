@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 
 const SuaSanPham = () => {
   const sach = JSON.parse(localStorage.getItem("sach"));
-  let navigator = useNavigate();
+  let navigate = useNavigate();
 
   // check dang nhap
   let admin = JSON.parse(localStorage.getItem("taiKhoanAdmin"));
@@ -166,14 +166,18 @@ const SuaSanPham = () => {
         .catch((errors) => console.log(errors));
     }
   };
-
+  const xemSanPham = () => {
+    navigate("/admin/xem_san_pham");
+  };
   return (
     <div className="pl5px">
-      <button></button>
+      <button className="btn btn-outline-success" onClick={xemSanPham}>
+        <p className="fs14 mb-0">Xem sản phẩm</p>
+      </button>
       <div className="">
         <div className="d-flex justify-content-center">
           <form className="" onSubmit={handlerSubmit}>
-            <h3>
+            <h3 className="text-center">
               <b>Cập nhật sản phẩm</b>
             </h3>
             <div className="d-flex ">
@@ -259,10 +263,16 @@ const SuaSanPham = () => {
                   <label className="input_label" htmlFor="password_field">
                     Hình ảnh
                   </label>
-                  <input placeholder="Password" name="input-name" type="file" onChange={handleFile} id="file" />
+                  <div className="d-flex">
+                    <input placeholder="Password" name="input-name" type="file" onChange={handleFile} id="file" />{" "}
+                    <img src={api.img + input.hinhAnh} className="wh20" alt="" />
+                  </div>
                   <span className="error">{errHinhAnh}</span>
                 </div>
-                <div className="input_container pt-5">
+                <div className="input_container pt-3">
+                  <label className="input_label" htmlFor="password_field">
+                    Chọn danh mục
+                  </label>
                   <select value={input.idDanhMuc}>{rederDanhMuc()}</select>
                 </div>
               </div>

@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import api from "../../components/urlApi";
-import {useNavigate, Link} from "react-router-dom";
+import {useNavigate, Link, useParams} from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import Swal from "sweetalert2";
 import {AiFillCaretLeft, AiFillCaretRight} from "react-icons/ai";
 
-const TrangSgSanPham = () => {
+const SanPhamTheoDanhMuc = () => {
   let navigate = useNavigate();
+  let params = useParams();
 
   const ITEMS_PER_PAGE = 8; //Số lượng sản phẩm hiển thị
   const [pageCount, setPageCount] = useState(0);
@@ -21,8 +22,22 @@ const TrangSgSanPham = () => {
 
   // tạo để nhận các giá trị
   const [a, setA] = useState(true);
-  const [data, setData] = useState([]);
   const [danhMuc, setDanhMuc] = useState([]);
+
+  const [danhMucSanPham, setDanhMucSanPham] = useState([]);
+  console.log(danhMucSanPham);
+  useEffect(() => {
+    const load = document.querySelector("#load");
+    load.classList.remove("d-none");
+    axios
+      .get(api.getDanhMucIdDanhMuc + params.id)
+      .then((res) => {
+        setDanhMucSanPham(res.data.data);
+        setPageCount(Math.ceil(res.data.data.length / ITEMS_PER_PAGE));
+      })
+      .catch((errors) => console.log(errors))
+      .finally(() => load.classList.add("d-none"));
+  }, [params.id, a]);
 
   useEffect(() => {
     axios
@@ -34,18 +49,18 @@ const TrangSgSanPham = () => {
   }, []);
 
   // Gọi api lấy tất cả các sách đả được thêm
-  useEffect(() => {
-    const load = document.querySelector("#load");
-    load.classList.remove("d-none");
-    axios
-      .get(api.sach)
-      .then((res) => {
-        setData(res.data.data);
-        setPageCount(Math.ceil(res.data.data.length / ITEMS_PER_PAGE));
-      })
-      .catch((errors) => console.log(errors))
-      .finally(() => load.classList.add("d-none"));
-  }, [a]);
+  // useEffect(() => {
+  //   const load = document.querySelector("#load");
+  //   load.classList.remove("d-none");
+  //   axios
+  //     .get(api.sach)
+  //     .then((res) => {
+  //       setData(res.data.data);
+  //       setPageCount(Math.ceil(res.data.data.length / ITEMS_PER_PAGE));
+  //     })
+  //     .catch((errors) => console.log(errors))
+  //     .finally(() => load.classList.add("d-none"));
+  // }, [a]);
 
   const rederDanhMuc = () => {
     return danhMuc.map((item, index) => {
@@ -84,9 +99,18 @@ const TrangSgSanPham = () => {
   };
 
   const offset = currentPage * ITEMS_PER_PAGE;
-  const currentData = data.slice(offset, offset + ITEMS_PER_PAGE);
+  const currentData = danhMucSanPham.slice(offset, offset + ITEMS_PER_PAGE);
 
   const rederSanPham = () => {
+    if (currentData.length === 0) {
+      return (
+        <tr>
+          <td colSpan={7} className="text-center">
+            Chưa có sản phẩm nào{" "}
+          </td>
+        </tr>
+      );
+    }
     return currentData.map((item, index) => {
       return (
         <tr key={index}>
@@ -106,7 +130,7 @@ const TrangSgSanPham = () => {
             <p className="fs14">{item.soLuong}</p>
           </td>
           <td>
-            <img className="img-thumbnail image-w image-h" src={api.img + item.hinhAnh} />
+            <img className="img-thumbnail image-w image-h" alt="Ảnh" src={api.img + item.hinhAnh} />
           </td>
           <td>
             <button className="btn btn-outline-warning fw-bolder mr3" onClick={() => checkId(item)}>
@@ -195,4 +219,4 @@ const TrangSgSanPham = () => {
   );
 };
 
-export default TrangSgSanPham;
+export default SanPhamTheoDanhMuc;

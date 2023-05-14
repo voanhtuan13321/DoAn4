@@ -73,11 +73,11 @@ const TrangDanhMuc = () => {
   };
 
   return (
-    <>
+    <div className="pl5px">
+      <button className="btn btn-outline-success" onClick={xemDanhMuc}>
+        <p className="fs14 mb-0">Xem danh mục</p>
+      </button>
       <div className="container-xxl">
-        <button className="btn btn-outline-success" onClick={xemDanhMuc}>
-          <p className="fs14 mb-0">Xem danh mục</p>
-        </button>
         <div className="row">
           <div className="col-3"></div>
           <div className="col-6">
@@ -121,7 +121,7 @@ const TrangDanhMuc = () => {
           <div className="col-3"></div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

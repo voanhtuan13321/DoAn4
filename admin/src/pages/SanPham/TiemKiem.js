@@ -22,6 +22,15 @@ const TimKiem = () => {
   }
 
   const rederSanPham = () => {
+    if (sach.length === 0) {
+      return (
+        <tr>
+          <td colSpan={7} className="text-center">
+            Chưa có sản phẩm nào{" "}
+          </td>
+        </tr>
+      );
+    }
     return sach?.map((item, index) => {
       return (
         <tr key={index}>

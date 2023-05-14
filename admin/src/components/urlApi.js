@@ -3,6 +3,7 @@ const ip = "192.168.1.82";
 const api = {
   getDanhMuc: `http://${ip}:8080/api/danh-muc`,
   getDanhMucId: `http://${ip}:8080/api/danh-muc/`,
+  getDanhMucIdDanhMuc: `http://${ip}:8080/api/sach/by-danh-muc/`,
 
   login: `http://${ip}:8080/api/quan-ly/logging`,
   checkTaiKhoan: `http://${ip}:8080/api/quan-ly/check-tai-khoan`,
@@ -36,7 +37,7 @@ const api = {
 
   donHang: `http://${ip}:8080/api/don-hang`,
 
-  ip: "192.168.1.142",
+  ip: "192.168.1.82",
 };
 
 export default api;

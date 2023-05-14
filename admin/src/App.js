@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import DangNhap from "./pages/DangNhap";
 import MainLayout from "./components/MainLayout";
 import TrangDanhMuc from "../src/pages/DanhMuc/TrangDanhMuc";
@@ -30,6 +30,7 @@ import XemSuKien from "./pages/SuKien/XemSuKien";
 import ThemSanPham from "./pages/SanPham/ThemSanPham";
 import XemSanPham from "./pages/SanPham/XemSanPham";
 import TimKiem from "./pages/SanPham/TiemKiem";
+import SanPhamTheoDanhMuc from "./pages/SanPham/SanPhamTheoDanhMuc";
 
 function App() {
   return (
@@ -53,26 +54,20 @@ function App() {
 
           <Route path="/admin/trang_cua_hang" element={<TrangCuaHang />} />
           <Route path="/admin/binh_luan" element={<TrangBinhLuan />} />
-          <Route
-            path="/admin/xem_binh_luan/:id"
-            element={<BinhLuanCuaSanPham />}
-          />
-          <Route
-            path="/admin/trang_sua_cua_hang"
-            element={<SuaThongTinCuaHang />}
-          />
+          <Route path="/admin/xem_binh_luan/:id" element={<BinhLuanCuaSanPham />} />
+          <Route path="/admin/trang_sua_cua_hang" element={<SuaThongTinCuaHang />} />
           <Route path="/admin/don_hang" element={<DanhSachDonHangMoi />} />
           <Route path="/admin/trang_khach_hang" element={<TrangKhachHang />} />
           <Route path="/admin/trang_san_pham" element={<TrangSanPham />} />
+          <Route path="/admin/sua_san_pham" element={<SuaSanPham />} />
           <Route path="/admin/sua_san_pham" element={<SuaSanPham />} />
           <Route path="/admin/thong_ke" element={<ThongKe />} />
 
           <Route path="/admin/tim_kiem" element={<TimKiem />} />
 
-          <Route
-            path="/admin/cap_nhat_tai_khoan"
-            element={<ThayDoiTaiKhoan />}
-          />
+          <Route path="/admin/san_theo_danh_muc/:id" element={<SanPhamTheoDanhMuc />} />
+
+          <Route path="/admin/cap_nhat_tai_khoan" element={<ThayDoiTaiKhoan />} />
         </Route>
       </Routes>
     </Router>

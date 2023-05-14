@@ -21,7 +21,7 @@ const Header = () => {
   }, []);
 
   const tenKhachHang = () => {
-    let getLocalStolore = JSON.parse(localStorage.getItem("khachHang"));
+    let getLocalStolore = JSON.parse(sessionStorage.getItem("khachHang"));
     if (getLocalStolore) {
       return getLocalStolore.ten;
     } else {
@@ -59,7 +59,7 @@ const Header = () => {
   };
 
   function renderTaiKhoan() {
-    let getLocalStolore = localStorage.getItem("khachHang");
+    let getLocalStolore = sessionStorage.getItem("khachHang");
     if (getLocalStolore) {
       return (
         <>
@@ -187,9 +187,9 @@ const Header = () => {
                     <NavLink to="/" className="link">
                       Trang chủ
                     </NavLink>
-                    <NavLink to="/su_kien" className="link">
+                    {/* <NavLink to="/su_kien" className="link">
                       Thông tin sự kiện
-                    </NavLink>
+                    </NavLink> */}
                     <NavLink to="/thong_tin_cua_hang" className="link">
                       Thông tin cửa hàng
                     </NavLink>

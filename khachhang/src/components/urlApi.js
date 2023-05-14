@@ -10,8 +10,6 @@ const api = {
   checkLogin: `http://${ip}:8080/api/khach-hang/check-logging`,
 
   login: `http://${ip}:8080/api/khach-hang/logging`,
-  // login: `http://${ip}:8080/api/quan-ly/logging`,
-  // checkTaiKhoan: `http://${ip}:8080/api/quan-ly/check-tai-khoan`,
   checkTaiKhoan: `http://${ip}:8080/api/khach-hang/check-tai-khoan`,
 
   suKien: `http://${ip}:8080/api/thong-tin-su-kien`,
@@ -46,7 +44,7 @@ const api = {
 
   img: "data:image/jpeg;base64,",
 
-  ip: "192.168.1.142",
+  ip: "192.168.1.82",
 };
 
 export default api;
