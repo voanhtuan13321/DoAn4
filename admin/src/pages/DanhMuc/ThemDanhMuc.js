@@ -58,10 +58,14 @@ const TrangDanhMuc = () => {
       axios
         .post(api.getDanhMuc, data)
         .then((res) => {
-          Swal.fire("Thêm danh mục thành công").then(() => {
-            setA(!a);
-            navigate("/admin/xem_danh_muc");
-          });
+          if (res.data.status === "successful") {
+            Swal.fire("Thêm danh mục thành công").then(() => {
+              setA(!a);
+              navigate("/admin/xem_danh_muc");
+            });
+          } else {
+            Swal.fire("Thêm danh mục thất bại");
+          }
         })
         .catch((errors) => console.log(errors))
         .finally(() => load.classList.add("d-none"));
