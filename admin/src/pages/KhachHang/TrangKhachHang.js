@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import api from "../../components/urlApi";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ReactPaginate from "react-paginate";
-import {AiFillCaretLeft, AiFillCaretRight} from "react-icons/ai";
+import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 import Swal from "sweetalert2";
 
 const TrangKhachHang = () => {
@@ -67,9 +67,9 @@ const TrangKhachHang = () => {
           <td>
             <p className="fs14 mb-0">{item.taiKhoan}</p>
           </td>
-          <td>
+          {/* <td>
             <p className="fs14 mb-0">{item.matKhau}</p>
-          </td>
+          </td> */}
           <td>
             <button className="btn btn-outline-danger fw-bolder" value={item.idKhachHang} onClick={checkId}>
               <p className="fs14 mb-0">Xóa</p>
@@ -80,7 +80,7 @@ const TrangKhachHang = () => {
     });
   };
 
-  const handlePageClick = ({selected}) => {
+  const handlePageClick = ({ selected }) => {
     setCurrentPage(selected);
   };
 
@@ -109,9 +109,9 @@ const TrangKhachHang = () => {
                 <th scope="col">
                   <p className="fs14 mb-0">Tài khoản</p>
                 </th>
-                <th scope="col">
+                {/* <th scope="col">
                   <p className="fs14 mb-0">Mật khẩu</p>
-                </th>
+                </th> */}
                 <th scope="col"></th>
               </tr>
             </thead>

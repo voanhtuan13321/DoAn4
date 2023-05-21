@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import api from "../../components/urlApi";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ReactPaginate from "react-paginate";
-import {AiFillCaretLeft, AiFillCaretRight} from "react-icons/ai";
+import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 import Chart from "chart.js/auto";
 import Swal from "sweetalert2";
 
@@ -119,7 +119,7 @@ const ThongKe = () => {
     }, 0);
   };
 
-  const handlePageClick = ({selected}) => {
+  const handlePageClick = ({ selected }) => {
     setCurrentPage(selected);
   };
 
@@ -207,15 +207,7 @@ const ThongKe = () => {
           <div className="col-5">
             <h6 className="mb-0">
               Danh thu của tháng đạt được:{" "}
-              <input
-                readOnly
-                className="inputwidth"
-                value={tongDanhThuCuaThang(thongKe).toLocaleString("vi-VN", {
-                  style: "currency",
-                  currency: "VND",
-                })}
-              />{" "}
-              VND
+              <input readOnly className="inputwidth" value={tongDanhThuCuaThang(thongKe).toLocaleString()} /> VND
             </h6>
           </div>
           <div className="col-5">
