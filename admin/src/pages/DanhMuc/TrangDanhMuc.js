@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import api from "../../components/urlApi";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ReactPaginate from "react-paginate";
-import {AiFillCaretLeft, AiFillCaretRight} from "react-icons/ai";
+import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 import Swal from "sweetalert2";
 
 const TrangDanhMuc = () => {
@@ -30,7 +30,7 @@ const TrangDanhMuc = () => {
   const handleInput = (e) => {
     let nameKey = e.target.name;
     let nameValue = e.target.value;
-    setInput((state) => ({...state, [nameKey]: nameValue}));
+    setInput((state) => ({ ...state, [nameKey]: nameValue }));
   };
 
   const handlerSubmit = (e) => {
@@ -85,7 +85,11 @@ const TrangDanhMuc = () => {
       .delete(api.getDanhMucId + getId)
       .then((res) => {
         if (res.data.status === "fail") {
-          Swal.fire("Xoá không thanh công");
+          Swal.fire(
+            "Xoá không thanh công",
+            "Danh mục hiện tại đang có sách, nếu bạn muốn xoá thì phải xoá hết sách trước",
+            "error"
+          );
         } else {
           Swal.fire("Xoá thành công");
         }
@@ -101,7 +105,7 @@ const TrangDanhMuc = () => {
     navigation("/admin/sua_danh_muc");
   }
 
-  const handlePageClick = ({selected}) => {
+  const handlePageClick = ({ selected }) => {
     setCurrentPage(selected);
   };
 
