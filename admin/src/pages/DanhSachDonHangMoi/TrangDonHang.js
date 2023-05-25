@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import api from "../../components/urlApi";
-import {useNavigate} from "react-router-dom";
+import {useNavigate,Link} from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import {AiFillCaretLeft, AiFillCaretRight} from "react-icons/ai";
 import Swal from "sweetalert2";
 
 const TrangDonHang = () => {
-  const ITEMS_PER_PAGE = 15;
+  const ITEMS_PER_PAGE = 5;
   let navigation = useNavigate();
   const [data, setData] = useState([]);
 
@@ -22,6 +22,7 @@ const TrangDonHang = () => {
     axios
       .get(api.donHang)
       .then((res) => {
+        console.log(res.data.data);
         setData(res.data.data);
       })
       .catch((errors) => console.log(errors));
@@ -78,29 +79,19 @@ const TrangDonHang = () => {
         return (
           <tr key={index}>
             <td>
-              <p className="fs14 mb-0">{item.maDonHang}</p>
+            <Link to={"/admin/chi_tiet_don_hang/" + item.id}>
+                <p className="fs14 mb-0">
+                  {item.maDonHang}</p>
+              </Link>
             </td>
             <td>
               <p className="fs14 mb-0">{item["khachHang"].ten}</p>
             </td>
             <td>
-              <p className="fs14 mb-0">{item["khachHang"].soDienThoai}</p>
+              <p className="fs14 mb-0">{item.ngayMua}</p>
             </td>
             <td>
-              <p className="fs14 mb-0">{item["sach"].ten}</p>
-            </td>
-            <td>
-              <p className="fs14 mb-0">{item.soLuong}</p>
-            </td>
-            <td>
-              <p className="fs14 mb-0">
-                {item.trangThai === "online"
-                  ? "Đã thanh toán"
-                  : (item["sach"].giaSach * item.soLuong).toLocaleString() + " VNĐ"}
-              </p>
-            </td>
-            <td>
-              <p className="fs14">{item.ngayMua}</p>
+              <p className="fs14 mb-0">{item.phuongThucThanhToan}</p>
             </td>
             <td>
               <p className="fs14">{item.trangThai}</p>
@@ -160,6 +151,51 @@ const TrangDonHang = () => {
   return (
     <div className="pl5px">
       <div className="">
+        <h5>Đơn hàng</h5>
+        <table className="table">
+          <thead className="table-dark">
+            <tr>
+              <th scope="col">
+                <p className="fs14 mb-0">Mã đơn hàng</p>
+              </th>
+              <th scope="col">
+                <p className="fs14 mb-0">Tên khách hàng</p>
+              </th>
+              <th scope="col">
+                <p className="fs14 mb-0 w103">Ngày mua</p>
+              </th>
+              <th scope="col">
+                <p className="fs14 mb-0 w103">Phương thức thanh toán</p>
+              </th>
+              <th scope="col">
+                <p className="fs14 mb-0">Trạng thái</p>
+              </th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>{donDatHang()}</tbody>
+        </table>
+        <ReactPaginate
+          previousLabel={<AiFillCaretLeft />}
+          nextLabel={<AiFillCaretRight />}
+          breakLabel={"..."}
+          pageCount={pageCount}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={3}
+          onPageChange={handlePageClick}
+          containerClassName={"pagination justify-content-center"}
+          pageClassName={"page-item"}
+          pageLinkClassName={"page-link"}
+          previousClassName={"page-item"}
+          previousLinkClassName={"page-link"}
+          nextClassName={"page-item"}
+          nextLinkClassName={"page-link"}
+          breakClassName={"page-item"}
+          breakLinkClassName={"page-link"}
+          activeClassName={"active"}
+        />
+      </div>
+      {/* <div className="">
         <h5>Đơn hàng</h5>
         <table className="table">
           <thead className="table-dark">
@@ -245,7 +281,7 @@ const TrangDonHang = () => {
           breakLinkClassName={"page-link"}
           activeClassName={"active"}
         />
-      </div>
+      </div> */}
     </div>
   );
 };

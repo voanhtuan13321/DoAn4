@@ -37,6 +37,8 @@ const api = {
 
   donHang: `http://${ip}:8080/api/don-hang`,
 
+  chiTietDonHang: `http://${ip}:8080/api/chi-tiet-don-hang/`,
+
   ip: "192.168.1.10",
 };
 

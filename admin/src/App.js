@@ -31,6 +31,7 @@ import ThemSanPham from "./pages/SanPham/ThemSanPham";
 import XemSanPham from "./pages/SanPham/XemSanPham";
 import TimKiem from "./pages/SanPham/TiemKiem";
 import SanPhamTheoDanhMuc from "./pages/SanPham/SanPhamTheoDanhMuc";
+import ChiTietDonHang from "./pages/DanhSachDonHangMoi/ChiTietDonHang";
 
 function App() {
   return (
@@ -62,6 +63,8 @@ function App() {
           <Route path="/admin/sua_san_pham" element={<SuaSanPham />} />
           <Route path="/admin/sua_san_pham" element={<SuaSanPham />} />
           <Route path="/admin/thong_ke" element={<ThongKe />} />
+
+          <Route path="/admin/chi_tiet_don_hang/:id" element={<ChiTietDonHang />} />
 
           <Route path="/admin/tim_kiem" element={<TimKiem />} />
 
