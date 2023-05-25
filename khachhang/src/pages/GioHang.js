@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from "react";
-import {Link, useNavigate} from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 import api from "../components/urlApi";
-import {AiFillDelete} from "react-icons/ai";
+import { AiFillDelete } from "react-icons/ai";
 
 const GioHang = () => {
   let idKhachHang = JSON.parse(sessionStorage.getItem("idKhachHang"));
@@ -47,6 +47,8 @@ const GioHang = () => {
 
     function handleThanhToan(phuongThucThanhToan) {
       const promises = [];
+      const listSanPham = [];
+      const listId = [];
 
       for (const idGioHang of getNameImage) {
         const data2 = {
@@ -54,11 +56,14 @@ const GioHang = () => {
           phuongThucThanhToan: phuongThucThanhToan,
         };
 
-        const promise1 = axios.post(api.donHang, data2);
-        const promise2 = axios.delete(api.gioHang + "/" + idGioHang);
-
-        promises.push(promise1, promise2);
+        listSanPham.push(data2);
+        listId.push(idGioHang);
       }
+
+      const promise1 = axios.post(api.donHang, { listSanPham });
+      const promise2 = axios.post(api.gioHang + "/delete", { listId });
+
+      promises.push(promise1, promise2);
 
       Promise.all(promises)
         .then(() => {
