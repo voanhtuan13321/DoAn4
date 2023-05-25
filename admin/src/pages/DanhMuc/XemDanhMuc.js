@@ -74,7 +74,7 @@ const XemDanhMuc = () => {
           <td>
             <p className="fs14 mb-0">{item.moTa}</p>
           </td>
-          <td className="d-flex">
+          <td className="d-flex justify-content-end">
             <button className="btn mr3 btn-outline-warning fw-bolder" onClick={() => checkId(item)}>
               Sửa
             </button>

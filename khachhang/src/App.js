@@ -6,7 +6,7 @@ import DangKi from "./pages/DangKi";
 import GioHang from "./pages/GioHang";
 import TrangChu from "./pages/TrangChu";
 import LichSuMuaHang from "./pages/LichSuMuaHang";
-import SuKien from "./pages/SuKien";
+// import SuKien from "./pages/SuKien";
 import SanPhamTheoDanhMuc from "./pages/SanPhamTheoDanhMuc";
 import CapnhatThongTinKhachHang from "./pages/CapnhatThongTinKhachHang";
 import QuenMatKhau from "./pages/QuenMatKhau";

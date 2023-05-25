@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from "react";
-import {BsSearch, BsFillCartCheckFill} from "react-icons/bs";
-import {useNavigate, NavLink, Link} from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { BsSearch, BsFillCartCheckFill } from "react-icons/bs";
+import { useNavigate, NavLink, Link } from "react-router-dom";
 import api from "../components/urlApi";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -38,7 +38,10 @@ const Header = () => {
     return danhMuc.map((item, index) => {
       return (
         <li key={index}>
-          <Link className="dropdown-item text-white" to={"/san_theo_danh_muc/" + item.idDanhMuc}>
+          <Link
+            className="dropdown-item text-white"
+            to={"/san_theo_danh_muc/" + item.idDanhMuc}
+          >
             {item.ten}
           </Link>
         </li>
@@ -68,14 +71,15 @@ const Header = () => {
               Taì khoản
             </Link>
           </li>
-          <li>
-            <button onClick={() => dangXuat()} className="dropdown-item">
-              Đăng xuất
-            </button>
-          </li>
+
           <li>
             <button onClick={() => donHang()} className="dropdown-item">
               Đơn hàng
+            </button>
+          </li>
+          <li>
+            <button onClick={() => dangXuat()} className="dropdown-item">
+              Đăng xuất
             </button>
           </li>
         </>
@@ -100,7 +104,11 @@ const Header = () => {
 
   const timKiem = () => {
     if (timKiemSach === "") {
-      Swal.fire("Có vẻ bạn chưa nhập gì vào ô tìm kiếm?", "Vui lòng nhập từ khoá để thực hiện chức năng này", "info");
+      Swal.fire(
+        "Có vẻ bạn chưa nhập gì vào ô tìm kiếm?",
+        "Vui lòng nhập từ khoá để thực hiện chức năng này",
+        "info"
+      );
     } else {
       window.localStorage.setItem("tuKhoaTimKiem", timKiemSach);
       window.location.href = `http://${api.ip}:3000/tim_kiem`;
@@ -145,16 +153,23 @@ const Header = () => {
                       type="button"
                       id="dropdownMenuButton1"
                       data-bs-toggle="dropdown"
-                      aria-expanded="false">
+                      aria-expanded="false"
+                    >
                       {tenKhachHang()}
                     </button>
-                    <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <ul
+                      className="dropdown-menu"
+                      aria-labelledby="dropdownMenuButton1"
+                    >
                       {renderTaiKhoan()}
                     </ul>
                   </div>
                 </div>
                 <div className="mx-3">
-                  <Link to="/gio_hang" className="d-flex align-items-center gap-10 text-white">
+                  <Link
+                    to="/gio_hang"
+                    className="d-flex align-items-center gap-10 text-white"
+                  >
                     <BsFillCartCheckFill />
                   </Link>
                 </div>
@@ -174,11 +189,15 @@ const Header = () => {
                     type="button"
                     id="dropdownMenuButton1"
                     data-bs-toggle="dropdown"
-                    aria-expanded="false">
+                    aria-expanded="false"
+                  >
                     <img alt="" />
                     <span className="me-5 d-inline-block">Danh mục</span>
                   </button>
-                  <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  <ul
+                    className="dropdown-menu"
+                    aria-labelledby="dropdownMenuButton1"
+                  >
                     {rederDanhMuc()}
                   </ul>
                 </div>

@@ -70,7 +70,7 @@ const SanPhamChiTiet = () => {
           console.log(error);
         });
     } else {
-      Swal.fire("Bạn chưa nhập bình luận?", "Vui lòng nhập vào bình luận của bạn để sử dụng chức năng này", "info");
+      Swal.fire("Bạn chưa nhập góp ý?", "Vui lòng nhập vào góp ý của bạn để sử dụng chức năng này", "info");
     }
   };
 
@@ -212,12 +212,12 @@ const SanPhamChiTiet = () => {
           <div className="col-3"></div>
           <div className="col-6">
             <div className="p-5">
-              <h3>Phần bình luận</h3>
+              <h3>Phần góp ý</h3>
               <form action="#" onSubmit={handleSubmitBinhLuan}>
                 <p>
-                  <textarea className="comment p-3" onChange={handleInput} rows={4} placeholder="Bình luận ...." />
+                  <textarea className="comment p-3" onChange={handleInput} rows={4} placeholder="Góp ý ...." />
                 </p>
-                <button className="btn btn-primary">Bình luận</button>
+                <button className="btn btn-primary">Góp ý</button>
               </form>
             </div>
           </div>

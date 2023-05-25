@@ -182,7 +182,7 @@ const GioHang = () => {
           <div className="cart-col-2">
             <h5 className="price">{item["sach"].giaSach.toLocaleString() + " VNĐ"}</h5>
           </div>
-          <div className="cart-col-3 d-flex align-items-center gap-15">
+          <div className="cart-col-3 d-flex justify-content-end align-items-center gap-15">
             <div className={item.trangThai === "thanh_toan" ? "d-flex anButtun" : "d-flex"}>
               <button
                 onClick={() => {

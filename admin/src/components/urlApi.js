@@ -1,4 +1,4 @@
-const ip = "10.134.112.55";
+const ip = "192.168.1.7";
 
 const api = {
   getDanhMuc: `http://${ip}:8080/api/danh-muc`,
@@ -37,7 +37,7 @@ const api = {
 
   donHang: `http://${ip}:8080/api/don-hang`,
 
-  ip: "10.134.112.55",
+  ip: "192.168.1.10",
 };
 
 export default api;
