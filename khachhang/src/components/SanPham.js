@@ -27,7 +27,7 @@ const SanPham = () => {
   };
 
   const themVaoGioHang = (idSach) => {
-    let idKhachHang = JSON.parse(localStorage.getItem("idKhachHang"));
+    let idKhachHang = JSON.parse(sessionStorage.getItem("idKhachHang"));
     if (!idKhachHang) {
       // window.location = "http://localhost:3000/dang-nhap";
       checkDangNhap();

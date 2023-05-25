@@ -6,7 +6,7 @@ import api from "../components/urlApi";
 import { AiFillDelete } from "react-icons/ai";
 
 const GioHang = () => {
-  let idKhachHang = JSON.parse(sessionStorage.getItem("idKhachHang"));
+  let idKhachHang = JSON.parse(localStorage.getItem("idKhachHang"));
   const [data, setData] = useState([]);
   const [getNameImage, setNameImage] = useState([]);
   const [a, setA] = useState("");
@@ -46,7 +46,6 @@ const GioHang = () => {
     }
 
     function handleThanhToan(phuongThucThanhToan) {
-      const promises = [];
       const listSanPham = [];
       const listId = [];
 
@@ -60,21 +59,15 @@ const GioHang = () => {
         listId.push(idGioHang);
       }
 
-      const promise1 = axios.post(api.donHang, { listSanPham });
-      const promise2 = axios.post(api.gioHang + "/delete", { listId });
-      promises.push(promise1, promise2);
-
-      Promise.all(promises)
-        .then(() => {
+      axios.post(api.donHang, { listSanPham }).then(() => {
+        axios.post(api.gioHang + "/delete", { listId }).then(() => {
           Swal.fire(
             "Đặt hàng thành công",
             "Bạn có thể huỷ đơn hàng trong ngày hôm nay, sau 23h59 thì bạn không được phép huỷ",
             "info"
           ).then((data) => (window.location.href = `http://${api.ip}:3000/gio_hang`));
         })
-        .catch((error) => {
-          console.log(error);
-        });
+      })
     }
   };
 
@@ -192,7 +185,7 @@ const GioHang = () => {
                 onClick={() => {
                   themSoLuongSanPham(item);
                 }}
-                className={item.soLuong == item["sach"].soLuong ? "btn d-none anButtun" : "btn"}>
+                className={item.soLuong == item["sach"].soLuong ? "btn custumBinhLuan anButtun" : "btn"}>
                 +
               </button>
               <input
@@ -208,7 +201,7 @@ const GioHang = () => {
                 onClick={() => {
                   giamSoLuongSanPham(item);
                 }}
-                className={item.soLuong == 1 ? "btn d-none" : "btn"}>
+                className={item.soLuong == 1 ? "btn anButtun custumBinhLuan" : "btn"}>
                 -
               </button>
             </div>

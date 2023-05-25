@@ -129,7 +129,7 @@ const TrangDonHang = () => {
               <p className="fs14 mb-0">{item.maDonHang}</p>
             </td>
             <td>
-              <p className="fs14 mb-0">{item["khachHang"].ten}</p>
+              <p className="fs14 mb-0">{item["khachHang"]?.ten}</p>
             </td>
             <td>
               <p className="fs14 mb-0">{item["khachHang"].soDienThoai}</p>

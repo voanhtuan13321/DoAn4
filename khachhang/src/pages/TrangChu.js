@@ -1,10 +1,11 @@
-import React, {useState, useEffect, useMemo} from "react";
-import {Link} from "react-router-dom";
+import React, { useState, useEffect, useMemo } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import api from "../components/urlApi";
 
 const TrangChu = () => {
   const [data, setData] = useState([]);
+  const [sachbanChay, setSachbanChay] = useState([]);
   const animationLoad = document.querySelector("#load");
 
   // lay du lieu thong tin all sach tu database
@@ -18,10 +19,25 @@ const TrangChu = () => {
       .finally(() => animationLoad.classList.add("d-none"));
   }, []);
 
+  // sach Bán chạy
+  useEffect(() => {
+    animationLoad.classList.remove("d-none");
+    axios
+      .get(api.sachBanChay)
+      .then((res) => {
+        setSachbanChay(res.data.data);
+      })
+      .finally(() => animationLoad.classList.add("d-none"));
+  }, []);
+
+  console.log(sachbanChay);
+
   const productsByCategory = useMemo(() => {
     animationLoad.classList.remove("d-none");
     // Lọc ra các giá trị categoryId duy nhất
-    const sanPhamTheoIdDanhMuc = [...new Set(data.map((product) => product["danhMuc"].idDanhMuc))];
+    const sanPhamTheoIdDanhMuc = [
+      ...new Set(data.map((product) => product["danhMuc"].idDanhMuc)),
+    ];
     // Tạo ra danh sách các sản phẩm theo từng categoryId
     const cacSanPhamTheoId = sanPhamTheoIdDanhMuc.map((categoryId) =>
       data.filter((product) => product["danhMuc"].idDanhMuc === categoryId)
@@ -32,50 +48,39 @@ const TrangChu = () => {
   }, [data]);
 
   return (
-    <div className="rimary mh700 mt150px">
+    <div className="rimary mh700 mt150px ">
       <div className="container-xxl py-2">
-        <div className="row">
-          <div className="col-6">
-            <div className="main-banner position-relative ">
-              <img
-                src="https://cdn0.fahasa.com/media/magentothem/banner7/Management_mainbanner_T4_840x320_1.jpg"
-                className="img-fluid rounded-3 height400"
-                alt="main banner"
-              />
-            </div>
+        <div className="row mb-5">
+          <div className="d-flex align-items-center mb-4 ">
+            <h4 className="mr5">Sản phẩm mua nhiều nhất</h4>
           </div>
-          <div className="col-6">
-            <div className="d-flex flex-wrap justify-content-between align-items-center">
-              <div className="small-banner">
-                <img
-                  src="https://cdn0.fahasa.com/media/magentothem/banner7/AZ_T04_slide_840x320.jpg"
-                  className="img-fluid rounded-3"
-                  alt="main banner"
-                />
-              </div>
-              <div className="small-banner">
-                <img
-                  src="https://cdn0.fahasa.com/media/magentothem/banner7/PLATINUM_NCCDINHTY_T42023_Slide_840x320.jpg"
-                  className="img-fluid rounded-3"
-                  alt="main banner"
-                />
-              </div>
-              <div className="small-banner">
-                <img
-                  src="https://cdn0.fahasa.com/media/wysiwyg/Thang-04-2023/FahasaT4w3_T423_Bo1_392x156.jpg"
-                  className="img-fluid rounded-3"
-                  alt="main banner"
-                />
-              </div>
-              <div className="small-banner ">
-                <img
-                  src="https://cdn0.fahasa.com/media/wysiwyg/Thang-04-2023/FahasaT4w2_LDP_Mainbanner_web.jpg"
-                  className="img-fluid rounded-3"
-                  alt="main banner"
-                />
-              </div>
+          {sachbanChay.slice(0, 8).map((item, index) => (
+            <div key={index} className="col-3 mb-3">
+              <Link
+                to={"/san_pham/" + item["sach"].idSach}
+                className="border color  card "
+                title={item.ten}
+              >
+                <div className="card">
+                  <img
+                    src={api.img + item["sach"].hinhAnh}
+                    className="card-img-top heightImage"
+                    alt="..."
+                  />
+                  <div className="card-body">
+                    <h5 className="card-title name">
+                      {item["sach"].ten.length > 60
+                        ? item["sach"].ten.slice(0, 60) + "..."
+                        : item["sach"].ten}
+                    </h5>
+                    <p className="card-text ">
+                      Giá sách: {item["sach"].giaSach.toLocaleString() + " VNĐ"}{" "}
+                    </p>
+                  </div>
+                </div>
+              </Link>
             </div>
-          </div>
+          ))}
         </div>
       </div>
       <div className="container-xxl">
@@ -84,21 +89,39 @@ const TrangChu = () => {
             <div className="mt-5" key={index}>
               <div className="d-flex align-items-center mb-4">
                 <h4 className="mr5">{categoryProducts[0]["danhMuc"].ten}</h4>
-                <Link className="mb-1" to={"/san_theo_danh_muc/" + categoryProducts[0]["danhMuc"]?.idDanhMuc}>
+                <Link
+                  className="mb-1"
+                  to={
+                    "/san_theo_danh_muc/" +
+                    categoryProducts[0]["danhMuc"]?.idDanhMuc
+                  }
+                >
                   Xem thêm
                 </Link>
               </div>
               <div className="row mb-5">
                 {categoryProducts.slice(0, 8).map((item, index) => (
                   <div key={index} className="col-3 mb-3">
-                    <Link to={"/san_pham/" + item.idSach} className="border color  card " title={item.ten}>
+                    <Link
+                      to={"/san_pham/" + item.idSach}
+                      className="border color  card "
+                      title={item.ten}
+                    >
                       <div className="card">
-                        <img src={api.img + item.hinhAnh} className="card-img-top heightImage" alt="..." />
+                        <img
+                          src={api.img + item.hinhAnh}
+                          className="card-img-top heightImage"
+                          alt="..."
+                        />
                         <div className="card-body">
                           <h5 className="card-title name">
-                            {item.ten.length > 60 ? item.ten.slice(0, 60) + "..." : item.ten}
+                            {item.ten.length > 60
+                              ? item.ten.slice(0, 60) + "..."
+                              : item.ten}
                           </h5>
-                          <p className="card-text ">Giá sách : {item.giaSach.toLocaleString() + " VNĐ"} </p>
+                          <p className="card-text ">
+                            Giá sách: {item.giaSach.toLocaleString() + " VNĐ"}{" "}
+                          </p>
                         </div>
                       </div>
                     </Link>

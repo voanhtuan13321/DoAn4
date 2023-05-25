@@ -58,7 +58,7 @@ const QuenMatKhau = () => {
           if (res.data.status === "ok") {
             alert("Đổi mật khẩu thành công");
             navigate("/dang_nhap");
-            localStorage.setItem();
+            sessionStorage.setItem();
           } else {
             navigate("");
           }

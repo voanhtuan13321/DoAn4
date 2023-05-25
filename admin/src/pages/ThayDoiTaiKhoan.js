@@ -8,11 +8,11 @@ const ThayDoiTaiKhoan = () => {
   const capNhat = JSON.parse(localStorage.getItem("taiKhoanAdmin"));
   const navigate = useNavigate();
   const [input, setInput] = useState({
-    ten: capNhat.ten,
-    email: capNhat.email,
-    soDienThoai: capNhat.soDienThoai,
-    taiKhoan: capNhat.taiKhoan,
-    matKhau: capNhat.matKhau,
+    ten: capNhat?.ten,
+    email: capNhat?.email,
+    soDienThoai: capNhat?.soDienThoai,
+    taiKhoan: capNhat?.taiKhoan,
+    matKhau: capNhat?.matKhau,
   });
 
   // check dang nhap

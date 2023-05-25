@@ -29,10 +29,11 @@ const api = {
   sachTheoDanhMuc: `http://${ip}:8080/api/sach/by-danh-muc/`,
 
   gioHang: `http://${ip}:8080/api/gio-hang`,
+
   gioHangId: `http://${ip}:8080/api/gio-hang/`,
   gioHangCount: `http://${ip}:8080/api/gio-hang/count/`,
 
-  lichSuMuaHang: `http://${ip}:8080/api/lich-su-mua`,
+  lichSuMuaHang: `http://${ip}:8080/api/don-hang/lich-su/`,
 
   thanhToan: `http://${ip}:8080/api/payment/create-payment`,
 
@@ -41,6 +42,10 @@ const api = {
   timKiem: `http://${ip}:8080/api/sach/searching`,
 
   donHang: `http://${ip}:8080/api/don-hang`,
+
+  chiTietDonHang: `http://${ip}:8080/api/chi-tiet-don-hang/`,
+
+  sachBanChay:`http://${ip}:8080/api/chi-tiet-don-hang/top-5`,
 
   img: "data:image/jpeg;base64,",
 

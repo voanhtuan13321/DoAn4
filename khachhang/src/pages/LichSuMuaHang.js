@@ -1,72 +1,88 @@
-import React, {useEffect, useState} from "react";
-import {Link, useParams} from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import api from "../components/urlApi";
+import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 const LichSuMuaHang = () => {
   let idKhachHang = JSON.parse(localStorage.getItem("idKhachHang"));
+  // console.log(idKhachHang);
   const [data, setData] = useState([]);
-
+  const [a, setA] = useState(true);
   useEffect(() => {
     axios
-      .get(api.lichSuMuaHang + "/" + idKhachHang)
+      .get(api.lichSuMuaHang + idKhachHang)
+      .then((res) => setData(res.data.data));
+  }, [a]);
+
+  console.log(data);
+
+  const deleteId = (item) => {
+    console.log(item);
+
+    // console.log(id);
+    axios
+      .delete(api.donHang + "/cancel/" + item.id)
       .then((res) => {
-        console.log(res);
-        setData(res.data.data);
+        Swal.fire("Đơn hàng đả huỷ");
+        setA(!a);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  };
 
-  const renderLichSu = () => {
-    return data.map((item, index) => {
-      return (
-        <div className="cart-data py-3 mb-2 d-flex justify-content-between align-items-center">
-          <div className="cart-col-1 gap-15 d-flex align-items-center">
-            <div className="w-25">
-              <img className="img-fluid" src={api.img + item["sach"].hinhAnh} />
-            </div>
-          </div>
-          <div className="cart-col-2">
-            <h5 className="price">{item["sach"].ten}</h5>
-          </div>
-          <div className="cart-col-2">
-            <h5 className="price"> {item["sach"].giaSach} VNĐ</h5>
-          </div>
-          <div className="cart-col-3 d-flex align-items-center gap-15">
-            <div>{item.soLuong}</div>
-            <div>{/* <AiFillDelete className="text-danger " /> */}</div>
-          </div>
-          <div className="cart-col-4">
-            <h5 className="price">{item["sach"].giaSach * item.soLuong + " VNĐ"}</h5>
-          </div>
-        </div>
-      );
-    });
+  const donHang = () => {
+    const today = new Date();
+
+    if (data.length > 0) {
+      return data?.map((item, index) => {
+        const ngayMua = new Date(item.ngayMua);
+        const isCungNgayHienTai =
+          today.getDate() === ngayMua.getDate() &&
+          today.getMonth() === today.getMonth() &&
+          today.getFullYear() === ngayMua.getFullYear();
+          // console.log(item.id);
+        return (
+          <tr key={index}>
+            <th scope="row">{index}</th>
+            <td>
+              <Link to={"/chi_tiet_don_hang/" + item.id}>
+                <p className="fs14 mb-0">
+                  {item.maDonHang}</p>
+              </Link>
+            </td>
+            <td>
+              <p className="fs14 mb-0">{item.ngayMua}</p>
+            </td>
+            {/* <td>
+              <p className="fs14 mb-0">{item.trangThai}</p>
+            </td> */}
+            
+          </tr>
+        );
+      });
+    } else {
+      <p className="text-center">Không có đơn hàng</p>;
+    }
   };
   return (
-    <div className="container-xxl mh700 mt150px">
-      <div className="row">
-        <div className="pt-5">
-          <h3>Lịch sử mua hàng</h3>
-        </div>
-        <div className="col-12">
-          <div className="cart-header py-3 d-flex justify-content-between align-items-center">
-            <h4 className="cart-col-1">Sản phẩm</h4>
-            <h4 className="cart-col-3">Tên sách</h4>
-            <h4 className="cart-col-2">Giá</h4>
-            <h4 className="cart-col-3">Số lượng</h4>
-            <h4 className="cart-col-4">Tổng tiền</h4>
-          </div>
-          {renderLichSu()}
-        </div>
-        <div className="col-12 py-2 mt-4">
-          <div className="d-flex justify-content-between align-items-baseline">
-            <Link to="/gio_hang" className="button">
-              Giỏ hàng
-            </Link>
-          </div>
-        </div>
+    <div className="container-xxl">
+      <div className="mh700 mt150px">
+        <table className="table caption-top">
+          <thead>
+            <tr>
+              <th scope="col">STT</th>
+              <th scope="col">Mã đơn hàng</th>
+              {/* <th scope="col">Sản phẩm</th>
+              <th scope="col">Hình ảnh</th> */}
+              {/* <th scope="col">Số lượng</th> */}
+              <th scope="col">Ngày đặt</th>
+              {/* <th scope="col">Trạng thái</th> */}
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>{donHang()}</tbody>
+        </table>
       </div>
     </div>
   );

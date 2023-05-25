@@ -18,7 +18,7 @@ const Footer = () => {
           <div className="row ">
             <div className="col-3"></div>
             <div className="col-3">
-              <h4 className="text-white mb-4">Liên hệ với chúng tôis</h4>
+              <h4 className="text-white mb-4">Liên hệ với chúng tôi</h4>
               <div>
                 <a
                   href="tel:+91 8264954234"

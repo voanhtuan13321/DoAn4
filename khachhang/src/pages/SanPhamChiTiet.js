@@ -15,9 +15,9 @@ const SanPhamChiTiet = () => {
   const params = useParams();
   const navigate = useNavigate();
 
-  const idKhachHang = JSON.parse(sessionStorage.getItem("idKhachHang"));
+  const idKhachHang = JSON.parse(localStorage.getItem("idKhachHang"));
   const animationLoad = document.getElementById("load");
-
+console.log(idKhachHang);
   // render san pham chi tiet
   useEffect(() => {
     animationLoad.classList.remove("d-none");
@@ -51,7 +51,7 @@ const SanPhamChiTiet = () => {
   // xu li khi click binh luan
   const handleSubmitBinhLuan = (e) => {
     e.preventDefault();
-    if (!idKhachHang) {
+    if (idKhachHang === null) {
       Swal.fire("Bạn chưa đăng nhập?", "Vui lòng đăng nhập trước khi thực hiện chức năng này", "info");
       window.setTimeout(() => navigate("/dang_nhap"), 1000);
     } else if (input) {
@@ -173,33 +173,31 @@ const SanPhamChiTiet = () => {
               <div>
                 <div className="d-flex justify-content-between">
                   <span>
-                    Nhà cung cấp: <b>{sanPham.tacGia}</b>
-                  </span>
-                  <span>
                     Tác giả: <b>{sanPham.tacGia}</b>
                   </span>
                 </div>
-                <div className="d-flex justify-content-between py-2">
+              </div>
+              <div className="py-2">
                   <span>
                     Nhà xuất bản: <b>{sanPham.nhaXuatBan}</b>
                   </span>
-                  <span>Ngày xuất bản: {sanPham.ngayXuatBan}</span>
                 </div>
-              </div>
+              <p>Ngày xuất bản: {sanPham.ngayXuatBan}</p>
               <div className="py-2">
                 <div className="d-flex ">
-                  <b className="text-danger fs-3">Giá : {sanPham.giaSach?.toLocaleString() + " VNĐ"}</b>
+                  <b className="text-danger fs-3">Giá: {sanPham.giaSach?.toLocaleString() + " VNĐ"}</b>
                 </div>
                 <div className="d-flex py-2">
-                  <span>Số lượng : </span>
-                  <b className="text-danger"> {sanPham.soLuong}</b>
+                  <span>Số lượng: <b className="text-danger">{sanPham.soLuong}</b></span>
+                  
                 </div>
               </div>
             </div>
+            
             <p>{sanPham.moTa}</p>
-            <p>Ngày phát hành : {sanPham.ngayXuatBan}</p>
+            {/* <p>Ngày phát hành: {sanPham.ngayXuatBan}</p> */}
             <div>
-              <button onClick={() => handelThemVaoGioHang(sanPham)} className="button">
+              <button onClick={() => handelThemVaoGioHang(sanPham)} className="button d-flex">
                 <span>
                   <BsCartCheckFill />
                 </span>

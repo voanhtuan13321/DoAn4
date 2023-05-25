@@ -21,7 +21,7 @@ const Header = () => {
   }, []);
 
   const tenKhachHang = () => {
-    let getLocalStolore = JSON.parse(sessionStorage.getItem("khachHang"));
+    let getLocalStolore = JSON.parse(localStorage.getItem("khachHang"));
     if (getLocalStolore) {
       return getLocalStolore.ten;
     } else {
@@ -58,17 +58,17 @@ const Header = () => {
   };
 
   const donHang = () => {
-    navigate("don_hang");
+    navigate("/don_hang");
   };
 
   function renderTaiKhoan() {
-    let getLocalStolore = sessionStorage.getItem("khachHang");
+    let getLocalStolore = localStorage.getItem("khachHang");
     if (getLocalStolore) {
       return (
         <>
           <li>
             <Link to="/cap_nhat_tai_khoan" className="dropdown-item">
-              Taì khoản
+              Tài khoản
             </Link>
           </li>
 

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import api from "../components/urlApi";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 const DonHang = () => {
   let idKhachHang = JSON.parse(localStorage.getItem("idKhachHang"));
   // console.log(idKhachHang);
@@ -22,7 +23,7 @@ const DonHang = () => {
     axios
       .delete(api.donHang + "/cancel/" + item.id)
       .then((res) => {
-        Swal.fire("ĐƠn hàng đả huỷ");
+        Swal.fire("Đơn hàng đả huỷ");
         setA(!a);
       })
       .catch((error) => {
@@ -40,20 +41,15 @@ const DonHang = () => {
           today.getDate() === ngayMua.getDate() &&
           today.getMonth() === today.getMonth() &&
           today.getFullYear() === ngayMua.getFullYear();
+          // console.log(item.id);
         return (
           <tr key={index}>
             <th scope="row">{index}</th>
             <td>
-              <p className="fs14 mb-0">{item.maDonHang}</p>
-            </td>
-            <td>
-              <p className="fs14 mb-0">{item["sach"].ten}</p>
-            </td>
-            <td>
-              <img className="wh" src={api.img + item["sach"].hinhAnh} />
-            </td>
-            <td>
-              <p className="fs14 mb-0">{item.soLuong}</p>
+              <Link to={"/chi_tiet_don_hang/" + item.id}>
+                <p className="fs14 mb-0">
+                  {item.maDonHang}</p>
+              </Link>
             </td>
             <td>
               <p className="fs14 mb-0">{item.ngayMua}</p>
@@ -89,9 +85,9 @@ const DonHang = () => {
             <tr>
               <th scope="col">STT</th>
               <th scope="col">Mã đơn hàng</th>
-              <th scope="col">Sản phẩm</th>
-              <th scope="col">Hình ảnh</th>
-              <th scope="col">Số lượng</th>
+              {/* <th scope="col">Sản phẩm</th>
+              <th scope="col">Hình ảnh</th> */}
+              {/* <th scope="col">Số lượng</th> */}
               <th scope="col">Ngày đặt</th>
               <th scope="col">Trạng thái</th>
               <th scope="col"></th>

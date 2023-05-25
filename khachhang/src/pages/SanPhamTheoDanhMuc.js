@@ -25,8 +25,8 @@ const SanPhamTheoDanhMuc = () => {
               <div className="card">
                 <img src={api.img + item.hinhAnh} className="card-img-top heightImage" alt="..." />
                 <div className="card-body">
-                  <h5 className="card-title">{item.ten.length > 50 ? item.ten.slice(0, 50) + "..." : item.ten}</h5>
-                  <p className="card-text ">Giá sách : {item.giaSach.toLocaleString() + " VNĐ"}</p>
+                  <h5 className="card-title">{item.ten.length > 50 ? item.ten.slice(0, 50) + "...": item.ten}</h5>
+                  <p className="card-text ">Giá sách: {item.giaSach.toLocaleString() + " VNĐ"}</p>
                 </div>
               </div>
             </Link>

@@ -36,7 +36,7 @@ const DangKi = () => {
 
   // Hàm kiểu tra email nhập vào
   function kiemTraEmail(value) {
-    const emailRegex = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
+    const emailRegex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
     return emailRegex.test(value);
   }
 
