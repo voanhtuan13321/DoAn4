@@ -62,7 +62,6 @@ const GioHang = () => {
 
       const promise1 = axios.post(api.donHang, { listSanPham });
       const promise2 = axios.post(api.gioHang + "/delete", { listId });
-
       promises.push(promise1, promise2);
 
       Promise.all(promises)
