@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import api from "../../components/urlApi";
 import ReactPaginate from "react-paginate";
-import {AiFillCaretLeft, AiFillCaretRight} from "react-icons/ai";
+import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 import Swal from "sweetalert2";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const BinhLuanCuaSanPham = () => {
   const ITEMS_PER_PAGE = 15;
@@ -29,7 +29,7 @@ const BinhLuanCuaSanPham = () => {
     });
   }, []);
 
-  const handlePageClick = ({selected}) => {
+  const handlePageClick = ({ selected }) => {
     setCurrentPage(selected);
   };
 
@@ -79,7 +79,7 @@ const BinhLuanCuaSanPham = () => {
               <p className="fs14 mb-0">Tên khách hàng</p>
             </th>
             <th scope="col">
-              <p className="fs14 mb-0">Nội dung binhg luận</p>
+              <p className="fs14 mb-0">Nội dung gióp ý</p>
             </th>
             <th scope="col">
               <p className="fs14 mb-0">Thời gian</p>

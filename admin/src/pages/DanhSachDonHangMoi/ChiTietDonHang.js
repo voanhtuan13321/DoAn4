@@ -5,21 +5,17 @@ import api from "../../components/urlApi";
 // import Swal from "sweetalert2";
 const ChiTietDonHang = () => {
   const params = useParams();
-  console.log(params.id);
   const [data, setData] = useState([]);
   // const [a, setA] = useState(true);
   console.log(data);
   useEffect(() => {
-    axios
-      .get(api.chiTietDonHang + params.id)
-      .then((res) => setData(res.data.data));
+    axios.get(api.chiTietDonHang + params.id).then((res) => setData(res.data.data));
   }, []);
 
-  console.log(data);
   const donHang = () => {
     // const today = new Date();
 
-    if (data.length > 0) {
+    if (data.length) {
       return data?.map((item, index) => {
         const ngayMua = new Date(item.ngayMua);
         // const isCungNgayHienTai =
@@ -35,17 +31,14 @@ const ChiTietDonHang = () => {
             </td>
             <td>
               <img className="whdonHang" src={api.img + item["sach"].hinhAnh} />
-            </td>{" "}
-        
+            </td>
             <td>
               <p className="fs14 mb-0">{item.soLuong}</p>
             </td>
             <td>
-              <p className="fs14 mb-0">{item['donHang'].ngayMua}</p>
+              <p className="fs14 mb-0">{item["donHang"].ngayMua}</p>
             </td>
-            <td>
-              <p className="fs14 mb-0">{item['donHang'].trangThai}</p>
-            </td>
+
             {/* <td>
                 {!isCungNgayHienTai ? (
                   ""
@@ -63,23 +56,22 @@ const ChiTietDonHang = () => {
         );
       });
     } else {
-      <p className="text-center">Không có đơn hàng</p>;
+      <p className="text-center mx-auto">Không có đơn hàng</p>;
     }
   };
   return (
     <div className="container-xxl">
       <div className="mh700 mt150px">
-        <h3 className="text-center p-5">Thông tin chi tiết của mã đơn hàng {data[0]?.['donHang'].maDonHang}</h3>
+        <h3 className="text-center p-5">Thông tin chi tiết của mã đơn hàng {data[0]?.["donHang"].maDonHang}</h3>
         <table className="table caption-top">
           <thead>
             <tr>
               <th scope="col">STT</th>
               {/* <th scope="col">Mã đơn hàng</th> */}
-               <th scope="col">Sản phẩm</th>
-                <th scope="col">Hình ảnh</th> 
-              <th scope="col">Số lượng</th> 
+              <th scope="col">Sản phẩm</th>
+              <th scope="col">Hình ảnh</th>
+              <th scope="col">Số lượng</th>
               <th scope="col">Ngày đặt</th>
-              <th scope="col">Trạng thái</th>
             </tr>
           </thead>
           <tbody>{donHang()}</tbody>

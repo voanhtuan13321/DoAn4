@@ -1,11 +1,11 @@
-import React, {useState} from "react";
-import {BsBorderStyle, BsFillCalendarEventFill} from "react-icons/bs";
-import {BiUserCircle} from "react-icons/bi";
-import {NavLink, Outlet, useNavigate} from "react-router-dom";
-import {BsSearch} from "react-icons/bs";
-import {GoFileDirectory} from "react-icons/go";
-import {AiOutlineDashboard, AiOutlineUserAdd, AiFillAppstore, AiOutlineComment} from "react-icons/ai";
-import {FaProductHunt} from "react-icons/fa";
+import React, { useState } from "react";
+import { BsBorderStyle, BsFillCalendarEventFill } from "react-icons/bs";
+import { BiUserCircle } from "react-icons/bi";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { BsSearch } from "react-icons/bs";
+import { GoFileDirectory } from "react-icons/go";
+import { AiOutlineDashboard, AiOutlineUserAdd, AiFillAppstore, AiOutlineComment } from "react-icons/ai";
+import { FaProductHunt } from "react-icons/fa";
 import api from "./urlApi";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -48,7 +48,7 @@ const Sidebar = () => {
     {
       path: "/admin/binh_luan",
       icon: <AiOutlineComment className="fs-4" />,
-      name: "Bình luận",
+      name: "Phản hồi/góp ý",
     },
     {
       path: "/admin/thong_ke",
@@ -74,7 +74,7 @@ const Sidebar = () => {
     if (timKiemSach === "") {
       Swal.fire("Có vẻ bạn chưa nhập gì vào ô tìm kiếm?", "Vui lòng nhập từ khoá để thực hiện chức năng này", "info");
     } else {
-      axios.get(api.timKiem, {params: {search: timKiemSach}}).then((res) => {
+      axios.get(api.timKiem, { params: { search: timKiemSach } }).then((res) => {
         localStorage.setItem("timKiemSach", JSON.stringify(res.data.data));
         window.location.href = `http://${api.ip}:2000/admin/tim_kiem`;
       });

@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import api from "../../components/urlApi";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 import Chart from "chart.js/auto";
@@ -22,13 +22,14 @@ const ThongKe = () => {
   const [thongKe, setThongKe] = useState([]);
   const [pageCount, setPageCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
+  const [totalMonth, setTotalMonth] = useState([]);
 
   useEffect(() => {
     const barChart = document.getElementById("barChart");
     const pieChart = document.getElementById("pieChart");
 
     (async function showThongKeTheoThang() {
-      const response = await axios.get(`${api.lichSuMua}/thong-ke-theo-thang`);
+      const response = await axios.get(`${api.donHang}/thong-ke-theo-thang`);
       const list = await response.data.data;
 
       let labels = [];
@@ -64,7 +65,7 @@ const ThongKe = () => {
     })();
 
     (async function showTopSachBanChay() {
-      const response = await axios.get(`${api.lichSuMua}/top-sach-ban-chay`);
+      const response = await axios.get(`${api.chiTietDonHang}top-5`);
       const list = await response.data.data;
 
       let labels = [];
@@ -72,7 +73,7 @@ const ThongKe = () => {
 
       list.forEach((item) => {
         labels.push(item.sach.ten);
-        data.push(item.soLuongBan);
+        data.push(item.soLuong);
       });
 
       new Chart(pieChart, {
@@ -98,7 +99,7 @@ const ThongKe = () => {
     })();
 
     axios
-      .get(api.thongKeTheoThang + thang)
+      .get(`${api.donHang}/thong-ke-theo-thang/` + thang)
       .then((res) => {
         setThongKe(res.data.data);
         setPageCount(Math.ceil(res.data.data.length / ITEMS_PER_PAGE));
@@ -106,14 +107,34 @@ const ThongKe = () => {
       .catch((err) => console.log(err));
   }, [thang]);
 
+  useEffect(() => {
+    if (!thongKe.length) return;
+    thongKe.forEach((el) => {
+      axios.get(`${api.chiTietDonHang}tong-tien-don-hang/${el.id}`).then((res) => {
+        if (res.data.data) {
+          setTotalMonth((prev) => [...prev, res.data.data]);
+        }
+      });
+    });
+  }, [thongKe]);
+
   // Thống kê giá tiền đả bán sách trog tháng
-  const tongDanhThuCuaThang = (data) => {
-    return data.reduce((accumulator, currentValue) => {
-      return accumulator + currentValue.sach.giaSach * currentValue.soLuong;
-    }, 0);
-  };
+  const tongDanhThuCuaThang = useMemo(() => {
+    if (!totalMonth.length) return;
+
+    return totalMonth.reduce((prev, cur) => prev + cur, 0);
+
+    // goi api tinh tong tien trong don hang do
+
+    // if (!data.length) return;
+    // return data.reduce((accumulator, currentValue) => {
+    //   return accumulator + currentValue.sach.giaSach * currentValue.soLuong;
+    // }, 0);
+  }, [totalMonth]);
 
   const tongSoLuong = (data) => {
+    if (!data.length) return;
+    console.log("Data:  ", data);
     return data.reduce((accumulator, currentValue) => {
       return accumulator + currentValue.soLuong;
     }, 0);
@@ -145,24 +166,23 @@ const ThongKe = () => {
 
   // render ra giao diện
   const render = () => {
-    if (currentData.length > 0) {
+    if (currentData.length) {
       return currentData.map((item, index) => {
         return (
-          <tr key={index}>
+          <tr key={item.id}>
+            <td>
+              <Link to={"/admin/chi_tiet_don_hang/" + item.id}>
+                <p className="fs14 mb-0">{item.maDonHang}</p>
+              </Link>
+            </td>
             <td>
               <p className="fs14 mb-0">{item["khachHang"].ten}</p>
             </td>
             <td>
-              <p className="fs14 mb-0">{item["khachHang"].diaChi}</p>
+              <p className="fs14 mb-0">{item.ngayMua}</p>
             </td>
             <td>
-              <p className="fs14 mb-0">{item["khachHang"].soDienThoai}</p>
-            </td>
-            <td>
-              <p className="fs14 mb-0">{item["sach"].ten}</p>
-            </td>
-            <td>
-              <p className="fs14 mb-0">{item.soLuong}</p>
+              <p className="fs14 mb-0">{item.phuongThucThanhToan}</p>
             </td>
           </tr>
         );
@@ -206,20 +226,39 @@ const ThongKe = () => {
 
           <div className="col-5">
             <h6 className="mb-0">
-              Danh thu của tháng đạt được:{" "}
-              <input readOnly className="inputwidth" value={tongDanhThuCuaThang(thongKe).toLocaleString()} /> VND
+              Danh thu của tháng đạt được: <input readOnly className="inputwidth" value={tongDanhThuCuaThang} /> VND
             </h6>
           </div>
           <div className="col-5">
-            <h6 className="mb-0">
-              Tổng số lượng mặt hàng đả bán: <input readOnly className="inputwidth" value={tongSoLuong(thongKe)} /> sản
+            {/* <h6 className="mb-0">
+              Tổng số lượng mặt hàng đã bán: <input readOnly className="inputwidth" value={tongSoLuong(thongKe)} /> sản
               phẩm
-            </h6>
+            </h6> */}
           </div>
         </div>
         <div className="row">
           <div className="py-2">
             <table className="table">
+              <thead className="table-dark">
+                <tr>
+                  <th scope="col">
+                    <p className="fs14 mb-0">Mã đơn hàng</p>
+                  </th>
+                  <th scope="col">
+                    <p className="fs14 mb-0">Tên khách hàng</p>
+                  </th>
+                  <th scope="col">
+                    <p className="fs14 mb-0 w103">Ngày mua</p>
+                  </th>
+                  <th scope="col">
+                    <p className="fs14 mb-0 w103">Phương thức thanh toán</p>
+                  </th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>{render()}</tbody>
+            </table>
+            {/* <table className="table">
               <thead className="table-dark">
                 <tr>
                   <th scope="col">
@@ -240,7 +279,7 @@ const ThongKe = () => {
                 </tr>
               </thead>
               <tbody>{render()}</tbody>
-            </table>
+            </table> */}
           </div>
 
           <ReactPaginate

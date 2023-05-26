@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import api from "../../components/urlApi";
-import {useNavigate,Link} from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import ReactPaginate from "react-paginate";
-import {AiFillCaretLeft, AiFillCaretRight} from "react-icons/ai";
+import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 import Swal from "sweetalert2";
 
 const TrangDonHang = () => {
@@ -22,7 +22,7 @@ const TrangDonHang = () => {
     axios
       .get(api.donHang)
       .then((res) => {
-        console.log(res.data.data);
+        console.log("don hang", res.data.data);
         setData(res.data.data);
       })
       .catch((errors) => console.log(errors));
@@ -32,32 +32,21 @@ const TrangDonHang = () => {
   const [pageCount, setPageCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
 
-  useEffect(() => {
-    axios
-      .get(api.lichSuMua)
-      .then((res) => {
-        setLichSu(res.data.data);
-        setPageCount(Math.ceil(res.data.data.length / ITEMS_PER_PAGE));
-      })
-      .catch((errors) => console.log(errors));
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get(api.lichSuMua)
+  //     .then((res) => {
+  //       setLichSu(res.data.data);
+  //       setPageCount(Math.ceil(res.data.data.length / ITEMS_PER_PAGE));
+  //     })
+  //     .catch((errors) => console.log(errors));
+  // }, []);
 
   // Lấy toàn bộ các thành phần đc chọn
   const checkId = (item) => {
-    const promises = [];
-    let data = {
-      idKhachHang: item["khachHang"].idKhachHang,
-      idSach: item["sach"].idSach,
-      maDonHang: item.maDonHang,
-      soLuong: item.soLuong,
-      ngayMua: item.ngayMua,
-    };
+    console.log("item", item);
 
-    const promise1 = axios.post(api.lichSuMua, data);
-    const promise2 = axios.delete(api.donHang + "/cancel/" + item.id);
-
-    promises.push(promise1, promise2);
-    Promise.all(promises).then(() => {
+    axios.put(api.donHang + "/" + item.id).then(() => {
       localStorage.removeItem("gioHang");
       Swal.fire("Đơn hàng đã được xác nhận").then(
         () => (window.location.href = `http://${api.ip}:2000/admin/don_hang`)
@@ -68,81 +57,78 @@ const TrangDonHang = () => {
   // Lấy tất cả các đơn đặt hàng đang chờ
   const donDatHang = () => {
     const today = new Date();
-    return data
-      .filter((item) => item.trangThai !== "none")
-      .map((item, index) => {
-        const ngayMua = new Date(item.ngayMua);
-        const isCungNgayHienTai =
-          today.getDate() === ngayMua.getDate() &&
-          today.getMonth() === today.getMonth() &&
-          today.getFullYear() === ngayMua.getFullYear();
-        return (
-          <tr key={index}>
-            <td>
+    return data.map((item, index) => {
+      const ngayMua = new Date(item.ngayMua);
+      const isCungNgayHienTai =
+        today.getDate() === ngayMua.getDate() &&
+        today.getMonth() === today.getMonth() &&
+        today.getFullYear() === ngayMua.getFullYear();
+      return (
+        <tr key={index}>
+          <td>
             <Link to={"/admin/chi_tiet_don_hang/" + item.id}>
-                <p className="fs14 mb-0">
-                  {item.maDonHang}</p>
-              </Link>
-            </td>
-            <td>
-              <p className="fs14 mb-0">{item["khachHang"].ten}</p>
-            </td>
-            <td>
-              <p className="fs14 mb-0">{item.ngayMua}</p>
-            </td>
-            <td>
-              <p className="fs14 mb-0">{item.phuongThucThanhToan}</p>
-            </td>
-            <td>
-              <p className="fs14">{item.trangThai}</p>
-            </td>
-            <td>
-              {isCungNgayHienTai ? (
-                ""
-              ) : (
-                <button onClick={() => checkId(item)} className="btn btn-outline-success fw-bolder ">
-                  <p className="fs14 mb-0 w61">Xác nhận</p>
-                </button>
-              )}
-            </td>
-          </tr>
-        );
-      });
-  };
-
-  const lichSuMuaHang = () => {
-    return currentData
-      .filter((item) => item.trangThai !== "none")
-      .map((item, index) => {
-        return (
-          <tr key={index}>
-            <td>
               <p className="fs14 mb-0">{item.maDonHang}</p>
-            </td>
-            <td>
-              <p className="fs14 mb-0">{item["khachHang"]?.ten}</p>
-            </td>
-            <td>
-              <p className="fs14 mb-0">{item["khachHang"].soDienThoai}</p>
-            </td>
-            <td>
-              <p className="fs14 mb-0">{item["sach"].ten}</p>
-            </td>
-            <td>
-              <p className="fs14 mb-0">{item.soLuong}</p>
-            </td>
-            <td>
-              <p className="fs14 mb-0">{item.ngayMua}</p>
-            </td>
-            <td>
-              <p className="fs14 mb-0">{(item.soLuong * item["sach"].giaSach).toLocaleString() + " VNĐ"} </p>
-            </td>
-          </tr>
-        );
-      });
+            </Link>
+          </td>
+          <td>
+            <p className="fs14 mb-0">{item["khachHang"].ten}</p>
+          </td>
+          <td>
+            <p className="fs14 mb-0">{item.ngayMua}</p>
+          </td>
+          <td>
+            <p className="fs14 mb-0">{item.phuongThucThanhToan}</p>
+          </td>
+          <td>
+            <p className="fs14">{item.trangThai}</p>
+          </td>
+          <td>
+            {isCungNgayHienTai ? (
+              ""
+            ) : (
+              <button onClick={() => checkId(item)} className="btn btn-outline-success fw-bolder ">
+                <p className="fs14 mb-0 w61">Xác nhận</p>
+              </button>
+            )}
+          </td>
+        </tr>
+      );
+    });
   };
 
-  const handlePageClick = ({selected}) => {
+  // const lichSuMuaHang = () => {
+  //   return currentData
+  //     .filter((item) => item.trangThai !== "none")
+  //     .map((item, index) => {
+  //       return (
+  //         <tr key={index}>
+  //           <td>
+  //             <p className="fs14 mb-0">{item.maDonHang}</p>
+  //           </td>
+  //           <td>
+  //             <p className="fs14 mb-0">{item["khachHang"]?.ten}</p>
+  //           </td>
+  //           <td>
+  //             <p className="fs14 mb-0">{item["khachHang"].soDienThoai}</p>
+  //           </td>
+  //           <td>
+  //             <p className="fs14 mb-0">{item["sach"].ten}</p>
+  //           </td>
+  //           <td>
+  //             <p className="fs14 mb-0">{item.soLuong}</p>
+  //           </td>
+  //           <td>
+  //             <p className="fs14 mb-0">{item.ngayMua}</p>
+  //           </td>
+  //           <td>
+  //             <p className="fs14 mb-0">{(item.soLuong * item["sach"].giaSach).toLocaleString() + " VNĐ"} </p>
+  //           </td>
+  //         </tr>
+  //       );
+  //     });
+  // };
+
+  const handlePageClick = ({ selected }) => {
     setCurrentPage(selected);
   };
 

@@ -28,6 +28,7 @@ const TrangKhachHang = () => {
       .then((res) => {
         setKhachHang(res.data.data);
         setPageCount(Math.ceil(res.data.data.length / ITEMS_PER_PAGE));
+        console.log("khach hang", res.data.data);
       })
       .catch((errors) => console.log(errors));
   }, [a]);
@@ -67,9 +68,9 @@ const TrangKhachHang = () => {
           <td>
             <p className="fs14 mb-0">{item.taiKhoan}</p>
           </td>
-          {/* <td>
-            <p className="fs14 mb-0">{item.matKhau}</p>
-          </td> */}
+          <td>
+            <p className="fs14 mb-0">{item.ngayTao}</p>
+          </td>
           <td>
             <button className="btn btn-outline-danger fw-bolder" value={item.idKhachHang} onClick={checkId}>
               <p className="fs14 mb-0">Xóa</p>
@@ -109,9 +110,9 @@ const TrangKhachHang = () => {
                 <th scope="col">
                   <p className="fs14 mb-0">Tài khoản</p>
                 </th>
-                {/* <th scope="col">
-                  <p className="fs14 mb-0">Mật khẩu</p>
-                </th> */}
+                <th scope="col">
+                  <p className="fs14 mb-0">Ngày Tạo</p>
+                </th>
                 <th scope="col"></th>
               </tr>
             </thead>
