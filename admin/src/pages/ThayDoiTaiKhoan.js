@@ -125,14 +125,17 @@ const ThayDoiTaiKhoan = () => {
       <form className="form" onSubmit={handlerSubmit}>
         <p className="form-title">Cập nhật tài khoản</p>
         <div className="input-container">
-          <input type="text" name="ten" onChange={handleInput} value={input.ten} placeholder="Nhập tài khoản" />
+          <label className="fs14">Nhập tài khoản</label>
+          <input type="text" name="ten" onChange={handleInput} value={input.ten} placeholder="Nhập tên" />
           <p className="error">{errTen}</p>
         </div>
         <div className="input-container">
+        <label className="fs14">Nhập email</label>
           <input type="email" name="email" onChange={handleInput} value={input.email} placeholder="Nhập email" />
           <p className="error">{errEmail}</p>
         </div>
         <div className="input-container">
+        <label className="fs14">Nhập số điện thoại</label>
           <input
             type="number"
             name="soDienThoai"
@@ -143,6 +146,7 @@ const ThayDoiTaiKhoan = () => {
           <p className="error">{errSoDienThoai}</p>
         </div>
         <div className="input-container">
+        <label className="fs14">Nhập tài khoản</label>
           <input
             type="text"
             name="taiKhoan"
@@ -153,6 +157,7 @@ const ThayDoiTaiKhoan = () => {
           <p className="error">{errTaiKhoan}</p>
         </div>
         <div className="input-container">
+        <label className="fs14">Nhập mật khẩu</label>
           <input
             type="password"
             name="matKhau"

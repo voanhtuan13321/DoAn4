@@ -1,16 +1,19 @@
-import React from "react";
+import React,{useState} from "react";
 import api from "../../components/urlApi";
 import Swal from "sweetalert2";
+import axios from "axios";
 import {useNavigate} from "react-router-dom";
+
 
 const TimKiem = () => {
   let sach = JSON.parse(localStorage.getItem("timKiemSach"));
-  const navigation = useNavigate();
+  let navigate = useNavigate();
+  const [a, setA] = useState(true);
 
   // check dang nhap
   let admin = JSON.parse(localStorage.getItem("taiKhoanAdmin"));
   if (!admin) {
-    Swal.fire("Bạn phải đăng nhập").then(() => navigation("/"));
+    Swal.fire("Bạn phải đăng nhập").then(() => navigate("/"));
   }
 
   if (sach === "") {
@@ -20,6 +23,26 @@ const TimKiem = () => {
       </div>
     );
   }
+
+    // xóa sản phẩm theo id
+    function deleteId(e) {
+      let getId = e.target.value;
+      console.log(getId);
+      axios
+        .delete(api.sachId + getId)
+        .then((res) => {
+          Swal.fire("Xoá sản phẩm thành công").then(() => setA(!a));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  
+    // Lấy phần tủ sách đả được chọn sửa bỏ vào local
+    function checkId(item) {
+      localStorage.setItem("sach", JSON.stringify(item));
+      navigate("/admin/sua_san_pham");
+    }
 
   const rederSanPham = () => {
     if (sach.length === 0) {
@@ -61,6 +84,15 @@ const TimKiem = () => {
 
           <td>
             <img className="img-thumbnail image-w image-h" src={api.img + item.hinhAnh} alt="" />
+          </td>
+
+          <td>
+            <button className="btn btn-outline-warning fw-bolder mr3" onClick={() => checkId(item)}>
+              Sửa
+            </button>
+            <button className="btn btn-outline-danger fw-bolder" value={item.idSach} onClick={deleteId}>
+              Xóa
+            </button>
           </td>
         </tr>
       );

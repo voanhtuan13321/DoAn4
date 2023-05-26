@@ -47,9 +47,11 @@ const api = {
 
   sachBanChay: `http://${ip}:8080/api/chi-tiet-don-hang/top-5`,
 
+  sachMoiNhat: `http://${ip}:8080/api/sach/sach-moi-nhat`,
+
   img: "data:image/jpeg;base64,",
 
-  ip: "192.168.1.82",
+  ip: "192.168.1.142",
 };
 
 export default api;

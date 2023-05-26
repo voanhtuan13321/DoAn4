@@ -6,6 +6,7 @@ import api from "../components/urlApi";
 const TrangChu = () => {
   const [data, setData] = useState([]);
   const [sachbanChay, setSachbanChay] = useState([]);
+  const [sachMoiNhat, setMoiNhat] = useState([]);
   const animationLoad = document.querySelector("#load");
 
   // lay du lieu thong tin all sach tu database
@@ -30,7 +31,18 @@ const TrangChu = () => {
       .finally(() => animationLoad.classList.add("d-none"));
   }, []);
 
-  console.log(sachbanChay);
+    // sach mới nhất
+    useEffect(() => {
+      animationLoad.classList.remove("d-none");
+      axios
+        .get(api.sachMoiNhat)
+        .then((res) => {
+          setMoiNhat(res.data.data);
+        })
+        .finally(() => animationLoad.classList.add("d-none"));
+    }, []);
+
+  console.log(sachMoiNhat);
 
   const productsByCategory = useMemo(() => {
     animationLoad.classList.remove("d-none");
@@ -75,6 +87,40 @@ const TrangChu = () => {
                     </h5>
                     <p className="card-text ">
                       Giá sách: {item["sach"].giaSach.toLocaleString() + " VNĐ"}{" "}
+                    </p>
+                  </div>
+                </div>
+              </Link>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="container-xxl py-2">
+        <div className="row mb-5">
+          <div className="d-flex align-items-center mb-4 ">
+            <h4 className="mr5">Sản phẩm mới nhất</h4>
+          </div>
+          {sachMoiNhat.slice(0, 8).map((item, index) => (
+            <div key={index} className="col-3 mb-3">
+              <Link
+                to={"/san_pham/" + item.idSach}
+                className="border color  card "
+                title={item.ten}
+              >
+                <div className="card">
+                  <img
+                    src={api.img + item.hinhAnh}
+                    className="card-img-top heightImage"
+                    alt="..."
+                  />
+                  <div className="card-body">
+                    <h5 className="card-title name">
+                      {item.ten.length > 60
+                        ? item.ten.slice(0, 60) + "..."
+                        : item.ten}
+                    </h5>
+                    <p className="card-text ">
+                      Giá sách: {item.giaSach.toLocaleString() + " VNĐ"}{" "}
                     </p>
                   </div>
                 </div>
