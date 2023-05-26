@@ -13,7 +13,7 @@ const TrangDanhMuc = () => {
   // check dang nhap
   let admin = JSON.parse(localStorage.getItem("taiKhoanAdmin"));
   if (!admin) {
-    Swal.fire("Bạn phải đăng nhập").then(() => navigation("/"));
+    Swal.fire("Bạn phải đăng nhập", "", "warning").then(() => navigation("/"));
   }
 
   const [input, setInput] = useState({
@@ -61,7 +61,7 @@ const TrangDanhMuc = () => {
       axios
         .post(api.getDanhMuc, data)
         .then((res) => {
-          Swal.fire("Thêm danh mục thành công").then(() => {
+          Swal.fire("Thêm danh mục thành công", "", "success").then(() => {
             setA(!a);
           });
         })
@@ -91,7 +91,7 @@ const TrangDanhMuc = () => {
             "error"
           );
         } else {
-          Swal.fire("Xoá thành công");
+          Swal.fire("Xoá thành công", "", "success");
         }
         setA(!a);
       })

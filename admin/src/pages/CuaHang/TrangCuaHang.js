@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import api from "../../components/urlApi";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const TrangCuaHang = () => {
@@ -112,7 +112,7 @@ const TrangCuaHang = () => {
     return data.map((item, index) => (
       <div className="text-start" key={index}>
         <p className="w500">{item.tenCuaHang}</p>
-        <p className="w500 mh100">{item.moTa}</p>
+        <p className="w500">{item.moTa}</p>
         <p className="w500">{item.soDienThoai}</p>
         <p className="w500">{item.diaChi}</p>
         <p className="w500">{item.website}</p>
@@ -129,15 +129,15 @@ const TrangCuaHang = () => {
       <div className="text-center py-5 mh400 mt150px">
         <div className="d-flex align-items-center justify-content-center">
           <form className="width-500">
-            <p className="form-title py-4">Thông tin của hàng</p>
+            <p className="form-title py-4">Thông tin cửa hàng</p>
             <div className="d-flex fs-5 ">
               <div className="text-start ml5 mr30">
-                <p className="w100">Tên cửa hàng :</p>
-                <p className="w100 mh100">Mô tả :</p>
-                <p className="w100">Số điện thoại :</p>
-                <p className="w100">Địa chỉ :</p>
-                <p className="w100">Website :</p>
-                <p className="w100">Email cửa hàng :</p>
+                <p className="w100">Tên cửa hàng:</p>
+                <p className="w100">Mô tả:</p>
+                <p className="w100">Số điện thoại:</p>
+                <p className="w100">Địa chỉ:</p>
+                <p className="w100">Website:</p>
+                <p className="w100">Email cửa hàng:</p>
               </div>
               {renderData()}
             </div>

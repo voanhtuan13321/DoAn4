@@ -48,7 +48,7 @@ const TrangDonHang = () => {
 
     axios.put(api.donHang + "/" + item.id).then(() => {
       localStorage.removeItem("gioHang");
-      Swal.fire("Đơn hàng đã được xác nhận").then(
+      Swal.fire("Đơn hàng đã được xác nhận", "", "success").then(
         () => (window.location.href = `http://${api.ip}:2000/admin/don_hang`)
       );
     });

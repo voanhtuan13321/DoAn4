@@ -63,16 +63,10 @@ const DangNhap = () => {
             .then((res) => {
               console.log(res);
               if (res.data.status === "ok") {
-                localStorage.setItem(
-                  "idKhachHang",
-                  JSON.stringify(res.data.data.idKhachHang)
-                );
-                localStorage.setItem(
-                  "khachHang",
-                  JSON.stringify(res.data.data)
-                );
+                localStorage.setItem("idKhachHang", JSON.stringify(res.data.data.idKhachHang));
+                localStorage.setItem("khachHang", JSON.stringify(res.data.data));
                 console.log(res.data.data);
-                Swal.fire("Đăng nhập thành công");
+                Swal.fire("Đăng nhập thành công", "", "success");
                 setTimeout(function () {
                   navigate("/");
                 }, 1000);
@@ -161,22 +155,12 @@ const DangNhap = () => {
           <h2 className="text-center">Đăng nhập</h2>
           <label>Tài khoản</label>
           <div className="input-container">
-            <input
-              type="text"
-              name="taiKhoan"
-              onChange={handleInput}
-              placeholder="Nhập tài khoản"
-            />
+            <input type="text" name="taiKhoan" onChange={handleInput} placeholder="Nhập tài khoản" />
             <p className="error">{errTaiKhoan}</p>
           </div>
           <div className="input-container">
             <label>Mật khẩu</label>
-            <input
-              type="password"
-              name="matKhau"
-              onChange={handleInput}
-              placeholder="Nhập vào mật khẩu"
-            />
+            <input type="password" name="matKhau" onChange={handleInput} placeholder="Nhập vào mật khẩu" />
             <p className="error">{errMatKhau}</p>
           </div>
           <div className="input-container">

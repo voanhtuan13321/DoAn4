@@ -15,7 +15,7 @@ const TrangKhachHang = () => {
   // check dang nhap
   let admin = JSON.parse(localStorage.getItem("taiKhoanAdmin"));
   if (!admin) {
-    Swal.fire("Bạn phải đăng nhập").then(() => navigation("/"));
+    Swal.fire("Bạn phải đăng nhập", "", "success").then(() => navigation("/"));
   }
 
   const [khachHang, setKhachHang] = useState([]);

@@ -1,7 +1,7 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import api from "../../components/urlApi";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const SuaThongTinCuaHang = () => {
@@ -49,7 +49,7 @@ const SuaThongTinCuaHang = () => {
   const handleInput = (e) => {
     let nameKey = e.target.name;
     let nameValue = e.target.value;
-    setInput((state) => ({...state, [nameKey]: nameValue}));
+    setInput((state) => ({ ...state, [nameKey]: nameValue }));
   };
 
   const handlerSubmit = (e) => {
@@ -111,7 +111,7 @@ const SuaThongTinCuaHang = () => {
       .post(api.cuaHang, data)
       .then((res) => {
         setA(!a);
-        Swal.fire("Cập nhật thành công").then(() => navigate("/admin/trang_cua_hang"));
+        Swal.fire("Cập nhật thành công", "", "success").then(() => navigate("/admin/trang_cua_hang"));
       })
       .catch((errors) => console.log(errors));
   };

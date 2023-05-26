@@ -25,11 +25,6 @@ const Sidebar = () => {
       name: "Danh mục",
       icon: <GoFileDirectory />,
     },
-    // {
-    //   path: "/admin/xem_su_kien",
-    //   name: "Sự kiện",
-    //   icon: <BsFillCalendarEventFill />,
-    // },
     {
       path: "/admin/trang_khach_hang",
       name: "Khách hàng",

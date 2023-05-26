@@ -1,7 +1,7 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import api from "../../components/urlApi";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const SuaDanhMuc = () => {
@@ -25,7 +25,7 @@ const SuaDanhMuc = () => {
   const handleInput = (e) => {
     let nameKey = e.target.name;
     let nameValue = e.target.value;
-    setInput((state) => ({...state, [nameKey]: nameValue}));
+    setInput((state) => ({ ...state, [nameKey]: nameValue }));
   };
 
   const handlerSubmit = (e) => {
@@ -58,7 +58,7 @@ const SuaDanhMuc = () => {
       axios
         .post(api.getDanhMuc, data)
         .then((res) => {
-          Swal.fire("Sửa thành công").then(() => {
+          Swal.fire("Sửa thành công", "", "success").then(() => {
             setA(!a);
             navigate("/admin/xem_danh_muc");
           });

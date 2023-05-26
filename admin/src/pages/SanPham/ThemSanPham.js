@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import api from "../../components/urlApi";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 const TrangSgSanPham = () => {
   let navigate = useNavigate();
@@ -60,7 +60,7 @@ const TrangSgSanPham = () => {
   const handleInput = (e) => {
     let nameKey = e.target.name;
     let nameValue = e.target.value;
-    setSapPham((state) => ({...state, [nameKey]: nameValue}));
+    setSapPham((state) => ({ ...state, [nameKey]: nameValue }));
   };
 
   const handleFile = (e) => {
@@ -186,7 +186,7 @@ const TrangSgSanPham = () => {
       axios
         .post(api.sach, data)
         .then((res) => {
-          Swal.fire("Thêm sản phẩm thành công").then(() => {
+          Swal.fire("Thêm sản phẩm thành công", "", "success").then(() => {
             setA(!a);
             navigate("/admin/xem_san_pham");
           });

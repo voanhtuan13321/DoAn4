@@ -10,7 +10,7 @@ const TrangDanhMuc = () => {
   // check dang nhap
   let admin = JSON.parse(localStorage.getItem("taiKhoanAdmin"));
   if (!admin) {
-    Swal.fire("Bạn phải đăng nhập").then(() => navigate("/"));
+    Swal.fire("Bạn phải đăng nhập", "", "warning").then(() => navigate("/"));
   }
 
   const [input, setInput] = useState({
@@ -59,12 +59,12 @@ const TrangDanhMuc = () => {
         .post(api.getDanhMuc, data)
         .then((res) => {
           if (res.data.status === "successful") {
-            Swal.fire("Thêm danh mục thành công").then(() => {
+            Swal.fire("Thêm danh mục thành công", "", "success").then(() => {
               setA(!a);
               navigate("/admin/xem_danh_muc");
             });
           } else {
-            Swal.fire("Thêm danh mục thất bại", "Có vẻ như danh mục bạn nhập đã tồn tại", "warning");
+            Swal.fire("Thêm danh mục thất bại", "Có vẻ như danh mục bạn nhập đã tồn tại", "error");
           }
         })
         .catch((errors) => console.log(errors))

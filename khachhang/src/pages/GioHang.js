@@ -14,7 +14,7 @@ const GioHang = () => {
 
   // kiem tra nguoi dung dang nhap chua, neu chua thì phai dang nhap
   if (!idKhachHang) {
-    Swal.fire("Bạn chưa đăng nhập?", "Vui lòng đăng nhập để thực hiện chức năng này", "info");
+    Swal.fire("Bạn chưa đăng nhập?", "Vui lòng đăng nhập để thực hiện chức năng này", "warning");
     window.setTimeout(() => {
       navigator("/dang_nhap");
     }, 1000);
@@ -64,10 +64,10 @@ const GioHang = () => {
           Swal.fire(
             "Đặt hàng thành công",
             "Bạn có thể huỷ đơn hàng trong ngày hôm nay, sau 23h59 thì bạn không được phép huỷ",
-            "info"
+            "success"
           ).then((data) => (window.location.href = `http://${api.ip}:3000/gio_hang`));
-        })
-      })
+        });
+      });
     }
   };
 
