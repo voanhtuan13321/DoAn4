@@ -226,7 +226,8 @@ const ThongKe = () => {
 
           <div className="col-5">
             <h6 className="mb-0">
-              Danh thu của tháng đạt được: <input readOnly className="inputwidth" value={tongDanhThuCuaThang} /> VND
+              Danh thu của tháng đạt được:{" "}
+              <input readOnly className="inputwidth" value={tongDanhThuCuaThang?.toLocaleString()} /> VND
             </h6>
           </div>
           <div className="col-5">

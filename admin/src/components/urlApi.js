@@ -1,4 +1,4 @@
-const ip = "192.168.1.82";
+const ip = "192.168.188.45";
 
 const api = {
   getDanhMuc: `http://${ip}:8080/api/danh-muc`,
@@ -39,7 +39,7 @@ const api = {
 
   chiTietDonHang: `http://${ip}:8080/api/chi-tiet-don-hang/`,
 
-  ip: "192.168.1.142",
+  ip: "192.168.188.45",
 };
 
 export default api;
